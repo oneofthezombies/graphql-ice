@@ -1,7 +1,7 @@
 # GraphQL Edge
 
-GraphQL Edge is a GraphQL server framework focused on V8 Isolates-based Edge
-Functions.
+GraphQL Edge is a JavaScript/TypeScript GraphQL server framework designed for  
+Edge Functions built on V8 Isolates.
 
 ## License
 
