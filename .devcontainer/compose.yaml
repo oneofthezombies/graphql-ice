@@ -1,0 +1,14 @@
+services:
+  edge:
+    build:
+      context: ../
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ../:/edge
+    networks:
+      - edge
+    restart: 'no'
+
+networks:
+  edge:
+    driver: bridge
