@@ -1,6 +1,6 @@
 # GraphQL Ice
 
-GraphQL Ice is a JavaScript/TypeScript GraphQL server framework designed for  
+GraphQL Ice is a JavaScript/TypeScript GraphQL server library designed for  
 Edge Functions built on V8 Isolates.
 
 ## License
