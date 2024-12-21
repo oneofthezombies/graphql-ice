@@ -31,6 +31,6 @@ RUN volta install sort-package-json@2.12.0
 RUN volta install typescript@5.7.2
 RUN volta install tsx@4.19.2
 RUN volta install vite@6.0.4
-RUN volta install cloudflare@3.5.0
+RUN volta install create-cloudflare@2.35.1
 
 RUN unset DEBIAN_FRONTEND
