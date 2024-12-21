@@ -21,6 +21,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/home/vscode/.cargo/bin:${PATH}"
 RUN rustup install 1.83.0
 RUN rustup default 1.83.0
+RUN cargo install --version 0.2.99 wasm-bindgen-cli
 
 RUN curl https://get.volta.sh | bash
 ENV PATH="/home/vscode/.volta/bin:${PATH}"
@@ -32,6 +33,5 @@ RUN volta install typescript@5.7.2
 RUN volta install tsx@4.19.2
 RUN volta install vite@6.0.4
 RUN volta install create-cloudflare@2.35.1
-RUN volta install wasm-pack@0.13.1
 
 RUN unset DEBIAN_FRONTEND
