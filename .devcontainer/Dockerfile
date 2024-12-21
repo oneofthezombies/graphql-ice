@@ -15,7 +15,7 @@ RUN apt clean && \
     rm -rf /var/lib/apt/lists/*
 
 USER vscode
-WORKDIR /workspace
+WORKDIR /graphql-ice
 
 RUN curl https://get.volta.sh | bash
 ENV PATH="/home/vscode/.volta/bin:${PATH}"
@@ -28,6 +28,6 @@ RUN volta install typescript@5.7.2
 RUN volta install tsx@4.19.2
 RUN volta install vite@6.0.4
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 RUN unset DEBIAN_FRONTEND

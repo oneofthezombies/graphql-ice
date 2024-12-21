@@ -1,14 +1,14 @@
 services:
-  workspace:
+  graphql-ice:
     build:
       context: ../
       dockerfile: .devcontainer/Dockerfile
     volumes:
-      - ../:/workspace
+      - ../:/graphql-ice
     networks:
-      - workspace
+      - graphql-ice
     restart: 'no'
 
 networks:
-  workspace:
+  graphql-ice:
     driver: bridge

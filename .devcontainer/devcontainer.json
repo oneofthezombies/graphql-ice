@@ -67,6 +67,6 @@
   "dockerComposeFile": "./compose.yaml",
   "overrideCommand": true,
   "postCreateCommand": "npm install --workspaces",
-  "service": "workspace",
-  "workspaceFolder": "/workspace"
+  "service": "graphql-ice",
+  "workspaceFolder": "/graphql-ice"
 }
