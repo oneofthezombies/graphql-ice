@@ -51,7 +51,14 @@
           "editor.defaultFormatter": "esbenp.prettier-vscode",
           "editor.formatOnSave": true
         },
-        "cSpell.words": ["devcontainers", "errorlens", "usernamehw", "tamasfe"],
+        "cSpell.words": [
+          "devcontainers",
+          "errorlens",
+          "usernamehw",
+          "tamasfe",
+          "tlsv1",
+          "rustup"
+        ],
         "editor.rulers": [80],
         "typescript.inlayHints.enumMemberValues.enabled": true,
         "typescript.inlayHints.functionLikeReturnTypes.enabled": true,

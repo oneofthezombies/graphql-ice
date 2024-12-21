@@ -18,12 +18,12 @@ USER vscode
 WORKDIR /graphql-ice
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/home/vscode/.cargo/bin:${PATH}"
 RUN rustup install 1.83.0
 RUN rustup default 1.83.0
 
 RUN curl https://get.volta.sh | bash
 ENV PATH="/home/vscode/.volta/bin:${PATH}"
-
 RUN volta install node@22.12.0
 RUN volta install npm@10.9.2
 RUN volta install eslint@9.17.0
