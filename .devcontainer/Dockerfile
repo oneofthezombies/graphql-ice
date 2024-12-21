@@ -17,6 +17,10 @@ RUN apt clean && \
 USER vscode
 WORKDIR /graphql-ice
 
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN rustup install 1.83.0
+RUN rustup default 1.83.0
+
 RUN curl https://get.volta.sh | bash
 ENV PATH="/home/vscode/.volta/bin:${PATH}"
 
@@ -27,7 +31,6 @@ RUN volta install sort-package-json@2.12.0
 RUN volta install typescript@5.7.2
 RUN volta install tsx@4.19.2
 RUN volta install vite@6.0.4
-
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN volta install cloudflare@3.5.0
 
 RUN unset DEBIAN_FRONTEND
