@@ -15,7 +15,7 @@ RUN apt clean && \
     rm -rf /var/lib/apt/lists/*
 
 USER vscode
-WORKDIR /edge
+WORKDIR /workspace
 
 RUN curl https://get.volta.sh | bash
 ENV PATH="/home/vscode/.volta/bin:${PATH}"

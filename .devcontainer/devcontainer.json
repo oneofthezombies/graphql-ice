@@ -67,6 +67,6 @@
   "dockerComposeFile": "./compose.yaml",
   "overrideCommand": true,
   "postCreateCommand": "npm install --workspaces",
-  "service": "edge",
-  "workspaceFolder": "/edge"
+  "service": "workspace",
+  "workspaceFolder": "/workspace"
 }

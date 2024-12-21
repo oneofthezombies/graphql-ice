@@ -1,14 +1,14 @@
 services:
-  edge:
+  workspace:
     build:
       context: ../
       dockerfile: .devcontainer/Dockerfile
     volumes:
-      - ../:/edge
+      - ../:/workspace
     networks:
-      - edge
+      - workspace
     restart: 'no'
 
 networks:
-  edge:
+  workspace:
     driver: bridge
