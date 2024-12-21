@@ -52,13 +52,13 @@
           "editor.formatOnSave": true
         },
         "cSpell.words": [
+          "bindgen",
           "devcontainers",
           "errorlens",
-          "usernamehw",
+          "rustup",
           "tamasfe",
           "tlsv1",
-          "rustup",
-          "bindgen"
+          "usernamehw"
         ],
         "editor.rulers": [80],
         "typescript.inlayHints.enumMemberValues.enabled": true,
