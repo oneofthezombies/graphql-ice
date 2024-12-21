@@ -57,7 +57,8 @@
           "usernamehw",
           "tamasfe",
           "tlsv1",
-          "rustup"
+          "rustup",
+          "bindgen"
         ],
         "editor.rulers": [80],
         "typescript.inlayHints.enumMemberValues.enabled": true,
