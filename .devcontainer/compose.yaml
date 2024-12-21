@@ -5,10 +5,5 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ../:/graphql-ice
-    networks:
-      - graphql-ice
+    network_mode: host
     restart: 'no'
-
-networks:
-  graphql-ice:
-    driver: bridge
