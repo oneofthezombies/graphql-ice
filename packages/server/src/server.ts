@@ -1,4 +1,4 @@
-import init from "./generated";
+import init from "./generated/bindings";
 
 export class Server {
   static async create(coreModule: WebAssembly.Module): Promise<Server> {

@@ -41,7 +41,7 @@ run("wasm-bindgen", [
   "--out-dir",
   generatedDir,
   "--out-name",
-  "index",
+  "bindings",
   "--target",
   "web",
   path.resolve(
@@ -51,6 +51,6 @@ run("wasm-bindgen", [
 ]);
 
 fs.rmSync("dist", { recursive: true, force: true });
-fs.mkdirSync("dist", { recursive: true });
-fs.copyFileSync("src/generated/index_bg.wasm", "dist/core.wasm");
-fs.writeFileSync("dist/core.wasm.d.ts", "export {};");
+fs.mkdirSync("dist/generated", { recursive: true });
+fs.copyFileSync("src/generated/bindings_bg.wasm", "dist/generated/core.wasm");
+fs.writeFileSync("dist/generated/core.wasm.d.ts", "export {};");

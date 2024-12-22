@@ -5,8 +5,8 @@
   "types": "./dist/index.d.ts",
   "exports": {
     "./core.wasm": {
-      "types": "./dist/core.wasm.d.ts",
-      "import": "./dist/core.wasm"
+      "types": "./dist/generated/core.wasm.d.ts",
+      "import": "./dist/generated/core.wasm"
     },
     "./adapter/cloudflare-workers": {
       "types": "./dist/adapter/cloudflare-workers.d.ts",
