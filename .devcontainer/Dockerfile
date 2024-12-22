@@ -21,7 +21,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/home/vscode/.cargo/bin:${PATH}"
 RUN rustup install 1.83.0
 RUN rustup default 1.83.0
+RUN rustup target add wasm32-unknown-unknown
 RUN cargo install --version 0.2.99 wasm-bindgen-cli
+RUN cargo install --version 1.222.0 wasm-tools
 
 RUN curl https://get.volta.sh | bash
 ENV PATH="/home/vscode/.volta/bin:${PATH}"

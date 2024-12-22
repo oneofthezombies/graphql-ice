@@ -1,11 +1,14 @@
 [package]
-name = "graphql_ice"
+name = "graphql_ice_server_core"
 repository.workspace = true
 license.workspace = true
 edition.workspace = true
 authors.workspace = true
 
 [lib]
+crate-type = ["cdylib"]
 
 [dependencies]
+wasm-bindgen = "0.2.99"
 wasm-bindgen-futures = "0.4.49"
+web-sys = { version = "0.3.76", features = ["console"] }

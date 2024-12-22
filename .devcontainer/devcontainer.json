@@ -58,7 +58,8 @@
           "rustup",
           "tamasfe",
           "tlsv1",
-          "usernamehw"
+          "usernamehw",
+          "cdylib"
         ],
         "editor.rulers": [80],
         "typescript.inlayHints.enumMemberValues.enabled": true,
