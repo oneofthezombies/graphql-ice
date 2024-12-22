@@ -68,6 +68,9 @@ const wasmRenamed = path.resolve("src/generated/core.wasm");
 console.log(`Rename wasm... from: ${wasmSrc} to: ${wasmRenamed}`);
 fs.renameSync(wasmSrc, wasmRenamed);
 
+console.log(`Optimize wasm... path: ${wasmRenamed}`);
+run("wasm-opt", [wasmRenamed, "-o", wasmRenamed, "-O3"]);
+
 const wasmCopied = path.resolve("dist/generated/core.wasm");
 console.log(`Copy wasm... from: ${wasmRenamed} to: ${wasmCopied}"`);
 fs.copyFileSync(wasmRenamed, wasmCopied);
