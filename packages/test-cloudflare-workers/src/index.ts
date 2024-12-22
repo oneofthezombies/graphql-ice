@@ -11,10 +11,10 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { createIce } from '@graphql-ice/server/adapter/cloudflare-workers';
 import core from '@graphql-ice/server/core.wasm';
+import { createServer } from '@graphql-ice/server/adapter/cloudflare-workers';
 
-const ice = await createIce(core);
+const server = await createServer(core);
 export default {
 	async fetch(req, env, ctx) {
 		const obj = {
@@ -22,7 +22,7 @@ export default {
 			env,
 			ctx,
 		};
-		console.log(ice);
+		console.log(server);
 		// console.log(obj);
 		return new Response(JSON.stringify(obj));
 	},

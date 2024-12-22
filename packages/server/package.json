@@ -4,10 +4,6 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
     "./core.wasm": {
       "types": "./dist/core.wasm.d.ts",
       "import": "./dist/core.wasm"
@@ -15,15 +11,28 @@
     "./adapter/cloudflare-workers": {
       "types": "./dist/adapter/cloudflare-workers.d.ts",
       "import": "./dist/adapter/cloudflare-workers.js"
+    },
+    "./adapter/deno-deploy": {
+      "types": "./dist/adapter/deno-deploy.d.ts",
+      "import": "./dist/adapter/deno-deploy.js"
+    },
+    "./adapter/node": {
+      "types": "./dist/adapter/node.d.ts",
+      "import": "./dist/adapter/node.js"
+    },
+    "./adapter/vercel-functions-edge": {
+      "types": "./dist/adapter/vercel-functions-edge.d.ts",
+      "import": "./dist/adapter/vercel-functions-edge.js"
     }
   },
   "devDependencies": {
-    "vite-plugin-dts": "4.4.0",
-    "vite-plugin-wasm": "3.4.1"
+    "@rollup/plugin-typescript": "12.1.2",
+    "esbuild": "0.24.2",
+    "rollup": "4.29.1",
+    "rollup-plugin-esbuild": "6.1.1"
   },
   "scripts": {
-    "generate": "node scripts/generate.js",
-    "build": "npm run generate && vite build"
-  },
-  "sideEffects": false
+    "build:core": "node scripts/build-core.js",
+    "build": "npm run build:core && rollup --config rollup.config.js"
+  }
 }

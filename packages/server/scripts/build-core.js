@@ -14,21 +14,34 @@ function run(command, args, options) {
   }
 }
 
-const wasmDistDir = "src";
-// fs.rmSync(wasmDistDir, { recursive: true, force: true });
+const generatedDir = "src/generated";
+fs.rmSync(generatedDir, { recursive: true, force: true });
+
+const targetFeatures = [
+  "+atomics",
+  "+bulk-memory",
+  "+exception-handling",
+  "+extended-const",
+  "+multivalue",
+  "+mutable-globals",
+  "+nontrapping-fptoint",
+  "+reference-types",
+  "+relaxed-simd",
+  "+sign-ext",
+  "+simd128",
+];
 run("cargo", ["build", "--target", "wasm32-unknown-unknown", "--release"], {
   cwd: path.resolve(process.cwd(), "../../crates/server_core"),
   env: {
     ...process.env,
-    RUSTFLAGS:
-      "-C target-feature=+atomics,+bulk-memory,+exception-handling,+extended-const,+multivalue,+mutable-globals,+nontrapping-fptoint,+reference-types,+relaxed-simd,+sign-ext,+simd128",
+    RUSTFLAGS: "-C target-feature=" + targetFeatures.join(","),
   },
 });
 run("wasm-bindgen", [
   "--out-dir",
-  wasmDistDir,
+  generatedDir,
   "--out-name",
-  "generated",
+  "index",
   "--target",
   "web",
   path.resolve(
@@ -36,3 +49,8 @@ run("wasm-bindgen", [
     "../../target/wasm32-unknown-unknown/release/graphql_ice_server_core.wasm"
   ),
 ]);
+
+fs.rmSync("dist", { recursive: true, force: true });
+fs.mkdirSync("dist", { recursive: true });
+fs.copyFileSync("src/generated/index_bg.wasm", "dist/core.wasm");
+fs.writeFileSync("dist/core.wasm.d.ts", "export {};");

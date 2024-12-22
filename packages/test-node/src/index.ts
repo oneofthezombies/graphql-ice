@@ -1,3 +1,4 @@
-import * as m from "@graphql-ice/wasm";
+import { createServer } from "@graphql-ice/server/adapter/node";
 
-console.log(m);
+const server = await createServer();
+console.log(server);
