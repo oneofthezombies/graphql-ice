@@ -52,14 +52,15 @@
           "editor.formatOnSave": true
         },
         "cSpell.words": [
+          "binaryen",
           "bindgen",
+          "cdylib",
           "devcontainers",
           "errorlens",
           "rustup",
           "tamasfe",
           "tlsv1",
-          "usernamehw",
-          "cdylib"
+          "usernamehw"
         ],
         "editor.rulers": [80],
         "typescript.inlayHints.enumMemberValues.enabled": true,

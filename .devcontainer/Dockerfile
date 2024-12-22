@@ -25,6 +25,17 @@ RUN rustup target add wasm32-unknown-unknown
 RUN cargo install --version 0.2.99 wasm-bindgen-cli
 RUN cargo install --version 1.222.0 wasm-tools
 
+RUN ARCH=$(uname -m) && \
+    if [ "${ARCH}" != "x86_64" ] && [ "${ARCH}" != "aarch64" ]; then \
+        echo "Unsupported architecture: ${ARCH}" && exit 1; \
+    fi && \
+    BINARYEN_URL="https://github.com/WebAssembly/binaryen/releases/download/version_121/binaryen-version_121-${ARCH}-linux.tar.gz" && \
+    curl -L $BINARYEN_URL -o binaryen.tar.gz && \
+    tar -xzf binaryen.tar.gz && \
+    rm binaryen.tar.gz && \
+    mv binaryen-version_121 /home/vscode/binaryen
+ENV PATH="/home/vscode/binaryen/bin:${PATH}"
+
 RUN curl https://get.volta.sh | bash
 ENV PATH="/home/vscode/.volta/bin:${PATH}"
 RUN volta install node@22.12.0
@@ -34,6 +45,7 @@ RUN volta install sort-package-json@2.12.0
 RUN volta install typescript@5.7.2
 RUN volta install tsx@4.19.2
 RUN volta install vite@6.0.4
+RUN volta install vitest@2.1.8
 RUN volta install create-cloudflare@2.35.1
 
 RUN unset DEBIAN_FRONTEND
