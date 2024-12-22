@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/server_core"]
+members = ["crates/core"]
 
 [workspace.package]
 repository = "https://github.com/oneofthezombies/graphql-ice"

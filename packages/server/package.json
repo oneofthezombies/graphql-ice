@@ -32,7 +32,7 @@
     "rollup-plugin-esbuild": "6.1.1"
   },
   "scripts": {
-    "build:core": "node scripts/build-core.js",
+    "build:core": "tsx scripts/build-core.ts",
     "build": "npm run build:core && rollup --config rollup.config.js"
   }
 }

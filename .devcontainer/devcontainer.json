@@ -60,7 +60,11 @@
           "rustup",
           "tamasfe",
           "tlsv1",
-          "usernamehw"
+          "usernamehw",
+          "multivalue",
+          "nontrapping",
+          "fptoint",
+          "rustflags"
         ],
         "editor.rulers": [80],
         "typescript.inlayHints.enumMemberValues.enabled": true,
