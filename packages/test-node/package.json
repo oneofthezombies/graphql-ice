@@ -1,10 +1,12 @@
 {
   "type": "module",
   "name": "test-node",
-  "dependencies": {
-    "@graphql-ice/engine": "*"
-  },
   "scripts": {
-    "dev": "tsx src/index.ts"
+    "dev": "tsx src/index.ts",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "2.1.8",
+    "@graphql-ice/engine": "*"
   }
 }
