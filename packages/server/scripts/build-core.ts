@@ -2,15 +2,26 @@ import { spawnSync, SpawnSyncOptions } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-function run(command: string, args?: string[], options?: SpawnSyncOptions) {
+function runSync(command: string, args?: string[], options?: SpawnSyncOptions) {
   args ??= [];
   options ??= {};
   if (!options.stdio) {
     options.stdio = "inherit";
   }
   const result = spawnSync(command, args, options);
-  if (result.status !== 0) {
-    throw new Error(command + args.join(" ") + " failed.");
+  const { error, status, stderr } = result;
+  if (error) {
+    const commandLine = command + args.join(" ");
+    throw new Error(`${commandLine} failed. error: ${error}`);
+  }
+
+  if (status !== 0) {
+    const commandLine = command + args.join(" ");
+    const stderrString = stderr.toString().trim();
+    throw new Error(
+      `${commandLine} failed. status: ${status}` +
+        (stderrString.length > 0 ? ` stderr: ${stderrString}` : "")
+    );
   }
 }
 
@@ -33,27 +44,28 @@ const targetFeatures = [
   "+sign-ext",
   "+simd128",
 ];
-run("cargo", ["build", "--target", "wasm32-unknown-unknown", "--release"], {
-  cwd: coreCrateDir,
-  env: {
-    ...process.env,
-    RUSTFLAGS: "-Ctarget-feature=" + targetFeatures.join(","),
-  },
-});
-
-console.log(`Generate bindings... path: ${srcGeneratedDir}`);
-run("wasm-bindgen", [
-  "--out-dir",
-  srcGeneratedDir,
-  "--out-name",
-  "bindings",
-  "--target",
-  "web",
-  path.resolve(
-    process.cwd(),
-    "../../target/wasm32-unknown-unknown/release/graphql_ice_core.wasm"
-  ),
-]);
+runSync(
+  "wasm-pack",
+  [
+    "build",
+    "--release",
+    "--out-dir",
+    srcGeneratedDir,
+    "--out-name",
+    "bindings",
+    "--target",
+    "web",
+    "--mode",
+    "no-install",
+  ],
+  {
+    cwd: coreCrateDir,
+    env: {
+      ...process.env,
+      RUSTFLAGS: "-Ctarget-feature=" + targetFeatures.join(","),
+    },
+  }
+);
 
 const distDir = path.resolve("dist");
 console.log(`Remove dist... path: ${distDir}`);
@@ -69,7 +81,7 @@ console.log(`Rename wasm... from: ${wasmSrc} to: ${wasmRenamed}`);
 fs.renameSync(wasmSrc, wasmRenamed);
 
 console.log(`Optimize wasm... path: ${wasmRenamed}`);
-run("wasm-opt", [wasmRenamed, "-o", wasmRenamed, "-O3"]);
+runSync("wasm-opt", [wasmRenamed, "-o", wasmRenamed, "-O3"]);
 
 const wasmCopied = path.resolve("dist/generated/core.wasm");
 console.log(`Copy wasm... from: ${wasmRenamed} to: ${wasmCopied}"`);
