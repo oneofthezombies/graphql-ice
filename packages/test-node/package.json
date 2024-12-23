@@ -5,7 +5,6 @@
     "test": "vitest --run"
   },
   "devDependencies": {
-    "@graphql-ice/engine": "*",
-    "vitest": "2.1.8"
+    "@graphql-ice/engine": "*"
   }
 }

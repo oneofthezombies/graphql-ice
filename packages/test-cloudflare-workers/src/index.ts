@@ -11,7 +11,7 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { createEngine } from '@graphql-ice/engine/adapter/cloudflare-workers';
+import { createEngine } from '@graphql-ice/engine/adapter/cloudflare-workers.js';
 import core from '@graphql-ice/engine/core.wasm';
 
 const engine = createEngine(core);

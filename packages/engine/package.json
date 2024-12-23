@@ -1,9 +1,12 @@
 {
   "name": "@graphql-ice/engine",
-  "version": "0.1.0",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "oneofthezombies <hunhoekim@gmail.com>",
+  "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": {
+    "./index.js": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
@@ -11,26 +14,31 @@
       "types": "./dist/core.wasm.d.ts",
       "import": "./dist/core.wasm"
     },
-    "./adapter/cloudflare-workers": {
+    "./adapter/cloudflare-workers.js": {
       "types": "./dist/adapter/cloudflare-workers.d.ts",
       "import": "./dist/adapter/cloudflare-workers.js"
     },
-    "./adapter/deno-deploy": {
+    "./adapter/deno-deploy.js": {
       "types": "./dist/adapter/deno-deploy.d.ts",
       "import": "./dist/adapter/deno-deploy.js"
     },
-    "./adapter/node": {
+    "./adapter/node.js": {
       "types": "./dist/adapter/node.d.ts",
       "import": "./dist/adapter/node.js"
     },
-    "./adapter/vercel-functions-edge": {
+    "./adapter/vercel-functions-edge.js": {
       "types": "./dist/adapter/vercel-functions-edge.d.ts",
       "import": "./dist/adapter/vercel-functions-edge.js"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build:core": "tsx scripts/build-core.ts",
-    "build": "vite build"
+    "build": "vite build",
+    "build:core": "tsx scripts/build-core.ts"
   },
-  "sideEffects": false
+  "publishConfig": {
+    "access": "public"
+  }
 }

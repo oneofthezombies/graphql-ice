@@ -1,5 +1,5 @@
 import { test, expect } from "vitest";
-import { createEngine } from "@graphql-ice/engine/adapter/node";
+import { createEngine } from "@graphql-ice/engine/adapter/node.js";
 
 test("ping", async () => {
   const engine = await createEngine();

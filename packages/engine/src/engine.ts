@@ -1,4 +1,4 @@
-import { initSync } from "./core-bindings";
+import { initSync } from "./core-bindings.js";
 
 export class Engine {
   ping: () => Promise<string>;
