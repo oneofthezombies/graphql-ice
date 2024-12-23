@@ -2,7 +2,7 @@
   "type": "module",
   "name": "test-node",
   "scripts": {
-    "test": "vitest --run"
+    "test": "vitest --run -c vitest.config.ts"
   },
   "devDependencies": {
     "@graphql-ice/engine": "*",
