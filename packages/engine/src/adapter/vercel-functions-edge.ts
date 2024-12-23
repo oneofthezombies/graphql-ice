@@ -1,6 +1,7 @@
 import { Engine } from "../engine";
 
-export async function createEngine(): Promise<Engine> {
+export function createEngine(core: WebAssembly.Module): Engine {
   console.log("Vercel Functions Edge engine");
-  return await Engine.create();
+  console.log(core);
+  return new Engine(core);
 }

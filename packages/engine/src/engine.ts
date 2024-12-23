@@ -1,20 +1,12 @@
-import init, { type InitOutput } from "./generated/core-bindings";
+import { initSync } from "./core-bindings";
 
 export class Engine {
   ping: () => Promise<string>;
 
-  private constructor(initOutput: InitOutput) {
+  constructor(core: WebAssembly.Module) {
+    const initOutput = initSync({
+      module: core,
+    });
     this.ping = initOutput.ping;
-  }
-
-  static async create(coreModule?: WebAssembly.Module): Promise<Engine> {
-    const initOutput = await init(
-      coreModule
-        ? {
-            module_or_path: coreModule,
-          }
-        : undefined
-    );
-    return new Engine(initOutput);
   }
 }

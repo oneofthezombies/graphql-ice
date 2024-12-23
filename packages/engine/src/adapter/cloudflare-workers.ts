@@ -1,8 +1,6 @@
 import { Engine } from "../engine";
 
-export async function createEngine(
-  coreModule: WebAssembly.Module
-): Promise<Engine> {
+export function createEngine(core: WebAssembly.Module): Engine {
   console.log("Cloudflare Workers engine");
-  return await Engine.create(coreModule);
+  return new Engine(core);
 }

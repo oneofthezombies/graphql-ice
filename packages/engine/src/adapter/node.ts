@@ -7,9 +7,9 @@ export async function createEngine() {
   console.log("Node.js engine");
   const corePath = path.resolve(
     path.dirname(fileURLToPath(import.meta.url)),
-    "../generated/core.wasm"
+    "../core.wasm"
   );
-  const coreSource = await fs.promises.readFile(corePath);
-  const coreModule = await WebAssembly.compile(coreSource);
-  return await Engine.create(coreModule);
+  const source = await fs.promises.readFile(corePath);
+  const core = await WebAssembly.compile(source);
+  return new Engine(core);
 }

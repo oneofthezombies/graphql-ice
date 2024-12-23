@@ -1,11 +1,14 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "emitDeclarationOnly": true,
-    "noEmit": false,
-    "declarationDir": "api",
-    "rootDir": "src"
+    "outDir": "dist",
+    "rootDir": "api",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "module": "esnext",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true
   },
-  "exclude": ["node_modules", "api", ".vercel"],
-  "include": ["src"]
+  "exclude": ["node_modules", "dist", ".vercel"],
+  "include": ["api"]
 }

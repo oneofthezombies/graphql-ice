@@ -9,6 +9,10 @@
     "@rollup/plugin-url": "8.0.2",
     "rollup-plugin-copy": "3.5.0",
     "rollup-plugin-delete": "2.1.0",
-    "rollup-plugin-esbuild": "6.1.1"
+    "rollup-plugin-esbuild": "6.1.1",
+    "vite-plugin-dts": "4.4.0",
+    "vite-plugin-top-level-await": "1.4.4",
+    "vite-plugin-typescript": "1.0.4",
+    "vite-plugin-wasm": "3.4.1"
   }
 }

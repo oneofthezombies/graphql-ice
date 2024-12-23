@@ -14,7 +14,8 @@
 import { createEngine } from '@graphql-ice/engine/adapter/cloudflare-workers';
 import core from '@graphql-ice/engine/core.wasm';
 
-const engine = await createEngine(core);
+const engine = createEngine(core);
+
 export default {
 	async fetch(req, env, ctx) {
 		return new Response(await engine.ping());

@@ -8,8 +8,8 @@
       "import": "./dist/index.js"
     },
     "./core.wasm": {
-      "types": "./dist/generated/core.wasm.d.ts",
-      "import": "./dist/generated/core.wasm"
+      "types": "./dist/core.wasm.d.ts",
+      "import": "./dist/core.wasm"
     },
     "./adapter/cloudflare-workers": {
       "types": "./dist/adapter/cloudflare-workers.d.ts",
@@ -31,5 +31,6 @@
   "scripts": {
     "build:core": "tsx scripts/build-core.ts",
     "build": "vite build"
-  }
+  },
+  "sideEffects": false
 }

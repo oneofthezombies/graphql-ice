@@ -116,7 +116,24 @@ function postBuild(outFullDirPath: string, outName: string) {
     run("wasm-opt", [wasmSrcRelFilePath, "-o", wasmDstRelFilePath, "-O3"]);
     fs.rmSync(wasmSrcRelFilePath);
 
-    fs.writeFileSync(`${outName}.wasm.d.ts`, "export {};");
+    fs.writeFileSync(
+      `${outName}.wasm.d.ts`,
+      `export default {};
+export {};`
+    );
+  } finally {
+    process.chdir(currentFullDirPath);
+  }
+}
+
+function deleteBuild(buildFullDirPath: string, wasmName: string) {
+  const currentFullDirPath = process.cwd();
+  try {
+    process.chdir(buildFullDirPath);
+    fs.rmSync(`${wasmName}.wasm`, { force: true });
+    fs.rmSync(`${wasmName}.wasm.d.ts`, { force: true });
+    fs.rmSync(`${wasmName}-bindings.js`, { force: true });
+    fs.rmSync(`${wasmName}-bindings.d.ts`, { force: true });
   } finally {
     process.chdir(currentFullDirPath);
   }
@@ -131,7 +148,7 @@ function copyBuild(srcFullDirPath: string, dstFullDirPath: string) {
 }
 
 const wasmName = "core";
-const srcGeneratedFullDirPath = path.resolve("src/generated");
-rm(srcGeneratedFullDirPath);
-build(srcGeneratedFullDirPath, wasmName);
-postBuild(srcGeneratedFullDirPath, wasmName);
+const srcFullDirPath = path.resolve("src");
+deleteBuild(srcFullDirPath, wasmName);
+build(srcFullDirPath, wasmName);
+postBuild(srcFullDirPath, wasmName);

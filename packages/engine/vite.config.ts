@@ -1,16 +1,35 @@
 import { defineConfig } from "vite";
-import typescript from "@rollup/plugin-typescript";
 import deletePlugin from "rollup-plugin-delete";
-import esbuild from "rollup-plugin-esbuild";
+import wasm from "vite-plugin-wasm";
+import topLevelAwait from "vite-plugin-top-level-await";
+import typescript from "vite-plugin-typescript";
 import copy from "rollup-plugin-copy";
-import url from "@rollup/plugin-url";
 
 export default defineConfig({
+  plugins: [
+    wasm(),
+    topLevelAwait(),
+    typescript({
+      tsconfig: "tsconfig.json",
+    }),
+  ],
   build: {
-    assetsDir: "",
+    target: "esnext",
     sourcemap: true,
-    minify: false,
+    minify: true,
     rollupOptions: {
+      plugins: [
+        deletePlugin({ targets: "dist/*", runOnce: true }),
+        copy({
+          targets: [
+            {
+              src: "src/core.wasm.d.ts",
+              dest: "dist",
+            },
+          ],
+          hook: "writeBundle",
+        }),
+      ],
       preserveEntrySignatures: "exports-only",
       input: [
         "./src/index.ts",
@@ -20,34 +39,15 @@ export default defineConfig({
         "./src/adapter/vercel-functions-edge.ts",
       ],
       output: {
+        preserveModules: true,
+        preserveModulesRoot: "src",
         dir: "dist",
-        format: "esm",
-        // preserveModules: true,
-        // preserveModulesRoot: "src",
+        format: "es",
         entryFileNames: "[name].js",
-        chunkFileNames: "[name].js",
+        chunkFileNames: "[name]-[hash].js",
         assetFileNames: "[name][extname]",
       },
-      plugins: [
-        deletePlugin({ targets: "dist/*", runOnce: true }),
-        url({
-          include: "**/*.wasm",
-          limit: 0,
-          // fileName: "[dirname][name][extname]",
-        }),
-        esbuild(),
-        typescript(),
-        // copy({
-        //   targets: [
-        //     {
-        //       src: "src/generated/*.d.ts",
-        //       dest: "dist/generated",
-        //     },
-        //   ],
-        //   hook: "writeBundle",
-        // }),
-      ],
-      external: ["node:fs", "node:path", "node:url"],
+      external: ["node:fs", "node:path", "node:url", "wbg"],
     },
   },
 });
