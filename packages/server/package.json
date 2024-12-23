@@ -2,8 +2,11 @@
   "name": "@graphql-ice/server",
   "version": "0.1.0",
   "type": "module",
-  "types": "./dist/index.d.ts",
   "exports": {
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
     "./adapter/cloudflare-workers": {
       "types": "./dist/adapter/cloudflare-workers.d.ts",
       "import": "./dist/adapter/cloudflare-workers.js"
@@ -22,12 +25,16 @@
     }
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "16.0.0",
     "@rollup/plugin-typescript": "12.1.2",
+    "@rollup/plugin-url": "8.0.2",
     "esbuild": "0.24.2",
     "rollup": "4.29.1",
+    "rollup-plugin-delete": "2.1.0",
     "rollup-plugin-esbuild": "6.1.1"
   },
   "scripts": {
+    "build:core": "tsx scripts/build-core.ts",
     "build": "rollup -c"
   },
   "dev-dependencies": {

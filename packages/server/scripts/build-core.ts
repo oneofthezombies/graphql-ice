@@ -34,10 +34,10 @@ function run(command: string, args?: string[], options?: SpawnSyncOptions) {
 
   if (status !== 0) {
     const commandLine = command + args.join(" ");
-    const stderrString = stderr.toString().trim();
+    const stderrString = stderr?.toString().trim();
     throw new Error(
       `${commandLine} failed. status: ${status}` +
-        (stderrString.length > 0 ? ` stderr: ${stderrString}` : "")
+        (stderrString ? ` stderr: ${stderrString}` : "")
     );
   }
 }
@@ -49,7 +49,7 @@ function rm(path: string) {
 
 function build(outFullDirPath: string, outName: string) {
   const coreCrateFullDirPath = path.resolve(process.cwd(), "../../crates/core");
-  console.log(`Build core... path: ${coreCrateFullDirPath}`);
+  console.log(`Build... path: ${coreCrateFullDirPath}`);
   const targetFeatures = [
     "+atomics",
     "+bulk-memory",
@@ -76,6 +76,8 @@ function build(outFullDirPath: string, outName: string) {
       "web",
       "--mode",
       "no-install",
+      "--no-pack",
+      "--no-opt",
     ],
     {
       cwd: coreCrateFullDirPath,
@@ -93,7 +95,6 @@ function postBuild(outFullDirPath: string, outName: string) {
   try {
     process.chdir(outFullDirPath);
     fs.rmSync(".gitignore");
-    fs.rmSync("package.json");
     fs.renameSync(`${outName}.js`, `bindings.js`);
     fs.renameSync(`${outName}.d.ts`, `bindings.d.ts`);
     const wasmSrc = `${outName}_bg.wasm`;
@@ -106,8 +107,16 @@ function postBuild(outFullDirPath: string, outName: string) {
   }
 }
 
+function copyBuild(srcFullDirPath: string, dstFullDirPath: string) {
+  console.log(`Copy build... from: ${srcFullDirPath} to: ${dstFullDirPath}`);
+  fs.cpSync(srcFullDirPath, dstFullDirPath, {
+    recursive: true,
+    force: true,
+  });
+}
+
 const wasmName = "core";
-const distFullDirPath = path.resolve("dist");
-rm(distFullDirPath);
-build(distFullDirPath, wasmName);
-postBuild(distFullDirPath, wasmName);
+const srcGeneratedFullDirPath = path.resolve("src/generated");
+rm(srcGeneratedFullDirPath);
+build(srcGeneratedFullDirPath, wasmName);
+postBuild(srcGeneratedFullDirPath, wasmName);
