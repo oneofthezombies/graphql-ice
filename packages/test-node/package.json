@@ -2,8 +2,7 @@
   "type": "module",
   "name": "test-node",
   "scripts": {
-    "dev": "tsx src/index.ts",
-    "test": "vitest"
+    "test": "vitest --run"
   },
   "devDependencies": {
     "vitest": "2.1.8",
