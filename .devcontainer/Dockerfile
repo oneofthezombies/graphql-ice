@@ -49,3 +49,5 @@ RUN volta install create-cloudflare@2.35.1
 RUN volta install wasm-pack@0.13.1
 
 RUN unset DEBIAN_FRONTEND
+
+RUN echo "alias ll='ls -alF'" >> /home/vscode/.bashrc

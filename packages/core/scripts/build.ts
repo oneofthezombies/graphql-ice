@@ -94,8 +94,8 @@ function postBuild(outFullDirPath: string, outName: string) {
     process.chdir(outFullDirPath);
     fs.rmSync(".gitignore");
     fs.rmSync("package.json");
-    fs.renameSync(`${outName}.js`, `${outName}-bindings.js`);
-    fs.renameSync(`${outName}.d.ts`, `${outName}-bindings.d.ts`);
+    fs.renameSync(`${outName}.js`, `bindings.js`);
+    fs.renameSync(`${outName}.d.ts`, `bindings.d.ts`);
     const wasmSrc = `${outName}_bg.wasm`;
     run("wasm-opt", [wasmSrc, "-o", `${outName}.wasm`, "-O3"]);
     fs.rmSync(wasmSrc);
@@ -106,20 +106,8 @@ function postBuild(outFullDirPath: string, outName: string) {
   }
 }
 
-function copyBuild(srcFullDirPath: string, dstFullDirPath: string) {
-  console.log(`Copy build from: ${srcFullDirPath} to: ${dstFullDirPath}`);
-  fs.cpSync(srcFullDirPath, dstFullDirPath, {
-    recursive: true,
-    force: true,
-  });
-}
-
-const srcGeneratedFullDirPath = path.resolve("src/generated");
 const wasmName = "core";
 const distFullDirPath = path.resolve("dist");
-const dstGeneratedFullDirPath = path.resolve(distFullDirPath, "generated");
-rm(srcGeneratedFullDirPath);
-build(srcGeneratedFullDirPath, wasmName);
-postBuild(srcGeneratedFullDirPath, wasmName);
 rm(distFullDirPath);
-copyBuild(srcGeneratedFullDirPath, dstGeneratedFullDirPath);
+build(distFullDirPath, wasmName);
+postBuild(distFullDirPath, wasmName);

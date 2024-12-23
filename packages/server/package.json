@@ -4,10 +4,6 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
-    "./core.wasm": {
-      "types": "./dist/generated/core.wasm.d.ts",
-      "import": "./dist/generated/core.wasm"
-    },
     "./adapter/cloudflare-workers": {
       "types": "./dist/adapter/cloudflare-workers.d.ts",
       "import": "./dist/adapter/cloudflare-workers.js"
@@ -32,7 +28,9 @@
     "rollup-plugin-esbuild": "6.1.1"
   },
   "scripts": {
-    "build:core": "tsx scripts/build-core.ts",
-    "build": "npm run build:core && rollup --config rollup.config.js"
+    "build": "rollup -c"
+  },
+  "dev-dependencies": {
+    "@graphql-ice/core": "*"
   }
 }

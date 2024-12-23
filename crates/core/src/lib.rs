@@ -11,7 +11,7 @@ pub async fn hello() -> Result<JsValue, JsValue> {
 }
 
 #[wasm_bindgen(start)]
-fn main() {
+fn start() {
     set_hook(Box::new(hook));
     log_1(&"Core started".into());
 }

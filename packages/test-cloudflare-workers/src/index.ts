@@ -11,10 +11,9 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import core from '@graphql-ice/server/core.wasm';
-import { createServer } from '@graphql-ice/server/adapter/cloudflare-workers';
+import { wasm, createServer } from '@graphql-ice/server/adapter/cloudflare-workers';
 
-const server = await createServer(core);
+const server = await createServer(wasm);
 export default {
 	async fetch(req, env, ctx) {
 		const obj = {

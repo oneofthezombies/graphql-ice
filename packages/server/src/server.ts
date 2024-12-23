@@ -1,4 +1,4 @@
-import init from "./generated/core-bindings";
+import init from "@graphql-ice/core/bindings";
 
 export class Server {
   static async create(coreModule: WebAssembly.Module): Promise<Server> {
