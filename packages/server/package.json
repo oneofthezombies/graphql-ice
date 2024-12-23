@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    "./server": {
-      "types": "./dist/server.d.ts",
-      "import": "./dist/server.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./core.wasm": {
+      "types": "./dist/generated/core.wasm.d.ts",
+      "import": "./dist/generated/core.wasm"
     },
     "./adapter/cloudflare-workers": {
       "types": "./dist/adapter/cloudflare-workers.d.ts",
@@ -29,15 +33,13 @@
     "@rollup/plugin-typescript": "12.1.2",
     "@rollup/plugin-url": "8.0.2",
     "esbuild": "0.24.2",
-    "rollup": "4.29.1",
+    "rollup-plugin-copy": "3.5.0",
     "rollup-plugin-delete": "2.1.0",
-    "rollup-plugin-esbuild": "6.1.1"
+    "rollup-plugin-esbuild": "6.1.1",
+    "vite": "6.0.5"
   },
   "scripts": {
     "build:core": "tsx scripts/build-core.ts",
-    "build": "rollup -c"
-  },
-  "dev-dependencies": {
-    "@graphql-ice/core": "*"
+    "build": "vite build"
   }
 }

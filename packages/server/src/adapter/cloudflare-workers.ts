@@ -1,6 +1,4 @@
 import { Server } from "../server";
-import core from "@graphql-ice/core/core";
-export { core };
 
 export async function createServer(
   coreModule: WebAssembly.Module

@@ -95,12 +95,27 @@ function postBuild(outFullDirPath: string, outName: string) {
   try {
     process.chdir(outFullDirPath);
     fs.rmSync(".gitignore");
-    fs.renameSync(`${outName}.js`, `bindings.js`);
-    fs.renameSync(`${outName}.d.ts`, `bindings.d.ts`);
-    const wasmSrc = `${outName}_bg.wasm`;
-    run("wasm-opt", [wasmSrc, "-o", `${outName}.wasm`, "-O3"]);
-    fs.rmSync(wasmSrc);
     fs.rmSync(`${outName}_bg.wasm.d.ts`);
+
+    const jsSrcRelFilePath = `${outName}.js`;
+    const jsSrcContent = fs.readFileSync(jsSrcRelFilePath, {
+      encoding: "utf8",
+    });
+    fs.rmSync(jsSrcRelFilePath);
+
+    const wasmSrcRelFilePath = `${outName}_bg.wasm`;
+    const wasmDstRelFilePath = `${outName}.wasm`;
+    const jsDstContent = jsSrcContent.replaceAll(
+      wasmSrcRelFilePath,
+      wasmDstRelFilePath
+    );
+    fs.writeFileSync(`${outName}-bindings.js`, jsDstContent);
+
+    fs.renameSync(`${outName}.d.ts`, `${outName}-bindings.d.ts`);
+
+    run("wasm-opt", [wasmSrcRelFilePath, "-o", wasmDstRelFilePath, "-O3"]);
+    fs.rmSync(wasmSrcRelFilePath);
+
     fs.writeFileSync(`${outName}.wasm.d.ts`, "export {};");
   } finally {
     process.chdir(currentFullDirPath);

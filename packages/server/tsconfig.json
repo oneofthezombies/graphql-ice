@@ -3,9 +3,9 @@
   "compilerOptions": {
     "emitDeclarationOnly": true,
     "noEmit": false,
-    "declarationDir": "./dist",
-    "rootDir": "./src"
+    "declarationDir": "dist",
+    "rootDir": "src"
   },
-  "exclude": ["node_modules", "dist", "generated"],
+  "exclude": ["node_modules", "dist"],
   "include": ["src"]
 }
