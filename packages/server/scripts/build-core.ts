@@ -2,7 +2,24 @@ import { spawnSync, SpawnSyncOptions } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-function runSync(command: string, args?: string[], options?: SpawnSyncOptions) {
+/**
+ * Path Naming Rules
+ *
+ * relative | full | relOrFull
+ * file | directory | fileOrDir
+ *
+ * relative file -> relFilePath
+ * relative directory -> relDirPath
+ * relative fileOrDir -> relPath
+ * full file -> fullFilePath
+ * full directory -> fullDirPath
+ * full fileOrDir -> fullPath
+ * relOrFull file -> filePath
+ * relOrFull directory -> dirPath
+ * relOrFull fileOrDir -> path
+ */
+
+function run(command: string, args?: string[], options?: SpawnSyncOptions) {
   args ??= [];
   options ??= {};
   if (!options.stdio) {
@@ -25,72 +42,84 @@ function runSync(command: string, args?: string[], options?: SpawnSyncOptions) {
   }
 }
 
-const srcGeneratedDir = path.resolve("src/generated");
-console.log(`Remove generated directory... path: ${srcGeneratedDir}`);
-fs.rmSync(srcGeneratedDir, { recursive: true, force: true });
+function rm(path: string) {
+  console.log(`Delete... path: ${path}`);
+  fs.rmSync(path, { recursive: true, force: true });
+}
 
-const coreCrateDir = path.resolve(process.cwd(), "../../crates/core");
-console.log(`Build core... path: ${coreCrateDir}`);
-const targetFeatures = [
-  "+atomics",
-  "+bulk-memory",
-  "+exception-handling",
-  "+extended-const",
-  "+multivalue",
-  "+mutable-globals",
-  "+nontrapping-fptoint",
-  "+reference-types",
-  "+relaxed-simd",
-  "+sign-ext",
-  "+simd128",
-];
-runSync(
-  "wasm-pack",
-  [
-    "build",
-    "--release",
-    "--out-dir",
-    srcGeneratedDir,
-    "--out-name",
-    "bindings",
-    "--target",
-    "web",
-    "--mode",
-    "no-install",
-  ],
-  {
-    cwd: coreCrateDir,
-    env: {
-      ...process.env,
-      RUSTFLAGS: "-Ctarget-feature=" + targetFeatures.join(","),
-    },
+function build(outFullDirPath: string, outName: string) {
+  const coreCrateFullDirPath = path.resolve(process.cwd(), "../../crates/core");
+  console.log(`Build core... path: ${coreCrateFullDirPath}`);
+  const targetFeatures = [
+    "+atomics",
+    "+bulk-memory",
+    "+exception-handling",
+    "+extended-const",
+    "+multivalue",
+    "+mutable-globals",
+    "+nontrapping-fptoint",
+    "+reference-types",
+    "+relaxed-simd",
+    "+sign-ext",
+    "+simd128",
+  ];
+  run(
+    "wasm-pack",
+    [
+      "build",
+      "--release",
+      "--out-dir",
+      outFullDirPath,
+      "--out-name",
+      outName,
+      "--target",
+      "web",
+      "--mode",
+      "no-install",
+    ],
+    {
+      cwd: coreCrateFullDirPath,
+      env: {
+        ...process.env,
+        RUSTFLAGS: "-Ctarget-feature=" + targetFeatures.join(","),
+      },
+    }
+  );
+}
+
+function postBuild(outFullDirPath: string, outName: string) {
+  console.log(`Post build core... path: ${outFullDirPath}`);
+  const currentFullDirPath = process.cwd();
+  try {
+    process.chdir(outFullDirPath);
+    fs.rmSync(".gitignore");
+    fs.rmSync("package.json");
+    fs.renameSync(`${outName}.js`, `${outName}-bindings.js`);
+    fs.renameSync(`${outName}.d.ts`, `${outName}-bindings.d.ts`);
+    const wasmSrc = `${outName}_bg.wasm`;
+    run("wasm-opt", [wasmSrc, "-o", `${outName}.wasm`, "-O3"]);
+    fs.rmSync(wasmSrc);
+    fs.rmSync(`${outName}_bg.wasm.d.ts`);
+    fs.writeFileSync(`${outName}.wasm.d.ts`, "export {};");
+  } finally {
+    process.chdir(currentFullDirPath);
   }
-);
+}
 
-const distDir = path.resolve("dist");
-console.log(`Remove dist... path: ${distDir}`);
-fs.rmSync(distDir, { recursive: true, force: true });
+function copyBuild(srcFullDirPath: string, dstFullDirPath: string) {
+  console.log(`Copy build from: ${srcFullDirPath} to: ${dstFullDirPath}`);
+  fs.cpSync(srcFullDirPath, dstFullDirPath, {
+    recursive: true,
+    force: true,
+  });
+}
 
-const distGeneratedDir = path.resolve(distDir, "generated");
-console.log(`Create dist generated... path: ${distGeneratedDir}`);
-fs.mkdirSync(distGeneratedDir, { recursive: true });
-
-const wasmSrc = path.resolve("src/generated/bindings_bg.wasm");
-const wasmRenamed = path.resolve("src/generated/core.wasm");
-console.log(`Rename wasm... from: ${wasmSrc} to: ${wasmRenamed}`);
-fs.renameSync(wasmSrc, wasmRenamed);
-
-console.log(`Optimize wasm... path: ${wasmRenamed}`);
-runSync("wasm-opt", [wasmRenamed, "-o", wasmRenamed, "-O3"]);
-
-const wasmCopied = path.resolve("dist/generated/core.wasm");
-console.log(`Copy wasm... from: ${wasmRenamed} to: ${wasmCopied}"`);
-fs.copyFileSync(wasmRenamed, wasmCopied);
-
-const wasmDtsSrc = path.resolve("src/generated/core.wasm.d.ts");
-console.log(`Generate d.ts... path: ${wasmDtsSrc}`);
-fs.writeFileSync(wasmDtsSrc, "export {};");
-
-const wasmDtsCopied = path.resolve("dist/generated/core.wasm.d.ts");
-console.log(`Copy d.ts... from: ${wasmDtsSrc} to: ${wasmDtsCopied}`);
-fs.copyFileSync(wasmDtsSrc, wasmDtsCopied);
+const srcGeneratedFullDirPath = path.resolve("src/generated");
+const wasmName = "core";
+const distFullDirPath = path.resolve("dist");
+const dstGeneratedFullDirPath = path.resolve(distFullDirPath, "generated");
+rm(srcGeneratedFullDirPath);
+build(srcGeneratedFullDirPath, wasmName);
+postBuild(srcGeneratedFullDirPath, wasmName);
+rm(distFullDirPath);
+copyBuild(srcGeneratedFullDirPath, dstGeneratedFullDirPath);
