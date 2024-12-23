@@ -3,12 +3,15 @@ import typescript from "@rollup/plugin-typescript";
 import deletePlugin from "rollup-plugin-delete";
 import esbuild from "rollup-plugin-esbuild";
 import copy from "rollup-plugin-copy";
+import wasm from "vite-plugin-wasm";
 
 export default defineConfig({
+  // plugins: [wasm()],
   build: {
     assetsDir: "",
     sourcemap: true,
     minify: false,
+    // target: "esnext",
     rollupOptions: {
       preserveEntrySignatures: "strict",
       input: [

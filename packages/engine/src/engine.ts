@@ -7,10 +7,14 @@ export class Engine {
     this.ping = initOutput.ping;
   }
 
-  static async create(coreModule: WebAssembly.Module): Promise<Engine> {
-    const initOutput = await init({
-      module_or_path: coreModule,
-    });
+  static async create(coreModule?: WebAssembly.Module): Promise<Engine> {
+    const initOutput = await init(
+      coreModule
+        ? {
+            module_or_path: coreModule,
+          }
+        : undefined
+    );
     return new Engine(initOutput);
   }
 }

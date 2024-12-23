@@ -165,3 +165,4 @@ dist
 
 build/
 generated/
+.vercel
