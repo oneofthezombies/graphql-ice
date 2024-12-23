@@ -17,6 +17,6 @@ import core from '@graphql-ice/engine/core.wasm';
 const engine = await createEngine(core);
 export default {
 	async fetch(req, env, ctx) {
-		return new Response(await engine.hello());
+		return new Response(await engine.ping());
 	},
 } as ExportedHandler<Env>;

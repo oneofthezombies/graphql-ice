@@ -1,10 +1,10 @@
 import init, { type InitOutput } from "./generated/core-bindings";
 
 export class Engine {
-  hello: () => Promise<string>;
+  ping: () => Promise<string>;
 
   private constructor(initOutput: InitOutput) {
-    this.hello = initOutput.hello;
+    this.ping = initOutput.ping;
   }
 
   static async create(coreModule: WebAssembly.Module): Promise<Engine> {

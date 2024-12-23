@@ -48,6 +48,7 @@ RUN volta install vitest@2.1.8
 RUN volta install create-cloudflare@2.35.1
 RUN volta install wasm-pack@0.13.1
 RUN volta install vite@6.0.5
+RUN volta install esbuild@0.24.2
 
 RUN unset DEBIAN_FRONTEND
 

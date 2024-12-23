@@ -3,5 +3,13 @@
   "workspaces": [
     "packages/*"
   ],
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "12.1.2",
+    "rollup-plugin-copy": "3.5.0",
+    "rollup-plugin-delete": "2.1.0",
+    "rollup-plugin-esbuild": "6.1.1",
+    "vite": "6.0.5",
+    "esbuild": "0.24.2"
+  }
 }
