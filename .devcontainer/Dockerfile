@@ -40,17 +40,17 @@ RUN curl https://get.volta.sh | bash
 ENV PATH="/home/vscode/.volta/bin:${PATH}"
 RUN volta install node@22.12.0
 RUN volta install npm@10.9.2
-RUN npm i -Eg create-cloudflare@2.35.1
-RUN npm i -Eg esbuild@0.24.2
-RUN npm i -Eg eslint@9.17.0
-RUN npm i -Eg sort-package-json@2.12.0
-RUN npm i -Eg tsx@4.19.2
-RUN npm i -Eg typescript@5.7.2
-RUN npm i -Eg vite@6.0.5
-RUN npm i -Eg vitest@2.1.8
-RUN npm i -Eg wasm-pack@0.13.1
-RUN npm i -Eg vercel@39.2.2
-RUN npm i -Eg create-next-app@15.1.2
+RUN volta install create-cloudflare@2.35.1
+RUN volta install esbuild@0.24.2
+RUN volta install eslint@9.17.0
+RUN volta install sort-package-json@2.12.0
+RUN volta install tsx@4.19.2
+RUN volta install typescript@5.7.2
+RUN volta install vite@6.0.5
+RUN volta install vitest@2.1.8
+RUN volta install wasm-pack@0.13.1
+RUN volta install vercel@39.2.2
+RUN volta install create-next-app@15.1.2
 
 RUN unset DEBIAN_FRONTEND
 
