@@ -1,4 +1,4 @@
-import { createServer } from "@graphql-ice/server/adapter/node";
+import { createEngine } from "@graphql-ice/engine/adapter/node";
 
-const server = await createServer();
-console.log(server);
+const engine = await createEngine();
+console.log(await engine.hello());

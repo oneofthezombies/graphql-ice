@@ -11,19 +11,12 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { createServer } from '@graphql-ice/server/adapter/cloudflare-workers';
-import core from '@graphql-ice/server/core.wasm';
+import { createEngine } from '@graphql-ice/engine/adapter/cloudflare-workers';
+import core from '@graphql-ice/engine/core.wasm';
 
-const server = await createServer(core);
+const engine = await createEngine(core);
 export default {
 	async fetch(req, env, ctx) {
-		const obj = {
-			req,
-			env,
-			ctx,
-		};
-		console.log(server);
-		// console.log(obj);
-		return new Response(JSON.stringify(obj));
+		return new Response(await engine.hello());
 	},
 } as ExportedHandler<Env>;

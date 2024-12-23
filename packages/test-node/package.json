@@ -2,7 +2,7 @@
   "type": "module",
   "name": "test-node",
   "dependencies": {
-    "@graphql-ice/server": "0.1.0"
+    "@graphql-ice/engine": "*"
   },
   "scripts": {
     "dev": "tsx src/index.ts"

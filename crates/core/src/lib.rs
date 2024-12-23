@@ -5,9 +5,8 @@ use wasm_bindgen::prelude::*;
 use web_sys::console::log_1;
 
 #[wasm_bindgen]
-pub async fn hello() -> Result<JsValue, JsValue> {
-    log_1(&"hello".into());
-    Ok(JsValue::null())
+pub async fn hello() -> Result<String, JsValue> {
+    Ok("hello".to_string())
 }
 
 #[wasm_bindgen(start)]
