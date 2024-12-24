@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    runtime: "edge",
+  },
   webpack: (config, { isServer }) => {
     config.experiments.asyncWebAssembly = true;
     config.experiments.syncWebAssembly = true;

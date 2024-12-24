@@ -16,7 +16,7 @@ export default defineConfig({
   build: {
     target: "esnext",
     sourcemap: true,
-    minify: true,
+    minify: false,
     rollupOptions: {
       plugins: [
         deletePlugin({ targets: "dist/*", runOnce: true }),

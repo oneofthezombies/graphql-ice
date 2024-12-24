@@ -2,9 +2,9 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "api",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "target": "esnext",
-    "module": "esnext",
+    "module": "nodenext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true
