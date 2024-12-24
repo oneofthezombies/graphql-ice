@@ -1,4 +1,6 @@
 import { createEngine } from "@graphql-ice/engine/adapter/vercel-functions-edge.js";
+
+// @ts-ignore
 import core from "./core.wasm?module";
 
 export const dynamic = "force-dynamic";

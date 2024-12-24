@@ -73,7 +73,7 @@ function build(outFullDirPath: string, outName: string) {
       "--out-name",
       outName,
       "--target",
-      "web",
+      "bundler",
       "--mode",
       "no-install",
       "--no-pack",
@@ -95,32 +95,34 @@ function postBuild(outFullDirPath: string, outName: string) {
   try {
     process.chdir(outFullDirPath);
     fs.rmSync(".gitignore");
-    fs.rmSync(`${outName}_bg.wasm.d.ts`);
+    run("wasm-opt", [`${outName}_bg.wasm`, "-o", `${outName}_bg.wasm`, "-O3"]);
+    //     fs.rmSync(`${outName}_bg.wasm.d.ts`);
 
-    const jsSrcRelFilePath = `${outName}.js`;
-    const jsSrcContent = fs.readFileSync(jsSrcRelFilePath, {
-      encoding: "utf8",
-    });
-    fs.rmSync(jsSrcRelFilePath);
+    //     const jsSrcRelFilePath = `${outName}.js`;
+    //     const jsSrcContent = fs.readFileSync(jsSrcRelFilePath, {
+    //       encoding: "utf8",
+    //     });
+    //     fs.rmSync(jsSrcRelFilePath);
 
-    const wasmSrcRelFilePath = `${outName}_bg.wasm`;
-    const wasmDstRelFilePath = `${outName}.wasm`;
-    const jsDstContent = jsSrcContent.replaceAll(
-      wasmSrcRelFilePath,
-      wasmDstRelFilePath
-    );
-    fs.writeFileSync(`${outName}-bindings.js`, jsDstContent);
+    //     const wasmSrcRelFilePath = `${outName}_bg.wasm`;
+    //     const wasmDstRelFilePath = `${outName}.wasm`;
+    //     const jsDstContent = jsSrcContent.replaceAll(
+    //       wasmSrcRelFilePath,
+    //       wasmDstRelFilePath
+    //     );
+    //     fs.writeFileSync(`${outName}-bindings.js`, jsDstContent);
 
-    fs.renameSync(`${outName}.d.ts`, `${outName}-bindings.d.ts`);
+    //     fs.renameSync(`${outName}.d.ts`, `${outName}-bindings.d.ts`);
 
-    run("wasm-opt", [wasmSrcRelFilePath, "-o", wasmDstRelFilePath, "-O3"]);
-    fs.rmSync(wasmSrcRelFilePath);
+    //     run("wasm-opt", [wasmSrcRelFilePath, "-o", wasmDstRelFilePath, "-O3"]);
+    //     fs.rmSync(wasmSrcRelFilePath);
 
-    fs.writeFileSync(
-      `${outName}.wasm.d.ts`,
-      `export default {};
-export {};`
-    );
+    //     fs.writeFileSync(
+    //       `${outName}.wasm.d.ts`,
+    //       `/* tslint:disable */
+    // /* eslint-disable */
+    // export {};`
+    //     );
   } finally {
     process.chdir(currentFullDirPath);
   }
@@ -148,7 +150,8 @@ function copyBuild(srcFullDirPath: string, dstFullDirPath: string) {
 }
 
 const wasmName = "core";
-const srcFullDirPath = path.resolve("src");
-deleteBuild(srcFullDirPath, wasmName);
-build(srcFullDirPath, wasmName);
-postBuild(srcFullDirPath, wasmName);
+const buildFullDirPath = path.resolve("src/generated");
+rm(buildFullDirPath);
+// deleteBuild(buildFullDirPath, wasmName);
+build(buildFullDirPath, wasmName);
+postBuild(buildFullDirPath, wasmName);

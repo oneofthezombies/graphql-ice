@@ -1,0 +1,11 @@
+{
+  "name": "test-webpack-wasm",
+  "type": "module",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "ts-loader": "9.5.1",
+    "webpack-cli": "^6.0.1"
+  }
+}
