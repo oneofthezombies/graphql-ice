@@ -1,4 +1,5 @@
 import { createEngine } from "@graphql-ice/engine/adapter/cloudflare-workers.js";
+// @ts-expect-error
 import core from "@graphql-ice/engine/core.wasm";
 
 export const config = {
