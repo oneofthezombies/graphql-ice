@@ -1,6 +1,6 @@
 {
-  "type": "module",
   "name": "test-vercel-functions-edge",
+  "type": "module",
   "scripts": {
     "test": "vitest --run"
   },

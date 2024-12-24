@@ -2,12 +2,16 @@
 	"name": "test-cloudflare-workers",
 	"version": "0.0.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
+		"cf-typegen": "wrangler types",
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"test": "vitest --run",
-		"cf-typegen": "wrangler types"
+		"test": "vitest --run"
+	},
+	"dependencies": {
+		"@graphql-ice/engine": "*"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.5.2",
@@ -17,9 +21,5 @@
 		"vite-plugin-wasm": "3.4.1",
 		"vitest": "2.1.8",
 		"wrangler": "^3.99.0"
-	},
-	"dependencies": {
-		"@graphql-ice/engine": "*"
-	},
-	"type": "module"
+	}
 }
