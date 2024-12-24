@@ -35,13 +35,7 @@ export default defineConfig({
         }),
       ],
       preserveEntrySignatures: "exports-only",
-      input: [
-        "./src/index.ts",
-        "./src/adapter/cloudflare-workers.ts",
-        "./src/adapter/deno-deploy.ts",
-        "./src/adapter/node.ts",
-        "./src/adapter/vercel-functions-edge.ts",
-      ],
+      input: ["./src/index.ts"],
       output: {
         preserveModules: true,
         preserveModulesRoot: "src",

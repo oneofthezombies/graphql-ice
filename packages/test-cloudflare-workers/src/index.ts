@@ -11,12 +11,10 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { createEngine } from '@graphql-ice/engine/adapter/cloudflare-workers.js';
+import { Engine } from '@graphql-ice/engine';
 import core from '@graphql-ice/engine/core.wasm';
 
-console.log(WebAssembly.Module.imports(core));
-console.log(WebAssembly.Module.exports(core));
-const engine = createEngine(core);
+const engine = new Engine(core);
 
 export default {
 	async fetch(req, env, ctx) {

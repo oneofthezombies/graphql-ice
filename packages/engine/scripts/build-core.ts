@@ -96,6 +96,7 @@ function postBuild(outFullDirPath: string, outName: string) {
     process.chdir(outFullDirPath);
     fs.rmSync(".gitignore");
     fs.rmSync(`${outName}.js`);
+    fs.rmSync(`${outName}.d.ts`);
 
     const wasmRelFilePath = `${outName}_bg.wasm`;
     run("wasm-opt", [wasmRelFilePath, "-o", wasmRelFilePath, "-O3"]);
@@ -107,25 +108,9 @@ export function clearCachedMemories() {
     cachedDataViewMemory0 = null;
     cachedUint8ArrayMemory0 = null;
 }
-`
-    );
 
-    fs.writeFileSync(
-      `${outName}.ts`,
-      `/* tslint:disable */
-/* eslint-disable */
-import * as core_bg from "./core_bg.js";
-import { __wbg_set_wasm, clearCachedMemories } from "./core_bg.js";
-export function init<T>(module: WebAssembly.Module): T {
-    const instance = new WebAssembly.Instance(module, {
-        "./core_bg.js": core_bg
-    });
-    clearCachedMemories();
-    const exports = instance.exports;
-    __wbg_set_wasm(exports);
-    // @ts-ignore
-    exports.__wbindgen_start();
-    return exports as unknown as T;
+export function getWasm() {
+    return wasm;
 }
 `
     );
