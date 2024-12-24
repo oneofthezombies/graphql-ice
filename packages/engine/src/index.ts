@@ -1,1 +1,3 @@
-export * from "./engine.js";
+export interface Engine {
+  ping: () => Promise<string>;
+}

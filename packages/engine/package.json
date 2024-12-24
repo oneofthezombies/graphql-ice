@@ -11,8 +11,8 @@
       "import": "./dist/index.js"
     },
     "./core.wasm": {
-      "types": "./dist/core.wasm.d.ts",
-      "import": "./dist/core.wasm"
+      "types": "./dist/generated/core_bg.wasm.d.ts",
+      "import": "./dist/generated/core_bg.wasm"
     },
     "./adapter/cloudflare-workers.js": {
       "types": "./dist/adapter/cloudflare-workers.d.ts",

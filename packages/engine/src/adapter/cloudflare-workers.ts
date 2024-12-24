@@ -1,6 +1,13 @@
-import { Engine } from "../engine.js";
+import { init } from "../generated/core.js";
+import { Engine } from "../index.js";
 
 export function createEngine(core: WebAssembly.Module): Engine {
   console.log("Cloudflare Workers engine");
-  return new Engine(core);
+  const engine = init<Engine>(core);
+  console.log(engine);
+  return {
+    ping: async (): Promise<string> => {
+      return await engine.ping();
+    },
+  };
 }

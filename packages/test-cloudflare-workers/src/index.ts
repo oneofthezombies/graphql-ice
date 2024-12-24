@@ -14,6 +14,8 @@
 import { createEngine } from '@graphql-ice/engine/adapter/cloudflare-workers.js';
 import core from '@graphql-ice/engine/core.wasm';
 
+console.log(WebAssembly.Module.imports(core));
+console.log(WebAssembly.Module.exports(core));
 const engine = createEngine(core);
 
 export default {

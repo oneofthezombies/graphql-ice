@@ -95,34 +95,47 @@ function postBuild(outFullDirPath: string, outName: string) {
   try {
     process.chdir(outFullDirPath);
     fs.rmSync(".gitignore");
-    run("wasm-opt", [`${outName}_bg.wasm`, "-o", `${outName}_bg.wasm`, "-O3"]);
-    //     fs.rmSync(`${outName}_bg.wasm.d.ts`);
+    fs.rmSync(`${outName}.js`);
 
-    //     const jsSrcRelFilePath = `${outName}.js`;
-    //     const jsSrcContent = fs.readFileSync(jsSrcRelFilePath, {
-    //       encoding: "utf8",
-    //     });
-    //     fs.rmSync(jsSrcRelFilePath);
+    const wasmRelFilePath = `${outName}_bg.wasm`;
+    run("wasm-opt", [wasmRelFilePath, "-o", wasmRelFilePath, "-O3"]);
 
-    //     const wasmSrcRelFilePath = `${outName}_bg.wasm`;
-    //     const wasmDstRelFilePath = `${outName}.wasm`;
-    //     const jsDstContent = jsSrcContent.replaceAll(
-    //       wasmSrcRelFilePath,
-    //       wasmDstRelFilePath
-    //     );
-    //     fs.writeFileSync(`${outName}-bindings.js`, jsDstContent);
+    fs.appendFileSync(
+      `${outName}_bg.js`,
+      `
+export function clearCachedMemories() {
+    cachedDataViewMemory0 = null;
+    cachedUint8ArrayMemory0 = null;
+}
+`
+    );
 
-    //     fs.renameSync(`${outName}.d.ts`, `${outName}-bindings.d.ts`);
+    fs.writeFileSync(
+      `${outName}.ts`,
+      `/* tslint:disable */
+/* eslint-disable */
+import * as core_bg from "./core_bg.js";
+import { __wbg_set_wasm, clearCachedMemories } from "./core_bg.js";
+export function init<T>(module: WebAssembly.Module): T {
+    const instance = new WebAssembly.Instance(module, {
+        "./core_bg.js": core_bg
+    });
+    clearCachedMemories();
+    const exports = instance.exports;
+    __wbg_set_wasm(exports);
+    // @ts-ignore
+    exports.__wbindgen_start();
+    return exports as unknown as T;
+}
+`
+    );
 
-    //     run("wasm-opt", [wasmSrcRelFilePath, "-o", wasmDstRelFilePath, "-O3"]);
-    //     fs.rmSync(wasmSrcRelFilePath);
-
-    //     fs.writeFileSync(
-    //       `${outName}.wasm.d.ts`,
-    //       `/* tslint:disable */
-    // /* eslint-disable */
-    // export {};`
-    //     );
+    fs.writeFileSync(
+      `${outName}_bg.wasm.d.ts`,
+      `/* tslint:disable */
+/* eslint-disable */
+export {};`
+    );
   } finally {
     process.chdir(currentFullDirPath);
   }
@@ -152,6 +165,5 @@ function copyBuild(srcFullDirPath: string, dstFullDirPath: string) {
 const wasmName = "core";
 const buildFullDirPath = path.resolve("src/generated");
 rm(buildFullDirPath);
-// deleteBuild(buildFullDirPath, wasmName);
 build(buildFullDirPath, wasmName);
 postBuild(buildFullDirPath, wasmName);

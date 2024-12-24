@@ -23,8 +23,12 @@ export default defineConfig({
         copy({
           targets: [
             {
-              src: "src/core.wasm.d.ts",
-              dest: "dist",
+              src: "src/generated/*.wasm",
+              dest: "dist/generated",
+            },
+            {
+              src: "src/generated/*.wasm.d.ts",
+              dest: "dist/generated",
             },
           ],
           hook: "writeBundle",
@@ -47,7 +51,7 @@ export default defineConfig({
         chunkFileNames: "[name]-[hash].js",
         assetFileNames: "[name][extname]",
       },
-      external: ["node:fs", "node:path", "node:url", "wbg"],
+      external: ["node:fs", "node:path", "node:url"],
     },
   },
 });
