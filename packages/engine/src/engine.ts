@@ -15,12 +15,10 @@ export function initCore(core: WebAssembly.Module): Core {
     const instance = new WebAssembly.Instance(core, {
       "./core_bg.js": core_bg,
     });
+    wasm = instance.exports;
     clearCachedMemories();
-    const exports = instance.exports;
-    __wbg_set_wasm(exports);
-    // @ts-expect-error
-    exports.__wbindgen_start();
-    wasm = exports;
+    __wbg_set_wasm(wasm);
+    wasm.__wbindgen_start();
   }
   return wasm as unknown as Core;
 }
@@ -28,8 +26,8 @@ export function initCore(core: WebAssembly.Module): Core {
 export class Engine implements Core {
   ping: Core["ping"];
 
-  constructor(coreModule: WebAssembly.Module) {
-    const core = initCore(coreModule);
-    this.ping = core.ping;
+  constructor(core: WebAssembly.Module) {
+    const coreExports = initCore(core);
+    this.ping = coreExports.ping;
   }
 }
