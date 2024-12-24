@@ -2,10 +2,9 @@
   "type": "module",
   "name": "test-vercel-functions-edge",
   "scripts": {
-    "test": "vitest --run",
-    "build": "webpack"
+    "test": "vitest --run"
   },
   "devDependencies": {
-    "@graphql-ice/engine": "0.0.1"
+    "@graphql-ice/engine": "0.0.2"
   }
 }
