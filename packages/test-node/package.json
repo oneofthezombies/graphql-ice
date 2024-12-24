@@ -2,7 +2,7 @@
   "type": "module",
   "name": "test-node",
   "scripts": {
-    "test": "vitest --run"
+    "test": "vitest --run --no-file-parallelism --disable-console-intercept"
   },
   "devDependencies": {
     "@graphql-ice/engine": "*"

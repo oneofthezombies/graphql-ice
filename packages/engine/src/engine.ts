@@ -5,29 +5,39 @@ import {
 } from "./generated/core_bg.js";
 import * as core_bg from "./generated/core_bg.js";
 
-interface Core {
+interface GlobalCore {
   ping: () => Promise<string>;
 }
 
-export function initCore(core: WebAssembly.Module): Core {
-  let wasm = getWasm();
-  if (!wasm) {
-    const instance = new WebAssembly.Instance(core, {
-      "./core_bg.js": core_bg,
-    });
-    wasm = instance.exports;
-    clearCachedMemories();
-    __wbg_set_wasm(wasm);
-    wasm.__wbindgen_start();
-  }
-  return wasm as unknown as Core;
+function initGlobalCore(core: WebAssembly.Module): GlobalCore {
+  const instance = new WebAssembly.Instance(core, {
+    "./core_bg.js": core_bg,
+  });
+  clearCachedMemories();
+
+  const { exports } = instance;
+  __wbg_set_wasm(exports);
+  // @ts-expect-error
+  exports.__wbindgen_start();
+  return exports as unknown as GlobalCore;
 }
 
-export class Engine implements Core {
-  ping: Core["ping"];
+export function getGlobalCore(): GlobalCore | undefined {
+  return getWasm();
+}
 
-  constructor(core: WebAssembly.Module) {
-    const coreExports = initCore(core);
-    this.ping = coreExports.ping;
+export class Engine implements GlobalCore {
+  ping: GlobalCore["ping"];
+
+  constructor(globalCore: GlobalCore) {
+    this.ping = globalCore.ping;
+  }
+
+  static from(core: WebAssembly.Module): Engine {
+    let globalCore = getGlobalCore();
+    if (!globalCore) {
+      globalCore = initGlobalCore(core);
+    }
+    return new Engine(globalCore);
   }
 }

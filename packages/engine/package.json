@@ -1,6 +1,6 @@
 {
   "name": "@graphql-ice/engine",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "author": "oneofthezombies <hunhoekim@gmail.com>",
   "sideEffects": false,
@@ -13,6 +13,10 @@
     "./core.wasm": {
       "types": "./dist/generated/core_bg.wasm.d.ts",
       "import": "./dist/generated/core_bg.wasm"
+    },
+    "./adapter/node": {
+      "types": "./dist/adapter/node.d.ts",
+      "import": "./dist/adapter/node.js"
     }
   },
   "files": [

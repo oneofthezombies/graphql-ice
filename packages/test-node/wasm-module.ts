@@ -1,6 +1,6 @@
-import { createEngine } from "@graphql-ice/engine/adapter/cloudflare-workers.js";
-import core from "@graphql-ice/engine/core.wasm";
+import { Engine } from "@graphql-ice/engine";
+import core from "@graphql-ice/engine/core.wasm" assert { type: "webassembly" };
 
-const engine = createEngine(core);
+const engine = new Engine(core);
 const result = await engine.ping();
 console.log(result);
