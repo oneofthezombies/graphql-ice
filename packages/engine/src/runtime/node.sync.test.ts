@@ -21,3 +21,9 @@ describe("initialize", () => {
     );
   });
 });
+
+describe("ping", () => {
+  test("ping", async () => {
+    expect(await engine.ping()).toBe("pong");
+  });
+});
