@@ -14,9 +14,9 @@
       "types": "./dist/generated/core_bg.wasm.d.ts",
       "import": "./dist/generated/core_bg.wasm"
     },
-    "./adapter/node": {
-      "types": "./dist/adapter/node.d.ts",
-      "import": "./dist/adapter/node.js"
+    "./runtime/node": {
+      "types": "./dist/runtime/node.d.ts",
+      "import": "./dist/runtime/node.js"
     }
   },
   "files": [

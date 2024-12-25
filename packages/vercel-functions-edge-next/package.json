@@ -1,0 +1,11 @@
+{
+  "name": "vercel-functions-edge-next",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest --run"
+  },
+  "dependencies": {
+    "@graphql-ice/engine": "0.0.4"
+  }
+}

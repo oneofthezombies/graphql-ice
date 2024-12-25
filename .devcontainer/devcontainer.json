@@ -64,7 +64,8 @@
           "multivalue",
           "nontrapping",
           "fptoint",
-          "rustflags"
+          "rustflags",
+          "wbindgen"
         ],
         "editor.rulers": [80],
         "typescript.inlayHints.enumMemberValues.enabled": true,

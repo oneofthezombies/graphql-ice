@@ -35,7 +35,7 @@ export default defineConfig({
         }),
       ],
       preserveEntrySignatures: "exports-only",
-      input: ["./src/index.ts", "./src/adapter/node.ts"],
+      input: ["./src/index.ts", "./src/runtime/node.ts"],
       output: {
         preserveModules: true,
         preserveModulesRoot: "src",

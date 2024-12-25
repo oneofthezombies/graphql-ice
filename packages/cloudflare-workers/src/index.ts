@@ -14,7 +14,7 @@
 import { Engine } from '@graphql-ice/engine';
 import core from '@graphql-ice/engine/core.wasm';
 
-const engine = new Engine(core);
+const engine = Engine.from(core);
 
 export default {
 	async fetch(req, env, ctx) {
