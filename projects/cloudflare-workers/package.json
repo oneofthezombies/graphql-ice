@@ -11,7 +11,7 @@
 		"test": "vitest --run"
 	},
 	"dependencies": {
-		"@graphql-ice/engine": "*"
+		"@graphql-ice/engine": "0.0.7"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.5.2",
