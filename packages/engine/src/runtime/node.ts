@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { CoreAsyncLoader, CoreSyncLoader } from "../engine";
+import { CoreAsyncLoader, CoreSyncLoader } from "../core.js";
 
 export const CORE_PATH = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
