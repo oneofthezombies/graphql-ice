@@ -1,8 +1,8 @@
 // @vitest-environment node
 
 import { describe, expect, test } from "vitest";
-import { engine, EngineAlreadyInitializedError } from "./engine.js";
-import { NodeCoreProvider } from "./runtime/node.js";
+import { engine, EngineAlreadyInitializedError } from "../engine.js";
+import { NodeCoreProvider } from "./node.js";
 
 describe("initialize", () => {
   test("initSync", async () => {

@@ -5,8 +5,8 @@ import {
   engine,
   EngineAlreadyInitializedError,
   EngineNotInitializedError,
-} from "./engine.js";
-import { NodeCoreProvider } from "./runtime/node.js";
+} from "../engine.js";
+import { NodeCoreProvider } from "./node.js";
 
 describe("before initialization", () => {
   test("ping", async () => {
