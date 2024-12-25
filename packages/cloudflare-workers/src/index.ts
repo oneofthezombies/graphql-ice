@@ -11,10 +11,10 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { Engine } from '@graphql-ice/engine';
+import { engine } from '@graphql-ice/engine';
 import core from '@graphql-ice/engine/core.wasm';
 
-const engine = Engine.from(core);
+await engine.init(core);
 
 export default {
 	async fetch(req, env, ctx) {
