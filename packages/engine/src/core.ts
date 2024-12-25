@@ -8,7 +8,9 @@ import {
 import * as core_bg from "./generated/core_bg.js";
 
 export class Core {
-  static async init(core: WebAssembly.Module) {
+  static async init(core: WebAssembly.Module): Promise<void>;
+  static async init(provider: AsyncCoreProvider): Promise<void>;
+  static async init(coreOrProvider: WebAssembly.Module | AsyncCoreProvider) {
     const imports = Core.beforeInstantiate();
     const instance = await WebAssembly.instantiate(core, imports);
     Core.afterInstantiate(instance);
