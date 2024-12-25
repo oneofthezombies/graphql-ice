@@ -48,12 +48,16 @@ function afterInstantiate(instance: WebAssembly.Instance) {
   engineImpl = new EngineInitialized();
 }
 
-function throwAlreadyInit(): never {
-  throw new Error("Core is already initialized.");
+export class EngineAlreadyInitializedError extends Error {
+  constructor() {
+    super("Engine is already initialized");
+  }
 }
 
-function throwNotInit(): never {
-  throw new Error("Core is not initialized.");
+export class EngineNotInitializedError extends Error {
+  constructor() {
+    super("Engine is not initialized");
+  }
 }
 
 interface EngineInterface {
@@ -64,11 +68,11 @@ interface EngineInterface {
 
 class EngineInitialized implements EngineInterface {
   async init() {
-    throwAlreadyInit();
+    throw new EngineAlreadyInitializedError();
   }
 
   initSync() {
-    throwAlreadyInit();
+    throw new EngineAlreadyInitializedError();
   }
 
   async ping(): Promise<string> {
@@ -79,20 +83,18 @@ class EngineInitialized implements EngineInterface {
 class EngineNotInitialized implements EngineInterface {
   async init(coreOrProvider: WebAssembly.Module | AsyncCoreProvider) {
     const core = await resolveCore(coreOrProvider);
-    const imports = getImports();
-    const instance = await WebAssembly.instantiate(core, imports);
+    const instance = await WebAssembly.instantiate(core, getImports());
     afterInstantiate(instance);
   }
 
   initSync(coreOrProvider: WebAssembly.Module | SyncCoreProvider) {
     const core = resolveCoreSync(coreOrProvider);
-    const imports = getImports();
-    const instance = new WebAssembly.Instance(core, imports);
+    const instance = new WebAssembly.Instance(core, getImports());
     afterInstantiate(instance);
   }
 
   async ping(): Promise<string> {
-    throwNotInit();
+    throw new EngineNotInitializedError();
   }
 }
 
