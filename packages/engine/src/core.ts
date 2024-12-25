@@ -7,45 +7,43 @@ import {
 } from "./generated/core_bg.js";
 import * as core_bg from "./generated/core_bg.js";
 
-export class Core {
-  static async init(core: WebAssembly.Module): Promise<void>;
-  static async init(provider: AsyncCoreProvider): Promise<void>;
-  static async init(coreOrProvider: WebAssembly.Module | AsyncCoreProvider) {
-    const imports = Core.beforeInstantiate();
-    const instance = await WebAssembly.instantiate(core, imports);
-    Core.afterInstantiate(instance);
+function parseCoreOrProviderSync(
+  coreOrProvider: WebAssembly.Module | SyncCoreProvider
+): WebAssembly.Module {
+  if (coreOrProvider instanceof WebAssembly.Module) {
+    return coreOrProvider;
+  } else {
+    return coreOrProvider.provideSync();
   }
+}
 
-  static initSync(core: WebAssembly.Module) {
-    const imports = Core.beforeInstantiate();
-    const instance = new WebAssembly.Instance(core, imports);
-    Core.afterInstantiate(instance);
+async function parseCoreOrProvider(
+  coreOrProvider: WebAssembly.Module | AsyncCoreProvider
+): Promise<WebAssembly.Module> {
+  if (coreOrProvider instanceof WebAssembly.Module) {
+    return coreOrProvider;
+  } else {
+    return await coreOrProvider.provide();
   }
+}
 
-  static async ping(): Promise<string> {
-    return await ping();
+function validateInit() {
+  if (getWasm()) {
+    throw new Error("Core is already initialized.");
   }
+}
 
-  private static get(): Core | undefined {
-    return getWasm();
-  }
+function getImports(): WebAssembly.Imports {
+  return {
+    "./core_bg.js": core_bg,
+  };
+}
 
-  private static beforeInstantiate(): WebAssembly.Imports {
-    if (Core.get()) {
-      throw new Error("Core is already initialized.");
-    }
-
-    return {
-      "./core_bg.js": core_bg,
-    };
-  }
-
-  private static afterInstantiate(instance: WebAssembly.Instance) {
-    const { exports } = instance;
-    clearCachedMemories();
-    __wbg_set_wasm(exports);
-    start();
-  }
+function afterInstantiate(instance: WebAssembly.Instance) {
+  const { exports } = instance;
+  clearCachedMemories();
+  __wbg_set_wasm(exports);
+  start();
 }
 
 export interface SyncCoreProvider {
@@ -56,14 +54,28 @@ export interface AsyncCoreProvider {
   provide(): Promise<WebAssembly.Module>;
 }
 
-export class EdgeCoreProvider implements SyncCoreProvider, AsyncCoreProvider {
-  constructor(readonly core: WebAssembly.Module) {}
-
-  provideSync(): WebAssembly.Module {
-    return this.core;
+export class Core {
+  static async init(core: WebAssembly.Module): Promise<void>;
+  static async init(provider: AsyncCoreProvider): Promise<void>;
+  static async init(coreOrProvider: WebAssembly.Module | AsyncCoreProvider) {
+    validateInit();
+    const core = await parseCoreOrProvider(coreOrProvider);
+    const imports = getImports();
+    const instance = await WebAssembly.instantiate(core, imports);
+    afterInstantiate(instance);
   }
 
-  async provide(): Promise<WebAssembly.Module> {
-    return this.core;
+  static initSync(core: WebAssembly.Module): void;
+  static initSync(provider: SyncCoreProvider): void;
+  static initSync(coreOrProvider: WebAssembly.Module | SyncCoreProvider) {
+    validateInit();
+    const core = parseCoreOrProviderSync(coreOrProvider);
+    const imports = getImports();
+    const instance = new WebAssembly.Instance(core, imports);
+    afterInstantiate(instance);
+  }
+
+  static async ping(): Promise<string> {
+    return await ping();
   }
 }
