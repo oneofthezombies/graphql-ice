@@ -5,6 +5,8 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@edge-runtime/types": "4.0.0",
+    "@edge-runtime/vm": "5.0.0",
     "@rollup/plugin-typescript": "12.1.2",
     "@rollup/plugin-url": "8.0.2",
     "rollup-plugin-copy": "3.5.0",

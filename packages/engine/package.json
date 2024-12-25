@@ -23,8 +23,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build",
-    "build:core": "tsx scripts/build-core.ts"
+    "build": "npm run build:core && vite build",
+    "build:core": "tsx scripts/build-core.ts",
+    "test": "vitest -c vite.config.ts --run"
   },
   "publishConfig": {
     "access": "public"
