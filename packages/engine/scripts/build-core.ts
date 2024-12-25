@@ -121,6 +121,7 @@ export function clearCachedMemories() {
     fs.writeFileSync(
       `${outName}_bg.wasm.d.ts`,
       `${lintIgnore}
+export default {};
 export {};`
     );
   } finally {

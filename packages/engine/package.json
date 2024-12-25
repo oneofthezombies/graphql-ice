@@ -1,6 +1,6 @@
 {
   "name": "@graphql-ice/engine",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "license": "MIT",
   "author": "oneofthezombies <hunhoekim@gmail.com>",
   "sideEffects": false,
