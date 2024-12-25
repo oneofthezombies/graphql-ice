@@ -101,24 +101,26 @@ function postBuild(outFullDirPath: string, outName: string) {
     const wasmRelFilePath = `${outName}_bg.wasm`;
     run("wasm-opt", [wasmRelFilePath, "-o", wasmRelFilePath, "-O3"]);
 
-    fs.appendFileSync(
-      `${outName}_bg.js`,
-      `
+    const lintIgnore = `/* eslint-disable */
+// @ts-nocheck
+// cSpell:disable
+`;
+    const jsRelFilePath = `${outName}_bg.js`;
+    const jsContent = fs.readFileSync(jsRelFilePath, "utf8");
+    fs.writeFileSync(
+      jsRelFilePath,
+      `${lintIgnore}
+${jsContent}
 export function clearCachedMemories() {
-    cachedDataViewMemory0 = null;
-    cachedUint8ArrayMemory0 = null;
-}
-
-export function getWasm() {
-    return wasm;
+  cachedDataViewMemory0 = null;
+  cachedUint8ArrayMemory0 = null;
 }
 `
     );
 
     fs.writeFileSync(
       `${outName}_bg.wasm.d.ts`,
-      `/* tslint:disable */
-/* eslint-disable */
+      `${lintIgnore}
 export {};`
     );
   } finally {
