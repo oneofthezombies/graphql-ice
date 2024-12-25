@@ -6,6 +6,24 @@ import {
 } from "./generated/core_bg.js";
 import * as core_bg from "./generated/core_bg.js";
 
+export class EngineAlreadyInitError extends Error {
+  constructor() {
+    super("Engine is already initialized");
+  }
+}
+
+export class EngineNotInitError extends Error {
+  constructor() {
+    super("Engine is not initialized");
+  }
+}
+
+export class UnexpectedInitArgError extends Error {
+  constructor(arg: unknown) {
+    super(`Unexpected init argument. arg: ${JSON.stringify(arg)}`);
+  }
+}
+
 export interface AsyncCoreProvider {
   provide(): Promise<WebAssembly.Module>;
 }
@@ -14,23 +32,50 @@ export interface SyncCoreProvider {
   provideSync(): WebAssembly.Module;
 }
 
-async function resolveCore(
-  coreOrProvider: WebAssembly.Module | AsyncCoreProvider
-): Promise<WebAssembly.Module> {
-  if (coreOrProvider instanceof WebAssembly.Module) {
-    return coreOrProvider;
-  } else {
-    return await coreOrProvider.provide();
+function validateInitArg(arg: any) {
+  if (!arg) {
+    throw new UnexpectedInitArgError(arg);
   }
 }
 
-function resolveCoreSync(
-  coreOrProvider: WebAssembly.Module | SyncCoreProvider
-): WebAssembly.Module {
-  if (coreOrProvider instanceof WebAssembly.Module) {
-    return coreOrProvider;
+async function resolveInitArg(arg: InitArg): Promise<WebAssembly.Module> {
+  if (arg instanceof WebAssembly.Module) {
+    return arg;
   } else {
-    return coreOrProvider.provideSync();
+    if (
+      typeof arg === "object" &&
+      "provide" in arg &&
+      typeof arg["provide"] === "function"
+    ) {
+      const maybePromise = arg.provide();
+      if (maybePromise instanceof Promise) {
+        const result = await maybePromise;
+        if (result instanceof WebAssembly.Module) {
+          return result;
+        }
+      }
+    }
+
+    throw new UnexpectedInitArgError(arg);
+  }
+}
+
+function resolveInitSyncArg(arg: InitSyncArg): WebAssembly.Module {
+  if (arg instanceof WebAssembly.Module) {
+    return arg;
+  } else {
+    if (
+      typeof arg === "object" &&
+      "provideSync" in arg &&
+      typeof arg["provideSync"] === "function"
+    ) {
+      const result = arg.provideSync();
+      if (result instanceof WebAssembly.Module) {
+        return result;
+      }
+    }
+
+    throw new UnexpectedInitArgError(arg);
   }
 }
 
@@ -48,31 +93,22 @@ function afterInstantiate(instance: WebAssembly.Instance) {
   engineImpl = new EngineInitialized();
 }
 
-export class EngineAlreadyInitializedError extends Error {
-  constructor() {
-    super("Engine is already initialized");
-  }
-}
-
-export class EngineNotInitializedError extends Error {
-  constructor() {
-    super("Engine is not initialized");
-  }
-}
+type InitArg = WebAssembly.Module | AsyncCoreProvider;
+type InitSyncArg = WebAssembly.Module | SyncCoreProvider;
 
 interface EngineInterface {
-  init(coreOrProvider: WebAssembly.Module | AsyncCoreProvider): Promise<void>;
-  initSync(coreOrProvider: WebAssembly.Module | SyncCoreProvider): void;
+  init(arg: InitArg): Promise<void>;
+  initSync(arg: InitSyncArg): void;
   ping(): Promise<string>;
 }
 
 class EngineInitialized implements EngineInterface {
   async init() {
-    throw new EngineAlreadyInitializedError();
+    throw new EngineAlreadyInitError();
   }
 
   initSync() {
-    throw new EngineAlreadyInitializedError();
+    throw new EngineAlreadyInitError();
   }
 
   async ping(): Promise<string> {
@@ -81,35 +117,35 @@ class EngineInitialized implements EngineInterface {
 }
 
 class EngineNotInitialized implements EngineInterface {
-  async init(coreOrProvider: WebAssembly.Module | AsyncCoreProvider) {
-    const core = await resolveCore(coreOrProvider);
+  async init(arg: InitArg) {
+    validateInitArg(arg);
+    const core = await resolveInitArg(arg);
     const instance = await WebAssembly.instantiate(core, getImports());
     afterInstantiate(instance);
   }
 
-  initSync(coreOrProvider: WebAssembly.Module | SyncCoreProvider) {
-    const core = resolveCoreSync(coreOrProvider);
+  initSync(arg: InitSyncArg) {
+    validateInitArg(arg);
+    const core = resolveInitSyncArg(arg);
     const instance = new WebAssembly.Instance(core, getImports());
     afterInstantiate(instance);
   }
 
   async ping(): Promise<string> {
-    throw new EngineNotInitializedError();
+    throw new EngineNotInitError();
   }
 }
 
 class Engine implements EngineInterface {
   async init(core: WebAssembly.Module): Promise<void>;
   async init(provider: AsyncCoreProvider): Promise<void>;
-  async init(
-    coreOrProvider: WebAssembly.Module | AsyncCoreProvider
-  ): Promise<void> {
+  async init(coreOrProvider: InitArg): Promise<void> {
     await engineImpl.init(coreOrProvider);
   }
 
   initSync(core: WebAssembly.Module): void;
   initSync(provider: SyncCoreProvider): void;
-  initSync(coreOrProvider: WebAssembly.Module | SyncCoreProvider): void {
+  initSync(coreOrProvider: InitSyncArg): void {
     engineImpl.initSync(coreOrProvider);
   }
 

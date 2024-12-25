@@ -3,31 +3,31 @@
 import { describe, expect, test } from "vitest";
 import {
   engine,
-  EngineAlreadyInitializedError,
-  EngineNotInitializedError,
+  EngineAlreadyInitError,
+  EngineNotInitError,
 } from "../engine.js";
 import { NodeCoreProvider } from "./node.js";
 
 describe("before initialization", () => {
   test("ping", async () => {
-    await expect(engine.ping()).rejects.toThrow(EngineNotInitializedError);
+    await expect(engine.ping()).rejects.toThrow(EngineNotInitError);
   });
 });
 
 describe("initialize", () => {
-  test("first init", async () => {
+  test("init", async () => {
     expect(await engine.init(new NodeCoreProvider())).toBeUndefined();
   });
 
   test("init after init", async () => {
     await expect(engine.init(new NodeCoreProvider())).rejects.toThrow(
-      EngineAlreadyInitializedError
+      EngineAlreadyInitError
     );
   });
 
   test("initSync after init", async () => {
     expect(() => engine.initSync(new NodeCoreProvider())).toThrow(
-      EngineAlreadyInitializedError
+      EngineAlreadyInitError
     );
   });
 });
