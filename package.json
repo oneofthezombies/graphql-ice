@@ -2,8 +2,7 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/*",
-    "projects/*"
+    "packages/*"
   ],
   "devDependencies": {
     "@edge-runtime/types": "4.0.0",
