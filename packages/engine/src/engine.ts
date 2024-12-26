@@ -85,24 +85,17 @@ function getImports(): WebAssembly.Imports {
   };
 }
 
-function afterInstantiate(instance: WebAssembly.Instance) {
-  const { exports } = instance;
-  clearCachedMemories();
-  __wbg_set_wasm(exports);
-  start();
-  engineImpl = new EngineInitialized();
-}
-
 type InitArg = WebAssembly.Module | AsyncCoreProvider;
 type InitSyncArg = WebAssembly.Module | SyncCoreProvider;
+type SetState = (next: EngineState) => void;
 
-interface EngineInterface {
+interface EngineState {
   init(arg: InitArg): Promise<void>;
   initSync(arg: InitSyncArg): void;
   ping(): Promise<string>;
 }
 
-class EngineInitialized implements EngineInterface {
+class InitEngineState implements EngineState {
   async init() {
     throw new EngineAlreadyInitError();
   }
@@ -116,44 +109,62 @@ class EngineInitialized implements EngineInterface {
   }
 }
 
-class EngineNotInitialized implements EngineInterface {
+class NotInitEngineState implements EngineState {
+  #setState: SetState;
+
+  constructor(setState: SetState) {
+    this.#setState = setState;
+  }
+
   async init(arg: InitArg) {
     validateInitArg(arg);
     const core = await resolveInitArg(arg);
     const instance = await WebAssembly.instantiate(core, getImports());
-    afterInstantiate(instance);
+    this.#afterInstantiate(instance);
   }
 
   initSync(arg: InitSyncArg) {
     validateInitArg(arg);
     const core = resolveInitSyncArg(arg);
     const instance = new WebAssembly.Instance(core, getImports());
-    afterInstantiate(instance);
+    this.#afterInstantiate(instance);
   }
 
   async ping(): Promise<string> {
     throw new EngineNotInitError();
   }
+
+  #afterInstantiate(instance: WebAssembly.Instance) {
+    const { exports } = instance;
+    clearCachedMemories();
+    __wbg_set_wasm(exports);
+    start();
+    this.#setState(new InitEngineState());
+  }
 }
 
-class Engine implements EngineInterface {
+class Engine implements EngineState {
+  #state: EngineState;
+
+  constructor() {
+    this.#state = new NotInitEngineState((next) => (this.#state = next));
+  }
+
   async init(core: WebAssembly.Module): Promise<void>;
   async init(provider: AsyncCoreProvider): Promise<void>;
   async init(coreOrProvider: InitArg): Promise<void> {
-    await engineImpl.init(coreOrProvider);
+    await this.#state.init(coreOrProvider);
   }
 
   initSync(core: WebAssembly.Module): void;
   initSync(provider: SyncCoreProvider): void;
   initSync(coreOrProvider: InitSyncArg): void {
-    engineImpl.initSync(coreOrProvider);
+    this.#state.initSync(coreOrProvider);
   }
 
   async ping(): Promise<string> {
-    return await engineImpl.ping();
+    return await this.#state.ping();
   }
 }
-
-let engineImpl = new EngineNotInitialized();
 
 export const engine = new Engine();
