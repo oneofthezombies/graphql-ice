@@ -3,7 +3,7 @@
 
 import { describe, expect, test } from "vitest";
 
-describe("check edge environment", () => {
+describe("check edge-runtime environment", () => {
   test("EdgeRuntime defined", () => {
     expect(EdgeRuntime).toBeDefined();
   });
