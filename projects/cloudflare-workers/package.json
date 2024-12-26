@@ -8,7 +8,7 @@
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"test": "vitest --run"
+		"test": "NODE_DEBUG=vitest-pool-workers:module-fallback,vitest-pool-workers:index vitest --run"
 	},
 	"dependencies": {
 		"@graphql-ice/engine": "0.0.8"
@@ -16,10 +16,7 @@
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.5.2",
 		"@cloudflare/workers-types": "^4.20241218.0",
-		"typescript": "^5.5.2",
-		"vite-plugin-top-level-await": "1.4.4",
-		"vite-plugin-wasm": "3.4.1",
-		"vitest": "2.1.8",
-		"wrangler": "^3.99.0"
+		"wrangler": "^3.99.0",
+		"typescript": "^5.5.2"
 	}
 }
