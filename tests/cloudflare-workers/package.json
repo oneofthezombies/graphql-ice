@@ -11,7 +11,7 @@
 		"test": "NODE_DEBUG=vitest-pool-workers:module-fallback,vitest-pool-workers:index vitest --run"
 	},
 	"dependencies": {
-		"@graphql-ice/engine": "0.0.8"
+		"@graphql-ice/engine": "*"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.5.2",

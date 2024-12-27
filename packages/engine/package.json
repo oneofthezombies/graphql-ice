@@ -14,6 +14,10 @@
       "types": "./dist/generated/core_bg.wasm.d.ts",
       "import": "./dist/generated/core_bg.wasm"
     },
+    "./core.wasm?module": {
+      "types": "./dist/generated/core_bg.wasm.d.ts",
+      "import": "./dist/generated/core_bg.wasm"
+    },
     "./runtime/node": {
       "types": "./dist/runtime/node.d.ts",
       "import": "./dist/runtime/node.js"

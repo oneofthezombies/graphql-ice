@@ -11,13 +11,13 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { engine } from '@graphql-ice/engine';
-import core from '@graphql-ice/engine/core.wasm';
+import { Engine } from '@graphql-ice/engine';
+import core from '@graphql-ice/engine/core.wasm?module';
 
-await engine.init(core);
+const { graphql } = await Engine.init({ core });
 
 export default {
 	async fetch(req, env, ctx) {
-		return new Response(await engine.ping());
+		return new Response(JSON.stringify(await graphql({ schema: {}, source: '' })));
 	},
 } as ExportedHandler<Env>;
