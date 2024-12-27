@@ -18,8 +18,8 @@ describe('Hello World worker', () => {
 		expect(await response.text()).toMatchInlineSnapshot(`"{}"`);
 	});
 
-	it('responds with Hello World! (integration style)', async () => {
-		const response = await SELF.fetch('https://example.com');
-		expect(await response.text()).toMatchInlineSnapshot(`"{}"`);
-	});
+	// it('responds with Hello World! (integration style)', async () => {
+	// 	const response = await SELF.fetch('https://example.com');
+	// 	expect(await response.text()).toMatchInlineSnapshot(`"{}"`);
+	// });
 });

@@ -31,7 +31,7 @@ function cloudflareVitestPoolWorkersFix() {
 }
 
 export default defineWorkersConfig({
-	plugins: [cloudflareVitestPoolWorkersFix()],
+	// plugins: [cloudflareVitestPoolWorkersFix()],
 	test: {
 		poolOptions: {
 			workers: {
