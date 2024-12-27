@@ -1,10 +1,8 @@
 {
-  "name": "vercel-functions-edge",
+  "name": "vercel-functions-edge-nextjs",
   "private": true,
   "type": "module",
-  "scripts": {
-    "test": "vitest --run"
-  },
+  "scripts": {},
   "dependencies": {
     "@graphql-ice/engine": "*"
   }
