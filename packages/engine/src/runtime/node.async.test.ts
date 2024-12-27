@@ -35,3 +35,11 @@ describe("initialize", () => {
     );
   });
 });
+
+describe("graphql", () => {
+  test("graphql", async () => {
+    expect(await Engine.get().graphql({ schema: {}, source: "" })).toBeTypeOf(
+      "object"
+    );
+  });
+});

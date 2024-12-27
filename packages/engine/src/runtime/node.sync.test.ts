@@ -23,3 +23,11 @@ describe("initialize", () => {
     );
   });
 });
+
+describe("graphql", () => {
+  test("graphqlSync", () => {
+    expect(Engine.get().graphqlSync({ schema: {}, source: "" })).toBeTypeOf(
+      "object"
+    );
+  });
+});
