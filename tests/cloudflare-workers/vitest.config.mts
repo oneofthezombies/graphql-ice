@@ -3,7 +3,7 @@ import { Plugin } from 'vitest/config.js';
 
 import path from 'node:path';
 
-function cloudflareVitestPoolWorkersFix() {
+function fixCloudflareVitestPoolWorkers() {
 	const WINDOWS_VOLUME_RE = /^[A-Z]:/i;
 	const WINDOWS_SLASH_RE = /\\/g;
 	const FS_PREFIX = `/@fs/`;
@@ -18,9 +18,8 @@ function cloudflareVitestPoolWorkersFix() {
 		const fsPath = normalizePath(id.startsWith(FS_PREFIX) ? id.slice(FS_PREFIX.length) : id);
 		return fsPath[0] === '/' || WINDOWS_VOLUME_RE.test(fsPath) ? fsPath : `/${fsPath}`;
 	}
-
 	return {
-		name: 'cloudflare-vitest-pool-workers-fix',
+		name: 'fix-cloudflare-vitest-pool-workers',
 		resolveId(id) {
 			if (id.includes('/@fs/') && !id.startsWith('/@fs/')) {
 				const url = new URL(id, 'http://placeholder');
@@ -31,7 +30,7 @@ function cloudflareVitestPoolWorkersFix() {
 }
 
 export default defineWorkersConfig({
-	// plugins: [cloudflareVitestPoolWorkersFix()],
+	plugins: [fixCloudflareVitestPoolWorkers()],
 	test: {
 		poolOptions: {
 			workers: {
