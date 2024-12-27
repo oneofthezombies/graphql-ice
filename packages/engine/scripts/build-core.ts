@@ -73,7 +73,7 @@ function build(outFullDirPath: string, outName: string) {
       "--out-name",
       outName,
       "--target",
-      "bundler",
+      "web",
       "--mode",
       "no-install",
       "--no-pack",
@@ -95,8 +95,6 @@ function postBuild(outFullDirPath: string, outName: string) {
   try {
     process.chdir(outFullDirPath);
     fs.rmSync(".gitignore");
-    fs.rmSync(`${outName}.js`);
-    fs.rmSync(`${outName}.d.ts`);
 
     const wasmRelFilePath = `${outName}_bg.wasm`;
     run("wasm-opt", [wasmRelFilePath, "-o", wasmRelFilePath, "-O3"]);
@@ -105,24 +103,28 @@ function postBuild(outFullDirPath: string, outName: string) {
 // @ts-nocheck
 // cSpell:disable
 `;
-    const jsRelFilePath = `${outName}_bg.js`;
+    const jsRelFilePath = `${outName}.js`;
     const jsContent = fs.readFileSync(jsRelFilePath, "utf8");
     fs.writeFileSync(
       jsRelFilePath,
       `${lintIgnore}
-${jsContent}
-export function clearCachedMemories() {
-  cachedDataViewMemory0 = null;
-  cachedUint8ArrayMemory0 = null;
-}
-`
+${jsContent}`
+    );
+
+    const dtsRelFilePath = `${outName}.d.ts`;
+    const dtsContent = fs.readFileSync(dtsRelFilePath, "utf8");
+    fs.writeFileSync(
+      dtsRelFilePath,
+      `${lintIgnore}
+${dtsContent}`
     );
 
     fs.writeFileSync(
       `${outName}_bg.wasm.d.ts`,
       `${lintIgnore}
-export default {};
-export {};`
+export default {} as WebAssembly.Module;
+export {};
+`
     );
   } finally {
     process.chdir(currentFullDirPath);

@@ -1,10 +1,5 @@
-import {
-  __wbg_set_wasm,
-  start,
-  clearCachedMemories,
-  ping,
-} from "./generated/core_bg.js";
-import * as core_bg from "./generated/core_bg.js";
+import { Executor } from "./executor.js";
+import init, { initSync, ping } from "./generated/core.js";
 
 export class EngineAlreadyInitError extends Error {
   constructor() {
@@ -79,12 +74,6 @@ function resolveInitSyncArg(arg: InitSyncArg): WebAssembly.Module {
   }
 }
 
-function getImports(): WebAssembly.Imports {
-  return {
-    "./core_bg.js": core_bg,
-  };
-}
-
 type InitArg = WebAssembly.Module | AsyncCoreProvider;
 type InitSyncArg = WebAssembly.Module | SyncCoreProvider;
 type SetState = (next: EngineState) => void;
@@ -119,27 +108,19 @@ class NotInitEngineState implements EngineState {
   async init(arg: InitArg) {
     validateInitArg(arg);
     const core = await resolveInitArg(arg);
-    const instance = await WebAssembly.instantiate(core, getImports());
-    this.#afterInstantiate(instance);
+    await init({ module_or_path: core });
+    this.#setState(new InitEngineState());
   }
 
   initSync(arg: InitSyncArg) {
     validateInitArg(arg);
     const core = resolveInitSyncArg(arg);
-    const instance = new WebAssembly.Instance(core, getImports());
-    this.#afterInstantiate(instance);
+    initSync({ module: core });
+    this.#setState(new InitEngineState());
   }
 
   async ping(): Promise<string> {
     throw new EngineNotInitError();
-  }
-
-  #afterInstantiate(instance: WebAssembly.Instance) {
-    const { exports } = instance;
-    clearCachedMemories();
-    __wbg_set_wasm(exports);
-    start();
-    this.#setState(new InitEngineState());
   }
 }
 
