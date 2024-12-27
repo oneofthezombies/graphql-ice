@@ -1,10 +1,20 @@
-import { defineConfig } from "vite";
+import { defineConfig, Plugin } from "vite";
 import deletePlugin from "rollup-plugin-delete";
 import typescript from "vite-plugin-typescript";
 import copy from "rollup-plugin-copy";
 
 export default defineConfig({
   plugins: [
+    deletePlugin({ targets: "dist/*", runOnce: true }),
+    copy({
+      targets: [
+        {
+          src: "src/generated/*.d.ts",
+          dest: "dist/generated",
+        },
+      ],
+      hook: "writeBundle",
+    }),
     typescript({
       tsconfig: "tsconfig.json",
     }),
@@ -14,18 +24,6 @@ export default defineConfig({
     sourcemap: true,
     minify: false,
     rollupOptions: {
-      plugins: [
-        deletePlugin({ targets: "dist/*", runOnce: true }),
-        copy({
-          targets: [
-            {
-              src: "src/generated/*.wasm.d.ts",
-              dest: "dist/generated",
-            },
-          ],
-          hook: "writeBundle",
-        }),
-      ],
       preserveEntrySignatures: "exports-only",
       input: ["./src/index.ts", "./src/runtime/node.ts"],
       output: {

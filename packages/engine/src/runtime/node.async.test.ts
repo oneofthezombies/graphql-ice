@@ -2,38 +2,34 @@
 
 import { describe, expect, test } from "vitest";
 import {
-  engine,
+  Engine,
   EngineAlreadyInitError,
   EngineNotInitError,
 } from "../engine.js";
-import { NodeCoreProvider } from "./node.js";
-
-describe("before initialization", () => {
-  test("ping", async () => {
-    await expect(engine.ping()).rejects.toThrow(EngineNotInitError);
-  });
-});
+import { NodeAdapter } from "./node.js";
 
 describe("initialize", () => {
-  test("init", async () => {
-    expect(await engine.init(new NodeCoreProvider())).toBeUndefined();
+  test("Engine.get", () => {
+    expect(Engine.get()).toThrow(EngineNotInitError);
+  });
+
+  test("Engine.init", async () => {
+    expect(await Engine.init({ adapter: new NodeAdapter() })).toBeUndefined();
+  });
+
+  test("Engine.isInitialized", () => {
+    expect(Engine.isInitialized).toBe(true);
   });
 
   test("init after init", async () => {
-    await expect(engine.init(new NodeCoreProvider())).rejects.toThrow(
+    await expect(Engine.init({ adapter: new NodeAdapter() })).rejects.toThrow(
       EngineAlreadyInitError
     );
   });
 
   test("initSync after init", async () => {
-    expect(() => engine.initSync(new NodeCoreProvider())).toThrow(
+    expect(() => Engine.initSync({ adapter: new NodeAdapter() })).toThrow(
       EngineAlreadyInitError
     );
-  });
-});
-
-describe("ping", () => {
-  test("ping", async () => {
-    expect(await engine.ping()).toBe("pong");
   });
 });

@@ -1,5 +1,4 @@
-import { Executor } from "./executor.js";
-import init, { initSync, ping } from "./generated/core.js";
+import init, { initSync } from "./generated/core.js";
 
 export class EngineAlreadyInitError extends Error {
   constructor() {
@@ -9,143 +8,135 @@ export class EngineAlreadyInitError extends Error {
 
 export class EngineNotInitError extends Error {
   constructor() {
-    super("Engine is not initialized");
+    super("Must be initialized with Engine.init or Engine.initSync.");
   }
 }
 
-export class UnexpectedInitArgError extends Error {
-  constructor(arg: unknown) {
-    super(`Unexpected init argument. arg: ${JSON.stringify(arg)}`);
+export class UnexpectedInitArgsError extends Error {
+  constructor(args: unknown) {
+    super(`Unexpected init arguments. args: ${JSON.stringify(args)}`);
   }
 }
 
-export interface AsyncCoreProvider {
-  provide(): Promise<WebAssembly.Module>;
+export type GraphQLSchema = {};
+
+export type GraphQLArgs = {
+  schema: GraphQLSchema;
+  source: string;
+};
+
+export type ExecutionResult = {};
+
+export type Core = WebAssembly.Module;
+
+export interface Adapter {
+  loadCore(): Promise<Core>;
+  loadCoreSync(): Core;
 }
 
-export interface SyncCoreProvider {
-  provideSync(): WebAssembly.Module;
-}
+type InitArgsWithCore = {
+  core: Core;
+  adapter?: never;
+};
 
-function validateInitArg(arg: any) {
-  if (!arg) {
-    throw new UnexpectedInitArgError(arg);
-  }
-}
+type InitArgsWithAdapter = {
+  core?: never;
+  adapter: Adapter;
+};
 
-async function resolveInitArg(arg: InitArg): Promise<WebAssembly.Module> {
-  if (arg instanceof WebAssembly.Module) {
-    return arg;
-  } else {
-    if (
-      typeof arg === "object" &&
-      "provide" in arg &&
-      typeof arg["provide"] === "function"
-    ) {
-      const maybePromise = arg.provide();
-      if (maybePromise instanceof Promise) {
-        const result = await maybePromise;
-        if (result instanceof WebAssembly.Module) {
-          return result;
-        }
-      }
-    }
+export type InitArgs = InitArgsWithCore | InitArgsWithAdapter;
 
-    throw new UnexpectedInitArgError(arg);
-  }
-}
+export type GraphqlFn = (args: GraphQLArgs) => Promise<ExecutionResult>;
+export type GraphqlSyncFn = (args: GraphQLArgs) => ExecutionResult;
 
-function resolveInitSyncArg(arg: InitSyncArg): WebAssembly.Module {
-  if (arg instanceof WebAssembly.Module) {
-    return arg;
-  } else {
-    if (
-      typeof arg === "object" &&
-      "provideSync" in arg &&
-      typeof arg["provideSync"] === "function"
-    ) {
-      const result = arg.provideSync();
-      if (result instanceof WebAssembly.Module) {
-        return result;
-      }
-    }
+export type InitResult = {
+  graphql: GraphqlFn;
+  graphqlSync: GraphqlSyncFn;
+};
 
-    throw new UnexpectedInitArgError(arg);
-  }
-}
-
-type InitArg = WebAssembly.Module | AsyncCoreProvider;
-type InitSyncArg = WebAssembly.Module | SyncCoreProvider;
-type SetState = (next: EngineState) => void;
-
-interface EngineState {
-  init(arg: InitArg): Promise<void>;
-  initSync(arg: InitSyncArg): void;
-  ping(): Promise<string>;
-}
-
-class InitEngineState implements EngineState {
-  async init() {
+function checkAlreadyInit() {
+  if (Engine.isInitialized) {
     throw new EngineAlreadyInitError();
   }
+}
 
-  initSync() {
-    throw new EngineAlreadyInitError();
-  }
+type ParseArgsResult = {
+  core: Core;
+};
 
-  async ping(): Promise<string> {
-    return await ping();
+async function parseArgs(args: InitArgs): Promise<ParseArgsResult> {
+  checkAlreadyInit();
+  if (args.core) {
+    return { core: args.core };
+  } else if (args.adapter) {
+    const core = await args.adapter.loadCore();
+    return { core };
+  } else {
+    throw new UnexpectedInitArgsError(args);
   }
 }
 
-class NotInitEngineState implements EngineState {
-  #setState: SetState;
-
-  constructor(setState: SetState) {
-    this.#setState = setState;
-  }
-
-  async init(arg: InitArg) {
-    validateInitArg(arg);
-    const core = await resolveInitArg(arg);
-    await init({ module_or_path: core });
-    this.#setState(new InitEngineState());
-  }
-
-  initSync(arg: InitSyncArg) {
-    validateInitArg(arg);
-    const core = resolveInitSyncArg(arg);
-    initSync({ module: core });
-    this.#setState(new InitEngineState());
-  }
-
-  async ping(): Promise<string> {
-    throw new EngineNotInitError();
+function parseArgsSync(args: InitArgs): ParseArgsResult {
+  checkAlreadyInit();
+  if (args.core) {
+    return { core: args.core };
+  } else if (args.adapter) {
+    const core = args.adapter.loadCoreSync();
+    return { core };
+  } else {
+    throw new UnexpectedInitArgsError(args);
   }
 }
 
-class Engine implements EngineState {
-  #state: EngineState;
+export class Engine {
+  static async init(args: InitArgs): Promise<InitResult> {
+    const { core } = await parseArgs(args);
+    await init({
+      module_or_path: core,
+    });
 
-  constructor() {
-    this.#state = new NotInitEngineState((next) => (this.#state = next));
+    return {
+      graphql: async (args) => {
+        return {} satisfies ExecutionResult;
+      },
+      graphqlSync: (args) => {
+        return {} satisfies ExecutionResult;
+      },
+    };
   }
 
-  async init(core: WebAssembly.Module): Promise<void>;
-  async init(provider: AsyncCoreProvider): Promise<void>;
-  async init(coreOrProvider: InitArg): Promise<void> {
-    await this.#state.init(coreOrProvider);
+  static initSync(args: InitArgs): InitResult {
+    const { core } = parseArgsSync(args);
+    initSync({
+      module: core,
+    });
+
+    return {
+      graphql: async (args) => {
+        return {} satisfies ExecutionResult;
+      },
+      graphqlSync: (args) => {
+        return {} satisfies ExecutionResult;
+      },
+    };
   }
 
-  initSync(core: WebAssembly.Module): void;
-  initSync(provider: SyncCoreProvider): void;
-  initSync(coreOrProvider: InitSyncArg): void {
-    this.#state.initSync(coreOrProvider);
+  static get isInitialized(): boolean {
+    return "__wbindgen_wasm_module" in init;
   }
 
-  async ping(): Promise<string> {
-    return await this.#state.ping();
+  static get(): InitResult {
+    if (!Engine.isInitialized) {
+      throw new EngineNotInitError();
+    }
+
+    return {
+      graphql: async (args) => {
+        return {} satisfies ExecutionResult;
+      },
+      graphqlSync: (args) => {
+        return {} satisfies ExecutionResult;
+      },
+    };
   }
 }
-
-export const engine = new Engine();

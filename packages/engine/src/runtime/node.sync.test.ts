@@ -1,29 +1,23 @@
 // @vitest-environment node
 
 import { describe, expect, test } from "vitest";
-import { engine, EngineAlreadyInitError } from "../engine.js";
-import { NodeCoreProvider } from "./node.js";
+import { Engine, EngineAlreadyInitError } from "../engine.js";
+import { NodeAdapter } from "./node.js";
 
 describe("initialize", () => {
   test("initSync", async () => {
-    expect(engine.initSync(new NodeCoreProvider())).toBeUndefined();
+    expect(Engine.initSync({ adapter: new NodeAdapter() })).toBeUndefined();
   });
 
   test("initSync after initSync", async () => {
-    expect(() => engine.initSync(new NodeCoreProvider())).toThrow(
+    expect(() => Engine.initSync({ adapter: new NodeAdapter() })).toThrow(
       EngineAlreadyInitError
     );
   });
 
   test("init after initSync", async () => {
-    await expect(engine.init(new NodeCoreProvider())).rejects.toThrow(
+    await expect(Engine.init({ adapter: new NodeAdapter() })).rejects.toThrow(
       EngineAlreadyInitError
     );
-  });
-});
-
-describe("ping", () => {
-  test("ping", async () => {
-    expect(await engine.ping()).toBe("pong");
   });
 });
