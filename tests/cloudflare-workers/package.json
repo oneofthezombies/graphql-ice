@@ -1,6 +1,5 @@
 {
 	"name": "cloudflare-workers",
-	"version": "0.0.0",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -18,7 +17,6 @@
 		"@graphql-ice/fix-cloudflare-vitest-pool-workers-plugin": "*",
 		"@cloudflare/vitest-pool-workers": "^0.5.2",
 		"@cloudflare/workers-types": "^4.20241218.0",
-		"wrangler": "^3.99.0",
-		"typescript": "^5.5.2"
+		"wrangler": "^3.99.0"
 	}
 }
