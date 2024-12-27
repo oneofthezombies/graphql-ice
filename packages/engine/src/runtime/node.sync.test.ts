@@ -6,7 +6,9 @@ import { NodeAdapter } from "./node.js";
 
 describe("initialize", () => {
   test("initSync", async () => {
-    expect(Engine.initSync({ adapter: new NodeAdapter() })).toBeUndefined();
+    expect(Engine.initSync({ adapter: new NodeAdapter() })).toBeTypeOf(
+      "object"
+    );
   });
 
   test("initSync after initSync", async () => {

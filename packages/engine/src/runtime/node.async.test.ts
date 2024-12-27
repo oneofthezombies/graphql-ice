@@ -10,11 +10,13 @@ import { NodeAdapter } from "./node.js";
 
 describe("initialize", () => {
   test("Engine.get", () => {
-    expect(Engine.get()).toThrow(EngineNotInitError);
+    expect(() => Engine.get()).toThrow(EngineNotInitError);
   });
 
   test("Engine.init", async () => {
-    expect(await Engine.init({ adapter: new NodeAdapter() })).toBeUndefined();
+    expect(await Engine.init({ adapter: new NodeAdapter() })).toBeTypeOf(
+      "object"
+    );
   });
 
   test("Engine.isInitialized", () => {
