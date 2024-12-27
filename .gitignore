@@ -165,4 +165,5 @@ dist
 
 build/
 generated/
-.vercel
+.vercel/
+.wrangler/
