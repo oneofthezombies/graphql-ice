@@ -12,12 +12,13 @@
  */
 
 import { Engine } from '@graphql-ice/engine';
-import core from '@graphql-ice/engine/core.wasm?module';
+import core from '@graphql-ice/engine/core.wasm';
 
 const { graphql } = await Engine.init({ core });
 
 export default {
 	async fetch(req, env, ctx) {
-		return new Response(JSON.stringify(await graphql({ schema: {}, source: '' })));
+		const result = await graphql({ schema: {}, source: '' });
+		return new Response(JSON.stringify(result));
 	},
 } as ExportedHandler<Env>;

@@ -11,7 +11,7 @@ export const config = {
   runtime: "edge",
 };
 
-const { graphql } = await Engine.init({ core });
+const { graphql } = Engine.initSync({ core });
 
 export async function GET(request: Request) {
   const result = await graphql({ schema: {}, source: "" });
