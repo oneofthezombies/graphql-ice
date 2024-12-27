@@ -8,7 +8,7 @@
     "dev": "wrangler dev",
     "test": "npm run test:wasm && npm run test:wasm-query-module",
     "test:debug": "NODE_DEBUG=vitest-pool-workers:module-fallback,vitest-pool-workers:index vitest --run",
-    "test:wasm": "ICE_WRANGLER_CONFIG_PATH=wrangler.wasm.toml vitest --run src/wasm.test.ts",
+    "test:wasm": "vitest --run src/index.test.ts",
     "test:wasm-query-module": "ICE_WRANGLER_CONFIG_PATH=wrangler.wasm-query-module.toml vitest --run src/wasm-query-module.test.ts"
   },
   "dependencies": {

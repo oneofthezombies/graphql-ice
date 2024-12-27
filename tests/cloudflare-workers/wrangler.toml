@@ -1,6 +1,6 @@
 # :schema /graphql-ice/node_modules/wrangler/config-schema.json
 name = "cloudflare-workers"
-main = "src/wasm.ts"
+main = "src/index.ts"
 compatibility_date = "2024-12-18"
 compatibility_flags = ["nodejs_compat"]
 
