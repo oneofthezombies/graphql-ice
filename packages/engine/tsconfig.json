@@ -1,15 +1,14 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
-    "emitDeclarationOnly": true,
-    "stripInternal": true,
     "declaration": true,
-    "declarationMap": true,
-    "outDir": "dist",
     "declarationDir": "dist",
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
     "rootDir": "src"
   },
-  "exclude": ["node_modules", "dist", "src/**/*.test.ts"],
+  "exclude": ["dist", "node_modules", "src/**/*.test.ts"],
+  "extends": "../../tsconfig.json",
   "include": ["src"]
 }

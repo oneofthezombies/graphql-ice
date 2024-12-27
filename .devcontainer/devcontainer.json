@@ -60,6 +60,7 @@
           "errorlens",
           "fptoint",
           "multivalue",
+          "nodenext",
           "nontrapping",
           "rustflags",
           "rustup",
