@@ -1,22 +1,20 @@
 {
-	"name": "cloudflare-workers",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"cf-typegen": "wrangler types",
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev",
-		"test:debug": "NODE_DEBUG=vitest-pool-workers:module-fallback,vitest-pool-workers:index vitest --run",
-		"test": "vitest --run"
-	},
-	"dependencies": {
-		"@graphql-ice/engine": "*"
-	},
-	"devDependencies": {
-		"@graphql-ice/fix-cloudflare-vitest-pool-workers-plugin": "*",
-		"@cloudflare/vitest-pool-workers": "^0.5.2",
-		"@cloudflare/workers-types": "^4.20241218.0",
-		"wrangler": "^3.99.0"
-	}
+  "name": "cloudflare-workers",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "cf-typegen": "wrangler types",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "test": "npm run test:wasm && npm run test:wasm-query-module",
+    "test:debug": "NODE_DEBUG=vitest-pool-workers:module-fallback,vitest-pool-workers:index vitest --run",
+    "test:wasm": "ICE_WRANGLER_CONFIG_PATH=wrangler.wasm.toml vitest --run src/wasm.test.ts",
+    "test:wasm-query-module": "ICE_WRANGLER_CONFIG_PATH=wrangler.wasm-query-module.toml vitest --run src/wasm-query-module.test.ts"
+  },
+  "dependencies": {
+    "@graphql-ice/engine": "*"
+  },
+  "devDependencies": {
+    "@graphql-ice/fix-cloudflare-vitest-pool-workers-plugin": "*"
+  }
 }

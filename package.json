@@ -19,6 +19,8 @@
     "vite-plugin-top-level-await": "1.4.4",
     "vite-plugin-typescript": "1.0.4",
     "vite-plugin-wasm": "3.4.1",
-    "vitest": "2.1.8"
+    "vitest": "2.1.8",
+    "@cloudflare/vitest-pool-workers": "0.5.40",
+    "@cloudflare/workers-types": "4.20241218.0"
   }
 }

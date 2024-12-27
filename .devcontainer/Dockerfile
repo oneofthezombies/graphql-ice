@@ -53,6 +53,7 @@ RUN volta install vercel@39.2.2
 RUN volta install create-next-app@15.1.2
 RUN volta install webpack@5.97.1
 RUN volta install webpack-cli@6.0.1
+RUN volta install wrangler@3.99.0
 
 RUN unset DEBIAN_FRONTEND
 
