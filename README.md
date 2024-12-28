@@ -4,14 +4,14 @@ A WebAssembly-based GraphQL engine library focused on edge computing.
 
 ## Supported Platforms
 
-| Platform           | Runtime           | Language              |
-| ------------------ | ----------------- | --------------------- |
-| Cloudflare Workers | V8 Isolates-based | JavaScript/TypeScript |
-| Vercel Edge        | V8 Isolates-based | JavaScript/TypeScript |
-| Deno Deploy        | V8 Isolates-based | JavaScript/TypeScript |
-| Node.js            | Node.js           | JavaScript/TypeScript |
-| Deno               | Deno              | JavaScript/TypeScript |
-| Fastly Compute     | Wasmtime          | Rust                  |
+| Platform           | Language                | Runtime           | Environment         |
+| ------------------ | ----------------------- | ----------------- | ------------------- |
+| Cloudflare Workers | JavaScript / TypeScript | V8 Isolates-based | Edge                |
+| Vercel Edge        | JavaScript / TypeScript | V8 Isolates-based | Edge                |
+| Deno Deploy        | JavaScript / TypeScript | V8 Isolates-based | Edge                |
+| Node.js            | JavaScript / TypeScript | Node.js           | Cloud / Self-hosted |
+| Deno               | JavaScript / TypeScript | Deno              | Cloud / Self-hosted |
+| Fastly Compute     | Rust                    | Wasmtime          | Edge                |
 
 ## License
 

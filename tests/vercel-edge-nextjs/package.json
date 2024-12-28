@@ -1,5 +1,5 @@
 {
-  "name": "vercel-functions-edge-nextjs",
+  "name": "vercel-edge-nextjs",
   "private": true,
   "type": "module",
   "scripts": {},

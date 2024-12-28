@@ -58,6 +58,7 @@
           "cdylib",
           "devcontainers",
           "errorlens",
+          "fastly",
           "fptoint",
           "multivalue",
           "nodenext",
@@ -67,6 +68,7 @@
           "tamasfe",
           "tlsv1",
           "usernamehw",
+          "wasmtime",
           "wbindgen"
         ],
         "editor.rulers": [80],
