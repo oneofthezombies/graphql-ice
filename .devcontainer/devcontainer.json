@@ -70,6 +70,12 @@
           "wbindgen"
         ],
         "editor.rulers": [80],
+        "rust-analyzer.rustfmt.extraArgs": [
+          "--config",
+          "--config",
+          "group_imports=StdExternalCrate",
+          "imports_granularity=Item"
+        ],
         "typescript.inlayHints.enumMemberValues.enabled": true,
         "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
         "typescript.inlayHints.parameterNames.enabled": "all",

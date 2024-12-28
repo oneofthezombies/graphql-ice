@@ -42,4 +42,8 @@ describe("graphql", () => {
       "object"
     );
   });
+
+  test("triggerPanic", () => {
+    expect(() => Engine.get().triggerPanic()).toThrow("unreachable");
+  });
 });

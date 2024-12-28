@@ -1,53 +1,35 @@
-use std::panic;
+#![no_std]
 
 use wasm_bindgen::prelude::*;
 use web_sys::console;
+use web_sys::js_sys::Object;
 
 #[wasm_bindgen]
-#[derive(Debug)]
-pub enum GraphQLError {
-    Dummy,
-}
-
-#[wasm_bindgen]
-#[derive(Debug)]
-pub struct GraphQLSchema {}
-
-#[wasm_bindgen]
-#[derive(Debug)]
-pub struct ExecutionResult {
-    errors: Option<Vec<GraphQLError>>,
-    data: Option<JsValue>,
-    extensions: Option<JsValue>,
-}
-
-#[wasm_bindgen]
-#[derive(Debug)]
-pub struct GraphQLArgs {
-    schema: GraphQLSchema,
-    source: String,
-}
-
-#[wasm_bindgen]
-pub async fn graphql(args: &GraphQLArgs) -> Result<ExecutionResult, JsError> {
-    Ok(ExecutionResult {
-        errors: None,
-        data: None,
-        extensions: None,
-    })
+pub async fn graphql(args: &Object) -> Result<Object, JsError> {
+    Ok(Object::new())
 }
 
 #[wasm_bindgen(js_name = graphqlSync)]
-pub fn graphql_sync(args: &GraphQLArgs) -> Result<ExecutionResult, JsError> {
-    Ok(ExecutionResult {
-        errors: None,
-        data: None,
-        extensions: None,
-    })
+pub fn graphql_sync(args: &Object) -> Result<Object, JsError> {
+    Ok(Object::new())
+}
+
+#[inline(never)]
+fn trigger_panic_0() {
+    panic!("panic triggered!");
+}
+
+#[inline(never)]
+fn trigger_panic_1() {
+    trigger_panic_0();
+}
+
+#[wasm_bindgen(js_name = triggerPanic)]
+pub fn trigger_panic() {
+    trigger_panic_1();
 }
 
 #[wasm_bindgen(start)]
 fn on_start() {
-    panic::set_hook(Box::new(console_error_panic_hook::hook));
     console::log_1(&"GraphQL Ice initialized.".into());
 }

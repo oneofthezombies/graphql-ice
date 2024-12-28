@@ -97,7 +97,7 @@ function postBuild(outFullDirPath: string, outName: string) {
     fs.rmSync(".gitignore");
 
     const wasmRelFilePath = `${outName}_bg.wasm`;
-    run("wasm-opt", [wasmRelFilePath, "-o", wasmRelFilePath, "-O3"]);
+    run("wasm-opt", [wasmRelFilePath, "-o", wasmRelFilePath, "-O1", "-g"]);
 
     const lintIgnore = `/* eslint-disable */
 // @ts-nocheck
@@ -143,29 +143,34 @@ export declare module "@graphql-ice/engine/core.wasm?module" {
   }
 }
 
-function deleteBuild(buildFullDirPath: string, wasmName: string) {
-  const currentFullDirPath = process.cwd();
-  try {
-    process.chdir(buildFullDirPath);
-    fs.rmSync(`${wasmName}.wasm`, { force: true });
-    fs.rmSync(`${wasmName}.wasm.d.ts`, { force: true });
-    fs.rmSync(`${wasmName}-bindings.js`, { force: true });
-    fs.rmSync(`${wasmName}-bindings.d.ts`, { force: true });
-  } finally {
-    process.chdir(currentFullDirPath);
+const Profile = ["debug", "release"] as const;
+type Profile = (typeof Profile)[number];
+type ArgsResult = {
+  profile: Profile;
+};
+function parseArgs(): ArgsResult {
+  const args = process.argv.slice(2);
+  let result: ArgsResult = {
+    profile: "release",
+  };
+
+  const arg0 = args[0];
+  if (arg0.startsWith("--")) {
+    const profile = arg0.slice(2) as Profile;
+    if (Profile.includes(profile)) {
+      result.profile = profile;
+    }
   }
+
+  return result;
 }
 
-function copyBuild(srcFullDirPath: string, dstFullDirPath: string) {
-  console.log(`Copy build... from: ${srcFullDirPath} to: ${dstFullDirPath}`);
-  fs.cpSync(srcFullDirPath, dstFullDirPath, {
-    recursive: true,
-    force: true,
-  });
+function main() {
+  const wasmName = "core";
+  const buildFullDirPath = path.resolve("src/generated");
+  rm(buildFullDirPath);
+  build(buildFullDirPath, wasmName);
+  postBuild(buildFullDirPath, wasmName);
 }
 
-const wasmName = "core";
-const buildFullDirPath = path.resolve("src/generated");
-rm(buildFullDirPath);
-build(buildFullDirPath, wasmName);
-postBuild(buildFullDirPath, wasmName);
+main();

@@ -1,4 +1,4 @@
-import init, { initSync } from "./generated/core.js";
+import init, { initSync, triggerPanic } from "./generated/core.js";
 
 export class EngineAlreadyInitError extends Error {
   constructor() {
@@ -52,6 +52,7 @@ export type GraphqlSyncFn = (args: GraphQLArgs) => ExecutionResult;
 export type InitResult = {
   graphql: GraphqlFn;
   graphqlSync: GraphqlSyncFn;
+  triggerPanic: () => void;
 };
 
 function checkAlreadyInit() {
@@ -102,6 +103,9 @@ export class Engine {
       graphqlSync: (args) => {
         return {} satisfies ExecutionResult;
       },
+      triggerPanic: () => {
+        triggerPanic();
+      },
     };
   }
 
@@ -117,6 +121,9 @@ export class Engine {
       },
       graphqlSync: (args) => {
         return {} satisfies ExecutionResult;
+      },
+      triggerPanic: () => {
+        triggerPanic();
       },
     };
   }
@@ -136,6 +143,9 @@ export class Engine {
       },
       graphqlSync: (args) => {
         return {} satisfies ExecutionResult;
+      },
+      triggerPanic: () => {
+        triggerPanic();
       },
     };
   }
