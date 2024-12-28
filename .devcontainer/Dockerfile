@@ -46,7 +46,7 @@ RUN volta install esbuild@0.24.2
 RUN volta install eslint@9.17.0
 RUN volta install sort-package-json@2.12.0
 RUN volta install tsx@4.19.2
-RUN volta install typescript@5.7.2
+RUN volta install typescript@5.6.2
 RUN volta install vite@6.0.5
 RUN volta install vitest@2.1.8
 RUN volta install vercel@39.2.2
@@ -54,6 +54,9 @@ RUN volta install create-next-app@15.1.2
 RUN volta install webpack@5.97.1
 RUN volta install webpack-cli@6.0.1
 RUN volta install wrangler@3.99.0
+
+RUN curl -fsSL https://deno.land/install.sh | sh -s v2.1.4
+ENV PATH="/home/vscode/.deno/bin:${PATH}"
 
 RUN unset DEBIAN_FRONTEND
 

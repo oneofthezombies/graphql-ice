@@ -2,8 +2,7 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/*",
-    "tests/*"
+    "packages/*"
   ],
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "0.5.40",
@@ -16,6 +15,7 @@
     "@types/react": "19.0.2",
     "@types/react-dom": "19.0.2",
     "@vercel/node": "5.0.0",
+    "glob": "11.0.0",
     "rollup-plugin-copy": "3.5.0",
     "rollup-plugin-delete": "2.1.0",
     "rollup-plugin-esbuild": "6.1.1",
