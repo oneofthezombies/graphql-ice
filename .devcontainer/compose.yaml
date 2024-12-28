@@ -1,9 +1,9 @@
 services:
-  graphql-ice:
+  graphql-steel:
     build:
       context: ../
       dockerfile: .devcontainer/Dockerfile
     volumes:
-      - ../:/graphql-ice
+      - ../:/graphql-steel
     network_mode: host
     restart: 'no'

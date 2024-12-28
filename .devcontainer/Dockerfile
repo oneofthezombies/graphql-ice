@@ -15,7 +15,7 @@ RUN apt clean && \
     rm -rf /var/lib/apt/lists/*
 
 USER vscode
-WORKDIR /graphql-ice
+WORKDIR /graphql-steel
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/home/vscode/.cargo/bin:${PATH}"
@@ -39,7 +39,8 @@ ENV PATH="/home/vscode/binaryen/bin:${PATH}"
 RUN curl https://get.volta.sh | bash
 ENV PATH="/home/vscode/.volta/bin:${PATH}"
 RUN volta install node@22.12.0
-RUN volta install npm@10.9.2
+RUN volta install npm@11.0.0
+
 RUN volta install create-cloudflare@2.35.1
 RUN volta install esbuild@0.24.2
 RUN volta install eslint@9.17.0

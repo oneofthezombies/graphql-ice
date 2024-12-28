@@ -90,6 +90,6 @@
   "dockerComposeFile": "./compose.yaml",
   "overrideCommand": true,
   "postCreateCommand": "npm install --workspaces",
-  "service": "graphql-ice",
-  "workspaceFolder": "/graphql-ice"
+  "service": "graphql-steel",
+  "workspaceFolder": "/graphql-steel"
 }
