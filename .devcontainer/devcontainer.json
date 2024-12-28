@@ -2,6 +2,7 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "denoland.vscode-deno",
         "donjayamanne.githistory",
         "esbenp.prettier-vscode",
         "rust-lang.rust-analyzer",
@@ -51,7 +52,7 @@
           "editor.defaultFormatter": "esbenp.prettier-vscode",
           "editor.formatOnSave": true
         },
-        "cSpell.ignorePaths": ["**/*.js.map", "**/*.d.ts.map"],
+        "cSpell.ignorePaths": ["**/*.d.ts.map", "**/*.js.map"],
         "cSpell.words": [
           "binaryen",
           "bindgen",
@@ -69,14 +70,15 @@
           "tlsv1",
           "usernamehw",
           "wasmtime",
-          "wbindgen"
+          "wbindgen",
+          "denoland"
         ],
         "editor.rulers": [80],
         "rust-analyzer.rustfmt.extraArgs": [
           "--config",
+          "imports_granularity=Item",
           "--config",
-          "group_imports=StdExternalCrate",
-          "imports_granularity=Item"
+          "group_imports=StdExternalCrate"
         ],
         "typescript.inlayHints.enumMemberValues.enabled": true,
         "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
