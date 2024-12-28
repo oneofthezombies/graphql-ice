@@ -5,12 +5,12 @@ use web_sys::console;
 use web_sys::js_sys::Object;
 
 #[wasm_bindgen]
-pub async fn graphql(args: &Object) -> Result<Object, JsError> {
+pub async fn graphql(args: &JsValue) -> Result<Object, JsError> {
     Ok(Object::new())
 }
 
 #[wasm_bindgen(js_name = graphqlSync)]
-pub fn graphql_sync(args: &Object) -> Result<Object, JsError> {
+pub fn graphql_sync(args: &JsValue) -> Result<Object, JsError> {
     Ok(Object::new())
 }
 
