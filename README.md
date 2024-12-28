@@ -1,7 +1,17 @@
-# GraphQL Ice
+# GraphQL Steel
 
-GraphQL Ice is a JavaScript/TypeScript GraphQL server library designed for  
-Edge Functions built on V8 Isolates.
+A WebAssembly-based GraphQL engine library focused on edge computing.
+
+## Supported Platforms
+
+| Platform           | Runtime           | Language              |
+| ------------------ | ----------------- | --------------------- |
+| Cloudflare Workers | V8 Isolates-based | JavaScript/TypeScript |
+| Vercel Edge        | V8 Isolates-based | JavaScript/TypeScript |
+| Deno Deploy        | V8 Isolates-based | JavaScript/TypeScript |
+| Node.js            | Node.js           | JavaScript/TypeScript |
+| Deno               | Deno              | JavaScript/TypeScript |
+| Fastly Compute     | Wasmtime          | Rust                  |
 
 ## License
 
