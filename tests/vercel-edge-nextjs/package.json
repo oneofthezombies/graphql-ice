@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "@graphql-steel/engine": "*",
-    "next": "15.1.2",
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "next": "15.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "@types/react": "19.0.2",
+    "typescript": "5.7.2"
   }
 }
