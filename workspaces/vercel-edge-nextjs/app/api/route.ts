@@ -2,6 +2,7 @@ import { Engine } from "@graphql-steel/engine";
 import core from "@graphql-steel/engine/core.wasm?module";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 const { graphql } = await Engine.init({ core });
 
