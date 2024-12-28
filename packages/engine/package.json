@@ -1,6 +1,6 @@
 {
-  "name": "@graphql-ice/engine",
-  "version": "0.0.8",
+  "name": "@graphql-steel/engine",
+  "version": "0.0.2",
   "license": "MIT",
   "author": "oneofthezombies <hunhoekim@gmail.com>",
   "sideEffects": false,
@@ -16,7 +16,7 @@
     },
     "./core.wasm?module": {
       "types": "./dist/generated/core_bg.wasm.d.ts",
-      "import": "./dist/generated/core_bg.wasm"
+      "import": "./dist/generated/core_bg.wasm?module"
     },
     "./runtime/node": {
       "types": "./dist/runtime/node.d.ts",

@@ -49,7 +49,6 @@ RUN volta install tsx@4.19.2
 RUN volta install typescript@5.7.2
 RUN volta install vite@6.0.5
 RUN volta install vitest@2.1.8
-RUN volta install wasm-pack@0.13.1
 RUN volta install vercel@39.2.2
 RUN volta install create-next-app@15.1.2
 RUN volta install webpack@5.97.1

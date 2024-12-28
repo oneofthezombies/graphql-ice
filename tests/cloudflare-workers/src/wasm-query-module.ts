@@ -1,5 +1,5 @@
-import { Engine } from "@graphql-ice/engine";
-import core from "@graphql-ice/engine/core.wasm?module";
+import { Engine } from "@graphql-steel/engine";
+import core from "@graphql-steel/engine/core.wasm?module";
 
 const { graphql } = await Engine.init({ core });
 

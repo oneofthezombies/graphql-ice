@@ -11,6 +11,10 @@ export default defineConfig({
     copy({
       targets: [
         {
+          src: "src/generated/*.wasm",
+          dest: "dist/generated",
+        },
+        {
           src: "src/generated/*.d.ts",
           dest: "dist/generated",
         },

@@ -1,9 +1,0 @@
-{
-  "name": "vercel-edge-nextjs",
-  "private": true,
-  "type": "module",
-  "scripts": {},
-  "dependencies": {
-    "@graphql-ice/engine": "*"
-  }
-}

@@ -1,5 +1,5 @@
 {
-  "name": "@graphql-ice/fix-cloudflare-vitest-pool-workers-plugin",
+  "name": "@graphql-steel/fix-cloudflare-vitest-pool-workers-plugin",
   "version": "0.0.0",
   "license": "MIT",
   "author": "oneofthezombies <hunhoekim@gmail.com>",

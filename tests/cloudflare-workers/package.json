@@ -6,15 +6,16 @@
     "cf-typegen": "wrangler types",
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
+    "dev:wasm-query-module": "wrangler dev -c wrangler.wasm-query-module.toml",
     "test": "npm run test:wasm && npm run test:wasm-query-module",
     "test:debug": "NODE_DEBUG=vitest-pool-workers:module-fallback,vitest-pool-workers:index vitest --run",
     "test:wasm": "vitest --run src/index.test.ts",
-    "test:wasm-query-module": "ICE_WRANGLER_CONFIG_PATH=wrangler.wasm-query-module.toml vitest --run src/wasm-query-module.test.ts"
+    "test:wasm-query-module": "STEEL_WRANGLER_CONFIG_PATH=wrangler.wasm-query-module.toml vitest --run src/wasm-query-module.test.ts"
   },
   "dependencies": {
-    "@graphql-ice/engine": "*"
+    "@graphql-steel/engine": "*"
   },
   "devDependencies": {
-    "@graphql-ice/fix-cloudflare-vitest-pool-workers-plugin": "*"
+    "@graphql-steel/fix-cloudflare-vitest-pool-workers-plugin": "*"
   }
 }

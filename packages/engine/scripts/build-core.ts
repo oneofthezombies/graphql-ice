@@ -63,30 +63,23 @@ function build(outFullDirPath: string, outName: string) {
     "+sign-ext",
     "+simd128",
   ];
-  run(
-    "wasm-pack",
-    [
-      "build",
-      "--release",
-      "--out-dir",
-      outFullDirPath,
-      "--out-name",
-      outName,
-      "--target",
-      "web",
-      "--mode",
-      "no-install",
-      "--no-pack",
-      "--no-opt",
-    ],
-    {
-      cwd: coreCrateFullDirPath,
-      env: {
-        ...process.env,
-        RUSTFLAGS: "-Ctarget-feature=" + targetFeatures.join(","),
-      },
-    }
-  );
+  run("cargo", ["build", "--release", "--target=wasm32-unknown-unknown"], {
+    cwd: coreCrateFullDirPath,
+    env: {
+      ...process.env,
+      RUSTFLAGS: "-Ctarget-feature=" + targetFeatures.join(","),
+    },
+  });
+  run("wasm-bindgen", [
+    "--out-dir",
+    outFullDirPath,
+    "--out-name",
+    outName,
+    "--target",
+    "web",
+    "--omit-default-module-path",
+    "../../target/wasm32-unknown-unknown/release/graphql_ice_core.wasm",
+  ]);
 }
 
 function postBuild(outFullDirPath: string, outName: string) {
@@ -94,7 +87,6 @@ function postBuild(outFullDirPath: string, outName: string) {
   const currentFullDirPath = process.cwd();
   try {
     process.chdir(outFullDirPath);
-    fs.rmSync(".gitignore");
 
     const wasmRelFilePath = `${outName}_bg.wasm`;
     run("wasm-opt", [wasmRelFilePath, "-o", wasmRelFilePath, "-O1", "-g"]);
