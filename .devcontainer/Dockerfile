@@ -11,6 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt install -y curl
 RUN apt install -y git
+RUN apt install -y xdg-utils
 RUN apt clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -40,7 +41,6 @@ RUN curl https://get.volta.sh | bash
 ENV PATH="/home/vscode/.volta/bin:${PATH}"
 RUN volta install node@22.12.0
 RUN volta install npm@11.0.0
-
 RUN volta install create-cloudflare@2.35.1
 RUN volta install esbuild@0.24.2
 RUN volta install eslint@9.17.0
@@ -57,6 +57,7 @@ RUN volta install wrangler@3.99.0
 
 RUN curl -fsSL https://deno.land/install.sh | sh -s v2.1.4
 ENV PATH="/home/vscode/.deno/bin:${PATH}"
+RUN deno install -Ag jsr:@deno/deployctl@1.13.0
 
 RUN unset DEBIAN_FRONTEND
 

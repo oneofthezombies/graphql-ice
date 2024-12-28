@@ -1,0 +1,11 @@
+{
+  "deploy": {
+    "project": "8f119861-48e5-44c9-a910-92c3f4c6c085",
+    "exclude": ["**/node_modules"],
+    "include": [],
+    "entrypoint": "main.ts"
+  },
+  "imports": {
+    "@graphql-steel/engine": "../engine"
+  }
+}
