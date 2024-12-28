@@ -8,7 +8,7 @@ export class EngineAlreadyInitError extends Error {
 
 export class EngineNotInitError extends Error {
   constructor() {
-    super("Must be initialized with Engine.init or Engine.initSync.");
+    super("Must be initialized with initIce or Engine.initSync.");
   }
 }
 
