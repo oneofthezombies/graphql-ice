@@ -17,7 +17,7 @@ export default defineConfig({
     minify: false,
     rollupOptions: {
       preserveEntrySignatures: "exports-only",
-      input: ["./src/default.ts", "./src/node.ts"],
+      input: ["./src/default.ts", "./src/node.ts", "./src/deno.ts"],
       output: {
         preserveModules: true,
         preserveModulesRoot: "src",

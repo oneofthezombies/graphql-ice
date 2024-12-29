@@ -1,8 +1,9 @@
-import { graphql, initOnce } from "@graphql-steel/steel";
-import core from "@graphql-steel/steel/core_bg.wasm";
+import { graphql, deno } from "@graphql-steel/steel";
+const { initOnce } = deno;
+
+await initOnce();
 
 Deno.serve(async () => {
-  await initOnce(core);
   const result = await graphql({ schema: {}, source: "" });
   return new Response(JSON.stringify(result));
 });

@@ -1,12 +1,16 @@
 {
   "name": "@graphql-steel/steel",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "author": "oneofthezombies <hunhoekim@gmail.com>",
   "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
+      "deno": {
+        "types": "./dist/deno.d.ts",
+        "import": "./dist/deno.js"
+      },
       "node": {
         "types": "./dist/node.d.ts",
         "import": "./dist/node.js"
