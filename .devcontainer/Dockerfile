@@ -15,6 +15,10 @@ RUN apt install -y xdg-utils
 RUN apt clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN wget https://github.com/supabase/cli/releases/download/v2.1.1/supabase_2.1.1_linux_arm64.deb && \
+    dpkg -i supabase_2.1.1_linux_arm64.deb && \
+    rm -f supabase_2.1.1_linux_arm64.deb
+
 USER vscode
 WORKDIR /graphql-steel
 

@@ -63,6 +63,7 @@
           "cdylib",
           "denoland",
           "devcontainers",
+          "dpkg",
           "errorlens",
           "fastly",
           "fptoint",
