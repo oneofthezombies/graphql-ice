@@ -1,8 +1,9 @@
 // @vitest-environment node
 
 import { describe, expect, test } from "vitest";
-import { graphqlSync, isInitialized } from "./steel.js";
-import { initOnceSync } from "./runtime/node.js";
+import { graphqlSync, isInitialized, node } from "./index-node.js";
+
+const { initOnceSync } = node;
 
 describe("initialize", () => {
   test("isInitialized", () => {

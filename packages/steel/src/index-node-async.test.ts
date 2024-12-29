@@ -1,8 +1,9 @@
 // @vitest-environment node
 
 import { describe, expect, test } from "vitest";
-import { graphql, isInitialized, triggerPanic } from "./steel.js";
-import { initOnce, initOnceSync } from "./runtime/node.js";
+import { graphql, isInitialized, node, triggerPanic } from "./index-node.js";
+
+const { initOnce, initOnceSync } = node;
 
 describe("initialize", () => {
   test("isInitialized", () => {
