@@ -1,0 +1,6 @@
+{
+  "name": "deno-deploy",
+  "dependencies": {
+    "@graphql-steel/steel": "*"
+  }
+}

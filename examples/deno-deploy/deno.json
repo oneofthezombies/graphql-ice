@@ -6,6 +6,6 @@
     "entrypoint": "main.ts"
   },
   "imports": {
-    "@graphql-steel/engine": "../engine"
+    "@graphql-steel/steel": "npm:@graphql-steel/steel"
   }
 }

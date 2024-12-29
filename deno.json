@@ -1,0 +1,6 @@
+{
+  "workspace": ["examples/deno-deploy"],
+  "imports": {
+    "chalk": "npm:chalk@5"
+  }
+}

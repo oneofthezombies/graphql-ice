@@ -1,4 +1,4 @@
-import { Engine } from "@graphql-steel/engine";
-import core from "@graphql-steel/engine/core.wasm";
+import { initOnce } from "@graphql-steel/steel";
+import core from "@graphql-steel/steel/core_bg.wasm";
 
 Deno.serve(() => new Response("Hello, world!"));
