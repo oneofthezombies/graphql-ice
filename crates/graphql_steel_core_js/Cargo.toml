@@ -1,0 +1,17 @@
+[package]
+name = "graphql_steel_core_js"
+repository.workspace = true
+license.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen.workspace = true
+wasm-bindgen-futures.workspace = true
+web-sys.workspace = true
+
+[dev-dependencies]
+wasm-bindgen-test.workspace = true

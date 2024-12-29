@@ -164,6 +164,6 @@ dist
 ##############
 
 build/
-generated/
+gen/
 .vercel/
 .wrangler/

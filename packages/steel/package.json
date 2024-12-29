@@ -1,0 +1,40 @@
+{
+  "name": "@graphql-steel/steel",
+  "version": "0.0.4",
+  "license": "MIT",
+  "author": "oneofthezombies <hunhoekim@gmail.com>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "node": {
+        "types": "./dist/index-node.d.ts",
+        "import": "./dist/index-node.js"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    },
+    "./core_bg.wasm": {
+      "types": "./gen/core_bg.wasm.d.ts",
+      "default": "./gen/core_bg.wasm"
+    },
+    "./core_bg.wasm?module": {
+      "types": "./gen/core_bg.wasm.d.ts",
+      "default": "./gen/core_bg.wasm?module"
+    }
+  },
+  "files": [
+    "dist",
+    "gen"
+  ],
+  "scripts": {
+    "build:core": "tsx scripts/build-core-js.ts ",
+    "build": "npm run build:core && vite build",
+    "test": "vitest --run"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

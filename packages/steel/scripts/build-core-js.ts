@@ -47,9 +47,9 @@ function rm(path: string) {
   fs.rmSync(path, { recursive: true, force: true });
 }
 
-function build(outFullDirPath: string, outName: string) {
-  const coreCrateFullDirPath = path.resolve(process.cwd(), "../../crates/core");
-  console.log(`Build... path: ${coreCrateFullDirPath}`);
+function build(crateName: string, outFullDirPath: string, outName: string) {
+  const crateFullDirPath = path.resolve(`../../crates/${crateName}`);
+  console.log(`Build... path: ${crateFullDirPath}`);
   const targetFeatures = [
     "+atomics",
     "+bulk-memory",
@@ -64,7 +64,7 @@ function build(outFullDirPath: string, outName: string) {
     "+simd128",
   ];
   run("cargo", ["build", "--release", "--target=wasm32-unknown-unknown"], {
-    cwd: coreCrateFullDirPath,
+    cwd: crateFullDirPath,
     env: {
       ...process.env,
       RUSTFLAGS: "-Ctarget-feature=" + targetFeatures.join(","),
@@ -78,11 +78,11 @@ function build(outFullDirPath: string, outName: string) {
     "--target",
     "web",
     "--omit-default-module-path",
-    "../../target/wasm32-unknown-unknown/release/graphql_ice_core.wasm",
+    `../../target/wasm32-unknown-unknown/release/${crateName}.wasm`,
   ]);
 }
 
-function postBuild(outFullDirPath: string, outName: string) {
+function postBuild(crateName: string, outFullDirPath: string, outName: string) {
   console.log(`Post build core... path: ${outFullDirPath}`);
   const currentFullDirPath = process.cwd();
   try {
@@ -91,42 +91,35 @@ function postBuild(outFullDirPath: string, outName: string) {
     const wasmRelFilePath = `${outName}_bg.wasm`;
     run("wasm-opt", [wasmRelFilePath, "-o", wasmRelFilePath, "-O1", "-g"]);
 
-    const lintIgnore = `/* eslint-disable */
-// @ts-nocheck
-// cSpell:disable
-`;
-    const jsRelFilePath = `${outName}.js`;
-    const jsContent = fs.readFileSync(jsRelFilePath, "utf8");
-    fs.writeFileSync(
-      jsRelFilePath,
-      `${lintIgnore}
-${jsContent}`
-    );
+    //     const lintIgnore = `/* eslint-disable */
+    // // @ts-nocheck
+    // // cSpell:disable
+    // `;
+    //     const jsRelFilePath = `${outName}.js`;
+    //     const jsContent = fs.readFileSync(jsRelFilePath, "utf8");
+    //     fs.writeFileSync(
+    //       jsRelFilePath,
+    //       `${lintIgnore}
+    // ${jsContent}`
+    //     );
 
-    const dtsRelFilePath = `${outName}.d.ts`;
-    const dtsContent = fs.readFileSync(dtsRelFilePath, "utf8");
-    fs.writeFileSync(
-      dtsRelFilePath,
-      `${lintIgnore}
-${dtsContent}`
-    );
+    //     const dtsRelFilePath = `${outName}.d.ts`;
+    //     const dtsContent = fs.readFileSync(dtsRelFilePath, "utf8");
+    //     fs.writeFileSync(
+    //       dtsRelFilePath,
+    //       `${lintIgnore}
+    // ${dtsContent}`
+    //     );
 
     fs.writeFileSync(
       `${outName}_bg.wasm.d.ts`,
-      `${lintIgnore}
-import { Core } from "../engine.js";
-
-export default {} as Core;
+      `export default {} as WebAssembly.Module;
 export {};
-
-export declare module "@graphql-ice/engine/core.wasm" {
-  const core: Core;
-  export default core;
+export declare module "@graphql-steel/steel/core_bg.wasm" {
+  export default WebAssembly.Module;
 }
-
-export declare module "@graphql-ice/engine/core.wasm?module" {
-  const core: Core;
-  export default core;
+export declare module "@graphql-steel/steel/core_bg.wasm?module" {
+  export default WebAssembly.Module;
 }
 `
     );
@@ -135,34 +128,13 @@ export declare module "@graphql-ice/engine/core.wasm?module" {
   }
 }
 
-const Profile = ["debug", "release"] as const;
-type Profile = (typeof Profile)[number];
-type ArgsResult = {
-  profile: Profile;
-};
-function parseArgs(): ArgsResult {
-  const args = process.argv.slice(2);
-  let result: ArgsResult = {
-    profile: "release",
-  };
-
-  const arg0 = args[0];
-  if (arg0.startsWith("--")) {
-    const profile = arg0.slice(2) as Profile;
-    if (Profile.includes(profile)) {
-      result.profile = profile;
-    }
-  }
-
-  return result;
-}
-
 function main() {
+  const crateName = "graphql_steel_core_js";
   const wasmName = "core";
-  const buildFullDirPath = path.resolve("src/generated");
+  const buildFullDirPath = path.resolve("gen");
   rm(buildFullDirPath);
-  build(buildFullDirPath, wasmName);
-  postBuild(buildFullDirPath, wasmName);
+  build(crateName, buildFullDirPath, wasmName);
+  postBuild(crateName, buildFullDirPath, wasmName);
 }
 
 main();

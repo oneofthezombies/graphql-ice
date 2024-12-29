@@ -52,7 +52,11 @@
           "editor.defaultFormatter": "esbenp.prettier-vscode",
           "editor.formatOnSave": true
         },
-        "cSpell.ignorePaths": ["**/*.d.ts.map", "**/*.js.map"],
+        "cSpell.ignorePaths": [
+          "**/*.d.ts.map",
+          "**/*.js.map",
+          "packages/steel/gen"
+        ],
         "cSpell.words": [
           "binaryen",
           "bindgen",

@@ -8,19 +8,19 @@ const isTest = process.env.MODE === "test";
 export default defineConfig({
   plugins: [
     isTest && deletePlugin({ targets: "dist/*", runOnce: true }),
-    copy({
-      targets: [
-        {
-          src: "src/generated/*.wasm",
-          dest: "dist/generated",
-        },
-        {
-          src: "src/generated/*.d.ts",
-          dest: "dist/generated",
-        },
-      ],
-      hook: "writeBundle",
-    }),
+    // copy({
+    //   targets: [
+    //     {
+    //       src: "src/generated/*.wasm",
+    //       dest: "dist/generated",
+    //     },
+    //     {
+    //       src: "src/generated/*.d.ts",
+    //       dest: "dist/generated",
+    //     },
+    //   ],
+    //   hook: "writeBundle",
+    // }),
     typescript({
       tsconfig: "tsconfig.json",
     }),
