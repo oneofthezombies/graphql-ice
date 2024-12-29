@@ -25,12 +25,7 @@ export default defineConfig({
         format: "es",
         entryFileNames: "[name].js",
         chunkFileNames: "[name]-[hash].js",
-        assetFileNames: (info) => {
-          if (info.names[0] === "core_bg.wasm") {
-            return info.originalFileNames[0].replace(/^src\//, "");
-          }
-          return "[name][extname]";
-        },
+        assetFileNames: "[name][extname]",
       },
       external: ["node:fs", "node:path", "node:url", /.*\.\/gen\/.+\.js/],
     },
