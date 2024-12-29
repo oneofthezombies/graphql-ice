@@ -1,26 +1,12 @@
-import { defineConfig, Plugin } from "vite";
+import { defineConfig } from "vite";
 import deletePlugin from "rollup-plugin-delete";
 import typescript from "vite-plugin-typescript";
-import copy from "rollup-plugin-copy";
 
 const isTest = process.env.MODE === "test";
 
 export default defineConfig({
   plugins: [
     isTest && deletePlugin({ targets: "dist/*", runOnce: true }),
-    // copy({
-    //   targets: [
-    //     {
-    //       src: "src/generated/*.wasm",
-    //       dest: "dist/generated",
-    //     },
-    //     {
-    //       src: "src/generated/*.d.ts",
-    //       dest: "dist/generated",
-    //     },
-    //   ],
-    //   hook: "writeBundle",
-    // }),
     typescript({
       tsconfig: "tsconfig.json",
     }),
@@ -31,7 +17,7 @@ export default defineConfig({
     minify: false,
     rollupOptions: {
       preserveEntrySignatures: "exports-only",
-      input: ["./src/index.ts", "./src/index-node.ts"],
+      input: ["./src/default.ts", "./src/node.ts"],
       output: {
         preserveModules: true,
         preserveModulesRoot: "src",
@@ -46,7 +32,7 @@ export default defineConfig({
           return "[name][extname]";
         },
       },
-      external: ["node:fs", "node:path", "node:url", /.*\.\/gen\/core\.js/],
+      external: ["node:fs", "node:path", "node:url", /.*\.\/gen\/.+\.js/],
     },
   },
 });

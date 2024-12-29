@@ -1,7 +1,7 @@
 // @vitest-environment node
 
 import { describe, expect, test } from "vitest";
-import { graphqlSync, isInitialized, node } from "./index-node.js";
+import { graphqlSync, isInitialized, node } from "./node.js";
 
 const { initOnceSync } = node;
 
