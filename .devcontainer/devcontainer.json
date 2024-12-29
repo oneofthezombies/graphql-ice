@@ -61,6 +61,7 @@
           "binaryen",
           "bindgen",
           "cdylib",
+          "denoland",
           "devcontainers",
           "errorlens",
           "fastly",
@@ -70,12 +71,12 @@
           "nontrapping",
           "rustflags",
           "rustup",
+          "supabase",
           "tamasfe",
           "tlsv1",
           "usernamehw",
           "wasmtime",
-          "wbindgen",
-          "denoland"
+          "wbindgen"
         ],
         "editor.rulers": [80],
         "rust-analyzer.rustfmt.extraArgs": [
