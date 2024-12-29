@@ -8,8 +8,7 @@ export default defineConfig({
   plugins: [
     !isTest && deletePlugin({ targets: "dist/*", runOnce: true }),
     typescript({
-      tsconfig: "tsconfig.json",
-      exclude: !isTest ? [],
+      tsconfig: !isTest ? "tsconfig.build.json" : "tsconfig.json",
     }),
   ].filter(Boolean),
   build: {
