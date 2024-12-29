@@ -4,8 +4,5 @@
     "exclude": ["**/node_modules"],
     "include": [],
     "entrypoint": "main.ts"
-  },
-  "imports": {
-    "@graphql-steel/steel": "npm:@graphql-steel/steel"
   }
 }
