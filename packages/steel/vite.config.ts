@@ -31,7 +31,7 @@ export default defineConfig({
     minify: false,
     rollupOptions: {
       preserveEntrySignatures: "exports-only",
-      input: ["./src/index.ts", "./src/runtime/node.ts"],
+      input: ["./src/index.ts", "./src/index-node.ts"],
       output: {
         preserveModules: true,
         preserveModulesRoot: "src",
@@ -46,7 +46,7 @@ export default defineConfig({
           return "[name][extname]";
         },
       },
-      external: ["node:fs", "node:path", "node:url"],
+      external: ["node:fs", "node:path", "node:url", /.*\.\/gen\/core\.js/],
     },
   },
 });
