@@ -1,7 +1,6 @@
-import { defineConfig, Plugin } from "vite";
+import { defineConfig } from "vite";
 import deletePlugin from "rollup-plugin-delete";
 import typescript from "vite-plugin-typescript";
-import copy from "rollup-plugin-copy";
 
 const isTest = process.env.MODE === "test";
 
