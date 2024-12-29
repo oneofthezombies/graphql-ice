@@ -1,7 +1,7 @@
-import { Engine } from "@graphql-steel/engine";
-import core from "@graphql-steel/engine/core.wasm";
+import { graphql, initOnce } from "@graphql-steel/steel";
+import core from "@graphql-steel/steel/core_bg.wasm";
 
-const { graphql } = await Engine.init({ core });
+await initOnce(core);
 
 export default {
   async fetch(req, env, ctx) {
