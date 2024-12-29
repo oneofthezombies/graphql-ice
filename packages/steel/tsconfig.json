@@ -8,7 +8,7 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "exclude": ["dist", "node_modules", "gen", "src/**/*.test.ts"],
+  "exclude": ["dist", "node_modules", "gen"],
   "extends": "../../tsconfig.json",
   "include": ["src"]
 }
