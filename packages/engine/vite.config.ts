@@ -18,11 +18,11 @@ export default defineConfig({
     rollupOptions: {
       preserveEntrySignatures: "exports-only",
       input: [
-        "./src/index-default.ts",
-        "./src/index-node.ts",
         "./src/index-deno.ts",
+        "./src/index-node.ts",
+        "./src/index-edge.ts",
         "./src/index-browser.ts",
-        "./src/index-worker.ts",
+        "./src/index-default.ts",
       ],
       output: {
         preserveModules: true,
