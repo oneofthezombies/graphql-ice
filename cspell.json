@@ -6,5 +6,5 @@
     "typescriptreact": true,
     "rust": true
   },
-  "words": []
+  "words": ["supabase"]
 }
