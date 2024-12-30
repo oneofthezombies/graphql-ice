@@ -1,4 +1,5 @@
 /engine.wasm
 /engine.wasm.d.ts
+/engine.wat
 /src/engine-exports.d.ts
 /src/engine-imports.js
