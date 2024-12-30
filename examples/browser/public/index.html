@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<body>
+  <script type="module">
+    import { initOnce } from "https://esm.sh/@graphql-steel/steel";
+    import core from "https://esm.sh/@graphql-steel/steel/core_bg.wasm?module";
+    await initOnce(core);
+    console.log("GraphQL Steel initialized!");
+  </script>
+  Graphql Steel Browser Example
+</body>
+</html>
