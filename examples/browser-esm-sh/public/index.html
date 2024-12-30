@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <body>
   <script type="module">
-    import { browser } from "https://esm.sh/@graphql-steel/engine@0.0.6";
-    await browser.initIdempotently();
+    import { browser } from "https://esm.sh/@graphql-steel/engine@0.0.7";
+    import engineWasmModule from "https://esm.sh/@graphql-steel/engine@0.0.7/engine.wasm?module";
+    await browser.initIdempotently(engineWasmModule);
   </script>
   Graphql Steel Example - esm.sh
 </body>
