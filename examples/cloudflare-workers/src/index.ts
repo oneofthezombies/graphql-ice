@@ -1,6 +1,6 @@
-import { graphql, workerd } from "@graphql-steel/engine";
+import { graphql, worker } from "@graphql-steel/engine";
 import engineWasmModule from "@graphql-steel/engine/engine.wasm";
-const { initIdempotently } = workerd;
+const { initIdempotently } = worker;
 
 await initIdempotently(engineWasmModule);
 
