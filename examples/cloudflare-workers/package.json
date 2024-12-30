@@ -7,10 +7,12 @@
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
     "dev:wasm-query-module": "wrangler dev -c wrangler.wasm-query-module.toml",
-    "test": "npm run test:wasm && npm run test:wasm-query-module",
+    "dev:init-sync": "wrangler dev -c wrangler.init-sync.toml",
+    "test": "npm run test:wasm && npm run test:wasm-query-module && npm run test:init-sync",
     "test:debug": "NODE_DEBUG=vitest-pool-workers:module-fallback,vitest-pool-workers:index vitest --run",
     "test:wasm": "vitest --run src/index.test.ts",
-    "test:wasm-query-module": "STEEL_WRANGLER_CONFIG_PATH=wrangler.wasm-query-module.toml vitest --run src/wasm-query-module.test.ts"
+    "test:wasm-query-module": "STEEL_WRANGLER_CONFIG_PATH=wrangler.wasm-query-module.toml vitest --run src/wasm-query-module.test.ts",
+    "test:init-sync": "STEEL_WRANGLER_CONFIG_PATH=wrangler.init-sync.toml vitest --run src/wasm-query-module.test.ts"
   },
   "dependencies": {
     "@graphql-steel/engine": "*"

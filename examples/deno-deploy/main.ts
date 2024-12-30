@@ -1,7 +1,7 @@
-import { graphql, deno } from "@graphql-steel/steel";
-const { initOnce } = deno;
+import { graphql, deno } from "@graphql-steel/engine";
+const { initIdempotently } = deno;
 
-await initOnce();
+await initIdempotently();
 
 Deno.serve(async () => {
   const result = await graphql({ schema: {}, source: "" });

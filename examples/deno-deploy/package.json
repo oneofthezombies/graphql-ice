@@ -2,6 +2,6 @@
   "name": "deno-deploy",
   "private": true,
   "dependencies": {
-    "@graphql-steel/steel": "*"
+    "@graphql-steel/engine": "*"
   }
 }
