@@ -21,5 +21,9 @@
   "scripts": {
     "build": "tsx ../../scripts/build-engine-js.ts --debug",
     "test": "vitest --run"
-  }
+  },
+  "files": [
+    "engine.wasm",
+    "engine.wasm.d.ts"
+  ]
 }

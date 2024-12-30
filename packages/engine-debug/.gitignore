@@ -1,2 +1,2 @@
-/engine*.d.ts
-/engine*.wasm
+*
+!/package.json

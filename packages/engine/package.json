@@ -35,5 +35,10 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "engine.wasm",
+    "engine.wasm.d.ts"
+  ]
 }
