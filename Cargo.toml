@@ -1,18 +1,20 @@
 [workspace]
 resolver = "2"
-members = ["crates/graphql_steel_core", "crates/graphql_steel_core_js"]
+members = ["crates/graphql_steel_engine", "crates/graphql_steel_engine_js"]
 
 [workspace.package]
-repository = "https://github.com/oneofthezombies/graphql-ice"
+repository = "https://github.com/oneofthezombies/graphql-steel"
 license = "MIT OR Apache-2.0"
 edition = "2021"
 authors = ["oneofthezombies <hunhoekim@gmail.com>"]
 
 [workspace.dependencies]
+# cSpell:disable
 wasm-bindgen = "0.2.99"
 wasm-bindgen-futures = "0.4.49"
 web-sys = { version = "0.3.76", features = ["console"] }
 wasm-bindgen-test = "0.3.49"
+# cSpell:enable
 
 [profile.release]
 panic = "abort"

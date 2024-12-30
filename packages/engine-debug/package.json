@@ -1,0 +1,25 @@
+{
+  "name": "@graphql-steel/engine-debug",
+  "version": "0.0.5",
+  "license": "MIT",
+  "author": "oneofthezombies <hunhoekim@gmail.com>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "./engine.wasm": {
+      "types": "./engine.wasm.d.ts",
+      "default": "./engine.wasm"
+    },
+    "./engine.wasm?module": {
+      "types": "./engine.wasm.d.ts",
+      "default": "./engine.wasm?module"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsx ../../scripts/build-engine-js.ts --debug",
+    "test": "vitest --run"
+  }
+}

@@ -1,6 +1,6 @@
 *
 !./index*.d.ts
 !./index*.js
-!./core*.d.ts
-!./core*.js
-!./core*.wasm
+!./engine*.d.ts
+!./engine*.js
+!./engine*.wasm

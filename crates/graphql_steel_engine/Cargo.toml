@@ -1,5 +1,5 @@
 [package]
-name = "graphql_steel_core"
+name = "graphql_steel_engine"
 repository.workspace = true
 license.workspace = true
 edition.workspace = true

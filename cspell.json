@@ -4,6 +4,6 @@
     "typescript": true,
     "typescriptreact": true
   },
-  "ignorePaths": ["crates/*/Cargo.toml"],
-  "words": []
+  "ignorePaths": [],
+  "words": ["supabase"]
 }
