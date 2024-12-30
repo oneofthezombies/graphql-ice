@@ -1,0 +1,7 @@
+{
+  "name": "esm-sh",
+  "private": true,
+  "scripts": {
+    "dev": "tsx main.ts"
+  }
+}

@@ -1,0 +1,5 @@
+./index*.js
+./index*.d.ts
+./core*.js
+./core*.d.ts
+./core*.wasm

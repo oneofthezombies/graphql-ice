@@ -1,0 +1,25 @@
+{
+  "name": "@graphql-steel/debug",
+  "version": "0.0.5",
+  "license": "MIT",
+  "author": "oneofthezombies <hunhoekim@gmail.com>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "./core.wasm": {
+      "types": "./core.wasm.d.ts",
+      "default": "./core.wasm"
+    },
+    "./core.wasm?module": {
+      "types": "./core.wasm.d.ts",
+      "default": "./core.wasm?module"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsx ../../scripts/build-core.ts --debug",
+    "test": "vitest --run"
+  }
+}

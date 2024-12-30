@@ -2,6 +2,6 @@
   "name": "browser",
   "private": true,
   "scripts": {
-    "dev": ""
+    "dev": "tsx main.ts"
   }
 }

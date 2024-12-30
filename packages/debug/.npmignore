@@ -1,0 +1,3 @@
+*
+!./core*.d.ts
+!./core*.wasm
