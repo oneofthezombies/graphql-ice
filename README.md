@@ -12,6 +12,7 @@ A WebAssembly-based GraphQL engine library focused on edge computing.
 | Supabase Edge Function          | JavaScript / TypeScript | Deno-based        | Edge                |
 | Deno                            | JavaScript / TypeScript | Deno              | Cloud / Self-hosted |
 | Node.js                         | JavaScript / TypeScript | Node.js           | Cloud / Self-hosted |
+| Chrome / Safari                 | JavaScript / TypeScript | Web Standard      | Browser             |
 
 ## License
 
