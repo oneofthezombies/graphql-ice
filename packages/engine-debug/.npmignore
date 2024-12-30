@@ -1,3 +1,3 @@
 *
-!./engine*.d.ts
-!./engine*.wasm
+!/engine*.d.ts
+!/engine*.wasm
