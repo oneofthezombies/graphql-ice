@@ -4,6 +4,6 @@
     "typescript": true,
     "typescriptreact": true
   },
-  "ignorePaths": [],
-  "words": ["supabase"]
+  "ignorePaths": ["packages/engine/src/engine-bindings.js", "packages/*/dist"],
+  "words": ["supabase", "idempotently"]
 }

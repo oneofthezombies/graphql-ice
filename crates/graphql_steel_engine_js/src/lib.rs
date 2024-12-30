@@ -6,7 +6,7 @@ use web_sys::js_sys::Object;
 
 #[wasm_bindgen(start)]
 pub fn on_start() {
-    console::log_1(&"GraphQL Ice initialized.".into());
+    console::log_1(&"GraphQL Steel engine initialized.".into());
 }
 
 #[wasm_bindgen]

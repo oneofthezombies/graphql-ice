@@ -17,7 +17,12 @@ export default defineConfig({
     minify: false,
     rollupOptions: {
       preserveEntrySignatures: "exports-only",
-      input: ["./src/default.ts", "./src/node.ts", "./src/deno.ts"],
+      input: [
+        "./src/index-default.ts",
+        "./src/index-node.ts",
+        "./src/index-deno.ts",
+        "./src/index-browser.ts",
+      ],
       output: {
         preserveModules: true,
         preserveModulesRoot: "src",

@@ -7,26 +7,30 @@
   "type": "module",
   "exports": {
     ".": {
+      "browser": {
+        "types": "./dist/index-browser.d.ts",
+        "import": "./dist/index-browser.js"
+      },
       "deno": {
-        "types": "./index.deno.d.ts",
-        "import": "./index.deno.js"
+        "types": "./dist/index-deno.d.ts",
+        "import": "./dist/index-deno.js"
       },
       "node": {
-        "types": "./index.node.d.ts",
-        "import": "./index.node.js"
+        "types": "./dist/index-node.d.ts",
+        "import": "./dist/index-node.js"
       },
       "default": {
-        "types": "./index.d.ts",
-        "import": "./index.js"
+        "types": "./dist/index-default.d.ts",
+        "import": "./dist/index-default.js"
       }
     },
-    "./core.wasm": {
-      "types": "./core.wasm.d.ts",
-      "default": "./core.wasm"
+    "./engine.wasm": {
+      "types": "./engine.wasm.d.ts",
+      "default": "./engine.wasm"
     },
-    "./core.wasm?module": {
-      "types": "./core.wasm.d.ts",
-      "default": "./core.wasm?module"
+    "./engine.wasm?module": {
+      "types": "./engine.wasm.d.ts",
+      "default": "./engine.wasm?module"
     }
   },
   "scripts": {

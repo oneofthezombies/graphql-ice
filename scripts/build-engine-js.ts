@@ -133,14 +133,13 @@ function postBuild(profile: string, buildFullDirPath: string) {
     }
 
     fs.rmSync("engine.js");
+    fs.rmSync("engine.d.ts");
     fs.rmSync("engine_bg.wasm.d.ts");
     if (profile === "debug") {
       fs.rmSync("engine_bg.js");
-      fs.rmSync("engine.d.ts");
       fs.writeFileSync("engine.wasm.d.ts", getWasmDtsContent("engine-debug"));
     } else if (profile === "release") {
-      fs.renameSync("engine_bg.js", "src/engine-imports.js");
-      fs.renameSync("engine.d.ts", "src/engine-exports.d.ts");
+      fs.renameSync("engine_bg.js", "src/engine-bindings.js");
       fs.writeFileSync("engine.wasm.d.ts", getWasmDtsContent("engine"));
     }
   } finally {

@@ -1,29 +1,29 @@
 // @vitest-environment node
 
 import { describe, expect, test } from "vitest";
-import { graphql, isInitialized, node, triggerPanic } from "./node.js";
+import { graphql, isInitialized, node, triggerPanic } from "./index-node.js";
 
-const { initOnce, initOnceSync } = node;
+const { initIdempotently, initIdempotentlySync } = node;
 
 describe("initialize", () => {
   test("isInitialized", () => {
     expect(isInitialized()).toBe(false);
   });
 
-  test("initOnce", async () => {
-    expect(await initOnce()).toBe(undefined);
+  test("initIdempotently", async () => {
+    expect(await initIdempotently()).toBe(undefined);
   });
 
   test("isInitialized", () => {
     expect(isInitialized()).toBe(true);
   });
 
-  test("initOnce after initialized", async () => {
-    expect(await initOnce()).toBe(undefined);
+  test("initIdempotently after initialized", async () => {
+    expect(await initIdempotently()).toBe(undefined);
   });
 
-  test("initOnceSync after initialized", async () => {
-    expect(initOnceSync()).toBe(undefined);
+  test("initIdempotentlySync after initialized", async () => {
+    expect(initIdempotentlySync()).toBe(undefined);
   });
 });
 
