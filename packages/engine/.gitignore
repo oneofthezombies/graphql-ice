@@ -1,6 +1,4 @@
-*
-!/src/
-!/tests/
-!/package.json
-!/tsconfig*.json
-!/vite*.config.ts
+/engine.wasm
+/engine.wasm.d.ts
+/src/engine-exports.d.ts
+/src/engine-imports.js
