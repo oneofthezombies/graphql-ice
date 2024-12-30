@@ -30,7 +30,7 @@
     }
   },
   "scripts": {
-    "build": "tsx ../../scripts/build-core.ts --release && vite build",
+    "build": "tsx ../../scripts/build-engine-js.ts && vite build",
     "test": "vitest --run"
   },
   "publishConfig": {
