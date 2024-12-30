@@ -1,10 +1,9 @@
 {
   "enabledFileTypes": {
-    "json": true,
-    "jsonc": true,
+    "rust": true,
     "typescript": true,
-    "typescriptreact": true,
-    "rust": true
+    "typescriptreact": true
   },
-  "words": ["supabase"]
+  "ignorePaths": ["crates/*/Cargo.toml"],
+  "words": []
 }

@@ -1,5 +1,5 @@
 {
-  "name": "esm-sh",
+  "name": "browser-esm-sh",
   "private": true,
   "scripts": {
     "dev": "tsx main.ts"
