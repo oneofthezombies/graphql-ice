@@ -1,5 +1,6 @@
-import { graphql, initIdempotently } from "@graphql-steel/engine";
+import { graphql, edgeLight } from "@graphql-steel/engine";
 import core from "@graphql-steel/engine/engine.wasm?module";
+const { initIdempotently } = edgeLight;
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
