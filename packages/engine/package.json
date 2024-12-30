@@ -1,6 +1,6 @@
 {
   "name": "@graphql-steel/engine",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "author": "oneofthezombies <hunhoekim@gmail.com>",
   "sideEffects": false,
@@ -34,7 +34,7 @@
     }
   },
   "scripts": {
-    "build": "tsx ../../scripts/build-engine-js.ts && vite build",
+    "build": "tsx ../../scripts/build-engine-js.ts &&  tsx scripts/update-package-version-ts.ts && vite build",
     "test": "vitest --run"
   },
   "publishConfig": {
