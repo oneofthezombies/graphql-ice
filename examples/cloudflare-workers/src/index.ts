@@ -1,5 +1,6 @@
-import { graphql, initIdempotently } from "@graphql-steel/engine";
+import { graphql, workerd } from "@graphql-steel/engine";
 import engineWasmModule from "@graphql-steel/engine/engine.wasm";
+const { initIdempotently } = workerd;
 
 await initIdempotently(async (imports) => {
   return await WebAssembly.instantiate(engineWasmModule, imports);

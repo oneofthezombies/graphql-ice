@@ -1,6 +1,6 @@
 {
   "name": "@graphql-steel/engine",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "license": "MIT",
   "author": "oneofthezombies <hunhoekim@gmail.com>",
   "sideEffects": false,
