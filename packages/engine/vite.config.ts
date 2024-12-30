@@ -22,8 +22,7 @@ export default defineConfig({
         "./src/index-node.ts",
         "./src/index-deno.ts",
         "./src/index-browser.ts",
-        "./src/index-workerd.ts",
-        "./src/index-edge-light.ts",
+        "./src/index-worker.ts",
       ],
       output: {
         preserveModules: true,
