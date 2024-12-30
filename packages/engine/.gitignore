@@ -1,5 +1,8 @@
 ./index*.js
 ./index*.d.ts
-./core*.js
-./core*.d.ts
-./core*.wasm
+./engine*.js
+./engine*.d.ts
+./engine*.wasm
+./src/engine*.js
+./src/engine*.d.ts
+./src/engine*.wasm
