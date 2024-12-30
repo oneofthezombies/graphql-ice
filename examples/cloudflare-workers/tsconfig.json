@@ -39,7 +39,7 @@
     /* Skip type checking all .d.ts files. */
     "skipLibCheck": true,
 
-    "customConditions": ["worker"]
+    "customConditions": ["workerd"]
   },
   "exclude": ["src/**/*.test.ts"],
   "include": ["worker-configuration.d.ts", "src/**/*.ts"]
