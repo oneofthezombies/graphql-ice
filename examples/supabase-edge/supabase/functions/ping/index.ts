@@ -4,18 +4,14 @@
 
 // Setup type definitions for built-in Supabase Runtime APIs
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { deno, graphql } from "npm:@graphql-steel/steel";
+const { initOnce } = deno;
 
-console.log("Hello from Functions!");
+await initOnce();
 
 Deno.serve(async (req) => {
-  const { name } = await req.json();
-  const data = {
-    message: `Hello ${name}!`,
-  };
-
-  return new Response(JSON.stringify(data), {
-    headers: { "Content-Type": "application/json" },
-  });
+  const result = await graphql({ schema: {}, source: "" });
+  return new Response(JSON.stringify(result));
 });
 
 /* To invoke locally:

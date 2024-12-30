@@ -52,7 +52,6 @@
           "editor.defaultFormatter": "esbenp.prettier-vscode",
           "editor.formatOnSave": true
         },
-        "deno.enablePaths": ["examples/supabase-edge"],
         "editor.rulers": [80],
         "typescript.inlayHints.enumMemberValues.enabled": true,
         "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
