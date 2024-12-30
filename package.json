@@ -3,7 +3,8 @@
   "type": "module",
   "workspaces": [
     "examples/*",
-    "packages/*"
+    "packages/*",
+    "examples/supabase-edge/supabase/functions/*"
   ],
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "0.5.40",

@@ -1,7 +1,0 @@
-{
-  "name": "supabase-edge-ping",
-  "private": true,
-  "dependencies": {
-    "@graphql-steel/steel": "*"
-  }
-}

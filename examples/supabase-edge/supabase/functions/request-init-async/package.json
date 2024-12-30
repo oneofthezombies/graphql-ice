@@ -1,0 +1,7 @@
+{
+  "name": "supabase-edge-request-init-async",
+  "private": true,
+  "dependencies": {
+    "@graphql-steel/engine": "*"
+  }
+}

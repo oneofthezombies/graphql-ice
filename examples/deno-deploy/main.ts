@@ -1,4 +1,4 @@
-import { graphql, deno } from "@graphql-steel/engine";
+import { graphql, deno } from "npm:@graphql-steel/engine";
 const { initIdempotently, initIdempotentlySync } = deno;
 
 // initIdempotentlySync();
