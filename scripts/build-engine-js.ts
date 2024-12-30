@@ -108,6 +108,18 @@ function build(profile: string, buildFullDirPath: string) {
   );
 }
 
+function getWasmDtsContent(packageName: string) {
+  return `export {};
+export default {} as WebAssembly.Module;
+export declare module "@graphql-steel/${packageName}/core.wasm" {
+  export default WebAssembly.Module;
+}
+export declare module "@graphql-steel/${packageName}/core.wasm?module" {
+  export default WebAssembly.Module;
+}
+`;
+}
+
 function postBuild(profile: string, buildFullDirPath: string) {
   console.log(`Post build... profile: ${profile}`);
   const currentFullDirPath = process.cwd();
@@ -120,18 +132,16 @@ function postBuild(profile: string, buildFullDirPath: string) {
       run("wasm-opt", [wasmRelFilePath, "-o", wasmRelFilePath, "-O3"]);
     }
 
-    //     fs.writeFileSync(
-    //       `${outName}_bg.wasm.d.ts`,
-    //       `export default {} as WebAssembly.Module;
-    // export {};
-    // export declare module "@graphql-steel/steel/core_bg.wasm" {
-    //   export default WebAssembly.Module;
-    // }
-    // export declare module "@graphql-steel/steel/core_bg.wasm?module" {
-    //   export default WebAssembly.Module;
-    // }
-    // `
-    //     );
+    fs.rmSync("engine.js");
+    if (profile === "debug") {
+      fs.rmSync("engine.d.ts");
+      fs.rmSync("engine_bg.js");
+      fs.rmSync("engine_bg.wasm.d.ts");
+      fs.writeFileSync("engine.wasm.d.ts", getWasmDtsContent("engine-debug"));
+    } else if (profile === "release") {
+      fs.rmSync("engine_bg.wasm.d.ts");
+      fs.writeFileSync("engine.wasm.d.ts", getWasmDtsContent("engine-debug"));
+    }
   } finally {
     process.chdir(currentFullDirPath);
   }
