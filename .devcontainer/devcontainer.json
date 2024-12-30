@@ -52,40 +52,8 @@
           "editor.defaultFormatter": "esbenp.prettier-vscode",
           "editor.formatOnSave": true
         },
-        "cSpell.ignorePaths": [
-          "**/*.d.ts.map",
-          "**/*.js.map",
-          "packages/steel/gen"
-        ],
-        "cSpell.words": [
-          "binaryen",
-          "bindgen",
-          "cdylib",
-          "denoland",
-          "devcontainers",
-          "dpkg",
-          "errorlens",
-          "fastly",
-          "fptoint",
-          "multivalue",
-          "nodenext",
-          "nontrapping",
-          "rustflags",
-          "rustup",
-          "supabase",
-          "tamasfe",
-          "tlsv1",
-          "usernamehw",
-          "wasmtime",
-          "wbindgen"
-        ],
+        "deno.enablePaths": ["examples/supabase-edge"],
         "editor.rulers": [80],
-        "rust-analyzer.rustfmt.extraArgs": [
-          "--config",
-          "imports_granularity=Item",
-          "--config",
-          "group_imports=StdExternalCrate"
-        ],
         "typescript.inlayHints.enumMemberValues.enabled": true,
         "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
         "typescript.inlayHints.parameterNames.enabled": "all",
@@ -99,7 +67,7 @@
   },
   "dockerComposeFile": "./compose.yaml",
   "overrideCommand": true,
-  "postCreateCommand": "npm install --workspaces",
+  "postCreateCommand": ".devcontainer/post-create.sh",
   "service": "graphql-steel",
   "workspaceFolder": "/graphql-steel"
 }

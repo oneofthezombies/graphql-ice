@@ -1,0 +1,10 @@
+{
+  "enabledFileTypes": {
+    "json": true,
+    "jsonc": true,
+    "typescript": true,
+    "typescriptreact": true,
+    "rust": true
+  },
+  "words": []
+}
