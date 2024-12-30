@@ -1,5 +1,5 @@
 {
-  "name": "browser-skypack",
+  "name": "browser-jsdelivr",
   "private": true,
   "scripts": {
     "dev": "tsx main.ts"

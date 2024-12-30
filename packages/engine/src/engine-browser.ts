@@ -1,15 +1,24 @@
 import { initIdempotently as initIdempotentlyInternal } from "./engine.js";
 import { PACKAGE_VERSION } from "./package-version.js";
 
-export const ENGINE_WASM_URL_ESM_SH = `https://esm.sh/@graphql-steel/engine@${PACKAGE_VERSION}/engine.wasm`;
+export const ENGINE_WASM_URL_JSDELIVR = `https://cdn.jsdelivr.net/npm/@graphql-steel/engine@${PACKAGE_VERSION}/engine.wasm`;
+
+export type InitInput = string | URL | Request | WebAssembly.Module;
 
 export async function initIdempotently(
-  engineWasmUrl: string = ENGINE_WASM_URL_ESM_SH
+  input: InitInput = ENGINE_WASM_URL_JSDELIVR
 ) {
   await initIdempotentlyInternal(async (imports) => {
-    return await WebAssembly.instantiateStreaming(
-      fetch(engineWasmUrl),
-      imports
-    );
+    if (
+      typeof input === "string" ||
+      input instanceof URL ||
+      input instanceof Request
+    ) {
+      return await WebAssembly.instantiateStreaming(fetch(input), imports);
+    } else if (input instanceof WebAssembly.Module) {
+      return await WebAssembly.instantiate(input, imports);
+    } else {
+      throw new Error(`Unexpected input type: ${typeof input}`);
+    }
   });
 }
