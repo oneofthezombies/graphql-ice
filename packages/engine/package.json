@@ -1,6 +1,6 @@
 {
   "name": "@graphql-steel/engine",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "license": "MIT",
   "author": "oneofthezombies <hunhoekim@gmail.com>",
   "sideEffects": false,
@@ -18,6 +18,10 @@
       "workerd": {
         "types": "./dist/index-workerd.d.ts",
         "import": "./dist/index-workerd.js"
+      },
+      "edge-light": {
+        "types": "./dist/index-edge-light.d.ts",
+        "import": "./dist/index-edge-light.js"
       },
       "browser": {
         "types": "./dist/index-browser.d.ts",

@@ -8,7 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@graphql-steel/steel": "*",
+    "@graphql-steel/engine": "*",
     "next": "15.1.2"
   },
   "devDependencies": {
