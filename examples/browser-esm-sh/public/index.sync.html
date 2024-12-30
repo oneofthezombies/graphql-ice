@@ -3,8 +3,8 @@
   <script type="module">
     import { browser } from "https://esm.sh/@graphql-steel/engine@0.0.8";
     import engineWasmModule from "https://esm.sh/@graphql-steel/engine@0.0.8/engine.wasm?module";
-    await browser.initIdempotently(engineWasmModule);
+    browser.initIdempotentlySync(engineWasmModule);
   </script>
-  Graphql Steel Example - esm.sh
+  Graphql Steel Example Synchronous Version - esm.sh
 </body>
 </html>

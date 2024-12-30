@@ -1,16 +1,12 @@
 {
   "name": "@graphql-steel/engine",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "license": "MIT",
   "author": "oneofthezombies <hunhoekim@gmail.com>",
   "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
-      "browser": {
-        "types": "./dist/index-browser.d.ts",
-        "import": "./dist/index-browser.js"
-      },
       "deno": {
         "types": "./dist/index-deno.d.ts",
         "import": "./dist/index-deno.js"
@@ -18,6 +14,14 @@
       "node": {
         "types": "./dist/index-node.d.ts",
         "import": "./dist/index-node.js"
+      },
+      "workerd": {
+        "types": "./dist/index-workerd.d.ts",
+        "import": "./dist/index-workerd.js"
+      },
+      "browser": {
+        "types": "./dist/index-browser.d.ts",
+        "import": "./dist/index-browser.js"
       },
       "default": {
         "types": "./dist/index-default.d.ts",

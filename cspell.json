@@ -5,5 +5,5 @@
     "typescriptreact": true
   },
   "ignorePaths": ["packages/engine/src/engine-bindings.js", "packages/*/dist"],
-  "words": ["supabase", "idempotently"]
+  "words": ["supabase", "idempotently", "workerd"]
 }
