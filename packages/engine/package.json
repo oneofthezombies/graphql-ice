@@ -42,7 +42,7 @@
     }
   },
   "scripts": {
-    "build": "tsx ../../scripts/build-engine-js.ts &&  tsx scripts/update-package-version-ts.ts && vite build",
+    "build": "tsx scripts/build.ts",
     "test": "vitest --run"
   },
   "publishConfig": {

@@ -37,7 +37,11 @@ const BUILD_RELEASE_FULL_PATH = path.resolve(
 );
 const WASM_NAME = "engine";
 
-function run(command: string, args?: string[], options?: SpawnSyncOptions) {
+export function run(
+  command: string,
+  args?: string[],
+  options?: SpawnSyncOptions
+) {
   args ??= [];
   options ??= {};
   if (!options.stdio) {
@@ -147,7 +151,7 @@ function postBuild(profile: string, buildFullDirPath: string) {
   }
 }
 
-function main() {
+export function buildEngineJs() {
   const flags = args
     .option("debug", "build with debug information.")
     .parse(process.argv);
@@ -158,5 +162,3 @@ function main() {
   build(profile, buildFullDirPath);
   postBuild(profile, buildFullDirPath);
 }
-
-main();

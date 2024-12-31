@@ -4,7 +4,7 @@ const PACKAGE_VERSION_RE =
   /(?<prefix>\s*export\s+const\s+PACKAGE_VERSION\s*=\s*")(?<value>.*)(?<postfix>".*)/;
 const PACKAGE_VERSION_REL_PATH = "src/package-version.ts";
 
-function main() {
+export function updatePackageVersionTs() {
   let isUpdated = false;
   const lineUpdated: string[] = [];
   const packageVersion: string = JSON.parse(
@@ -28,5 +28,3 @@ function main() {
   }
   fs.writeFileSync(PACKAGE_VERSION_REL_PATH, lineUpdated.join("\n"));
 }
-
-main();
