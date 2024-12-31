@@ -59,11 +59,11 @@ function getImportObject(): WebAssembly.Imports {
 }
 
 function postInstantiate(instantiateResult: InstantiateResult) {
-  const exports: WebAssembly.Exports =
+  const exportObject: WebAssembly.Exports =
     "instance" in instantiateResult
       ? instantiateResult.instance.exports
       : instantiateResult.exports;
-  __wbg_set_wasm(exports);
+  __wbg_set_wasm(exportObject);
   on_start();
   context.isInitialized = true;
 }
