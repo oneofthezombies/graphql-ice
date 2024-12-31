@@ -16,11 +16,11 @@ export type InstantiateResult =
 export type InstantiatePromiseOrValue = PromiseOrValue<InstantiateResult>;
 
 export type Instantiate = (
-  imports: WebAssembly.Imports
+  importObject: WebAssembly.Imports
 ) => InstantiatePromiseOrValue;
 
 export type InstantiateSync = (
-  imports: WebAssembly.Imports
+  importObject: WebAssembly.Imports
 ) => InstantiateResult;
 
 export type GraphQLSchema = {};
@@ -54,10 +54,10 @@ export function isInitialized(): boolean {
 
 export const IMPORT_MODULE_NAME = "./engine_bg.js";
 
-function getImports(): WebAssembly.Imports {
-  const imports: WebAssembly.Imports = {};
-  imports[IMPORT_MODULE_NAME] = moduleImports;
-  return imports;
+function getImportObject(): WebAssembly.Imports {
+  const importObject: WebAssembly.Imports = {};
+  importObject[IMPORT_MODULE_NAME] = moduleImports;
+  return importObject;
 }
 
 function postInstantiate(instantiateResult: InstantiateResult) {
@@ -76,8 +76,8 @@ export async function initIdempotently(instantiate: Instantiate) {
   }
 
   if (!context.instantiatePromiseOrValue) {
-    const imports = getImports();
-    context.instantiatePromiseOrValue = instantiate(imports);
+    const importObject = getImportObject();
+    context.instantiatePromiseOrValue = instantiate(importObject);
   }
 
   try {
@@ -93,8 +93,8 @@ export function initIdempotentlySync(instantiateSync: InstantiateSync) {
     return;
   }
 
-  const imports = getImports();
-  const instantiateResult = instantiateSync(imports);
+  const importObject = getImportObject();
+  const instantiateResult = instantiateSync(importObject);
   postInstantiate(instantiateResult);
   context.isInitialized = true;
 }

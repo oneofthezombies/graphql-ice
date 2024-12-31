@@ -14,18 +14,18 @@ export const ENGINE_WASM_PATH = path.resolve(
 export async function initIdempotently(
   engineWasmPath: string = ENGINE_WASM_PATH
 ) {
-  await initIdempotentlyInternal(async (imports) => {
+  await initIdempotentlyInternal(async (importObject) => {
     const bytes = await fs.promises.readFile(engineWasmPath);
-    return await WebAssembly.instantiate(bytes, imports);
+    return await WebAssembly.instantiate(bytes, importObject);
   });
 }
 
 export function initIdempotentlySync(
   engineWasmPath: string = ENGINE_WASM_PATH
 ) {
-  initIdempotentlySyncInternal((imports) => {
+  initIdempotentlySyncInternal((importObject) => {
     const bytes = fs.readFileSync(engineWasmPath);
     const module = new WebAssembly.Module(bytes);
-    return new WebAssembly.Instance(module, imports);
+    return new WebAssembly.Instance(module, importObject);
   });
 }
