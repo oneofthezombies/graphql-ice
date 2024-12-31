@@ -13,11 +13,11 @@ export type InstantiateResult =
   | WebAssembly.Instance
   | WebAssembly.WebAssemblyInstantiatedSource;
 
-export type InstantiatePromiseOrValue = PromiseOrValue<InstantiateResult>;
+export type InstantiatePromiseOrResult = PromiseOrValue<InstantiateResult>;
 
 export type Instantiate = (
   importObject: WebAssembly.Imports
-) => InstantiatePromiseOrValue;
+) => InstantiatePromiseOrResult;
 
 export type InstantiateSync = (
   importObject: WebAssembly.Imports
@@ -40,10 +40,10 @@ export class EngineNotInitError extends Error {
 
 const context: {
   isInitialized: boolean;
-  instantiatePromiseOrValue: InstantiatePromiseOrValue | null;
+  instantiatePromiseOrResult: InstantiatePromiseOrResult | null;
 } = {
   isInitialized: false,
-  instantiatePromiseOrValue: null,
+  instantiatePromiseOrResult: null,
 };
 
 export function isInitialized(): boolean {
@@ -73,16 +73,16 @@ export async function init(instantiate: Instantiate) {
     return;
   }
 
-  if (!context.instantiatePromiseOrValue) {
+  if (!context.instantiatePromiseOrResult) {
     const importObject = getImportObject();
-    context.instantiatePromiseOrValue = instantiate(importObject);
+    context.instantiatePromiseOrResult = instantiate(importObject);
   }
 
   try {
-    const instantiateResult = await context.instantiatePromiseOrValue;
+    const instantiateResult = await context.instantiatePromiseOrResult;
     postInstantiate(instantiateResult);
   } finally {
-    context.instantiatePromiseOrValue = null;
+    context.instantiatePromiseOrResult = null;
   }
 }
 
