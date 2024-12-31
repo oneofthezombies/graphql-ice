@@ -1,6 +1,6 @@
 import {
-  initIdempotently as initIdempotentlyInternal,
-  initIdempotentlySync as initIdempotentlySyncInternal,
+  init as initInternal,
+  initSync as initSyncInternal,
 } from "./engine.js";
 import { PACKAGE_VERSION } from "./package-version.js";
 
@@ -8,10 +8,8 @@ export const ENGINE_WASM_URL_JSDELIVR = `https://cdn.jsdelivr.net/npm/@graphql-s
 
 export type InitInput = string | URL | Request | WebAssembly.Module;
 
-export async function initIdempotently(
-  input: InitInput = ENGINE_WASM_URL_JSDELIVR
-) {
-  await initIdempotentlyInternal(async (importObject) => {
+export async function init(input: InitInput = ENGINE_WASM_URL_JSDELIVR) {
+  await initInternal(async (importObject) => {
     if (
       typeof input === "string" ||
       input instanceof URL ||
@@ -26,8 +24,8 @@ export async function initIdempotently(
   });
 }
 
-export function initIdempotentlySync(engineWasmModule: WebAssembly.Module) {
-  initIdempotentlySyncInternal((importObject) => {
+export function initSync(engineWasmModule: WebAssembly.Module) {
+  initSyncInternal((importObject) => {
     return new WebAssembly.Instance(engineWasmModule, importObject);
   });
 }

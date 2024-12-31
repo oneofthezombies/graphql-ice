@@ -34,9 +34,7 @@ export type ExecutionResult = {};
 
 export class EngineNotInitError extends Error {
   constructor() {
-    super(
-      "Must be initialized with initIdempotently() or initIdempotentlySync()."
-    );
+    super("Must be initialized with init() or initSync().");
   }
 }
 
@@ -70,7 +68,7 @@ function postInstantiate(instantiateResult: InstantiateResult) {
   context.isInitialized = true;
 }
 
-export async function initIdempotently(instantiate: Instantiate) {
+export async function init(instantiate: Instantiate) {
   if (context.isInitialized) {
     return;
   }
@@ -88,7 +86,7 @@ export async function initIdempotently(instantiate: Instantiate) {
   }
 }
 
-export function initIdempotentlySync(instantiateSync: InstantiateSync) {
+export function initSync(instantiateSync: InstantiateSync) {
   if (context.isInitialized) {
     return;
   }

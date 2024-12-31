@@ -1,8 +1,7 @@
 import { graphql, edge } from "@graphql-steel/engine";
 import engineWasmModule from "@graphql-steel/engine/engine.wasm";
-const { initIdempotently } = edge;
 
-await initIdempotently(engineWasmModule);
+await edge.init(engineWasmModule);
 
 export default {
   async fetch(req, env, ctx) {

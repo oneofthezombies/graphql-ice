@@ -3,15 +3,15 @@
 import { describe, expect, test } from "vitest";
 import { graphqlSync, isInitialized, node } from "./index-node.js";
 
-const { initIdempotentlySync } = node;
+const { initSync } = node;
 
 describe("initialize", () => {
   test("isInitialized", () => {
     expect(isInitialized()).toBe(false);
   });
 
-  test("initIdempotentlySync", async () => {
-    expect(initIdempotentlySync()).toBe(undefined);
+  test("initSync", async () => {
+    expect(initSync()).toBe(undefined);
   });
 
   test("isInitialized", () => {

@@ -5,9 +5,8 @@
 // Setup type definitions for built-in Supabase Runtime APIs
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { deno, graphql } from "npm:@graphql-steel/engine";
-const { initIdempotently } = deno;
 
-await initIdempotently();
+await deno.init();
 
 Deno.serve(async (req) => {
   const result = await graphql({ schema: {}, source: "" });

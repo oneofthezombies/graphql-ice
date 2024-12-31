@@ -1,12 +1,11 @@
 import { graphql, deno } from "npm:@graphql-steel/engine";
-const { initIdempotently, initIdempotentlySync } = deno;
 
-// initIdempotentlySync();
-await initIdempotently();
+// deno.initSync();
+await deno.init();
 
 Deno.serve(async () => {
-  // initIdempotentlySync();
-  // await initIdempotently();
+  // deno.initSync();
+  // await deno.init();
   const result = await graphql({ schema: {}, source: "" });
   return new Response(JSON.stringify(result));
 });

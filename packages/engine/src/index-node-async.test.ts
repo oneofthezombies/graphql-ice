@@ -3,27 +3,27 @@
 import { describe, expect, test } from "vitest";
 import { graphql, isInitialized, node, triggerPanic } from "./index-node.js";
 
-const { initIdempotently, initIdempotentlySync } = node;
+const { init, initSync } = node;
 
 describe("initialize", () => {
   test("isInitialized", () => {
     expect(isInitialized()).toBe(false);
   });
 
-  test("initIdempotently", async () => {
-    expect(await initIdempotently()).toBe(undefined);
+  test("init", async () => {
+    expect(await init()).toBe(undefined);
   });
 
   test("isInitialized", () => {
     expect(isInitialized()).toBe(true);
   });
 
-  test("initIdempotently after initialized", async () => {
-    expect(await initIdempotently()).toBe(undefined);
+  test("init after initialized", async () => {
+    expect(await init()).toBe(undefined);
   });
 
-  test("initIdempotentlySync after initialized", async () => {
-    expect(initIdempotentlySync()).toBe(undefined);
+  test("initSync after initialized", async () => {
+    expect(initSync()).toBe(undefined);
   });
 });
 

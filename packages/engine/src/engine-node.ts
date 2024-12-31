@@ -2,8 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  initIdempotently as initIdempotentlyInternal,
-  initIdempotentlySync as initIdempotentlySyncInternal,
+  init as initInternal,
+  initSync as initSyncInternal,
 } from "./engine.js";
 
 export const ENGINE_WASM_PATH = path.resolve(
@@ -11,19 +11,15 @@ export const ENGINE_WASM_PATH = path.resolve(
   "../engine.wasm"
 );
 
-export async function initIdempotently(
-  engineWasmPath: string = ENGINE_WASM_PATH
-) {
-  await initIdempotentlyInternal(async (importObject) => {
+export async function init(engineWasmPath: string = ENGINE_WASM_PATH) {
+  await initInternal(async (importObject) => {
     const bytes = await fs.promises.readFile(engineWasmPath);
     return await WebAssembly.instantiate(bytes, importObject);
   });
 }
 
-export function initIdempotentlySync(
-  engineWasmPath: string = ENGINE_WASM_PATH
-) {
-  initIdempotentlySyncInternal((importObject) => {
+export function initSync(engineWasmPath: string = ENGINE_WASM_PATH) {
+  initSyncInternal((importObject) => {
     const bytes = fs.readFileSync(engineWasmPath);
     const module = new WebAssembly.Module(bytes);
     return new WebAssembly.Instance(module, importObject);
