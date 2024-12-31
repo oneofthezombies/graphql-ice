@@ -7,17 +7,17 @@ import {
 } from "./engine-bindings.js";
 import * as moduleImports from "./engine-bindings.js";
 
-export type MaybePromise<T> = Promise<T> | T;
+export type PromiseOrValue<T> = Promise<T> | T;
 
 export type InstantiateResult =
   | WebAssembly.Instance
   | WebAssembly.WebAssemblyInstantiatedSource;
 
-export type InstantiateMaybePromise = MaybePromise<InstantiateResult>;
+export type InstantiatePromiseOrValue = PromiseOrValue<InstantiateResult>;
 
 export type Instantiate = (
   imports: WebAssembly.Imports
-) => InstantiateMaybePromise;
+) => InstantiatePromiseOrValue;
 
 export type InstantiateSync = (
   imports: WebAssembly.Imports
@@ -42,10 +42,10 @@ export class EngineNotInitError extends Error {
 
 const context: {
   isInitialized: boolean;
-  instantiateMaybePromise: InstantiateMaybePromise | null;
+  instantiatePromiseOrValue: InstantiatePromiseOrValue | null;
 } = {
   isInitialized: false,
-  instantiateMaybePromise: null,
+  instantiatePromiseOrValue: null,
 };
 
 export function isInitialized(): boolean {
@@ -75,16 +75,16 @@ export async function initIdempotently(instantiate: Instantiate) {
     return;
   }
 
-  if (!context.instantiateMaybePromise) {
+  if (!context.instantiatePromiseOrValue) {
     const imports = getImports();
-    context.instantiateMaybePromise = instantiate(imports);
+    context.instantiatePromiseOrValue = instantiate(imports);
   }
 
   try {
-    const instantiateResult = await context.instantiateMaybePromise;
+    const instantiateResult = await context.instantiatePromiseOrValue;
     postInstantiate(instantiateResult);
   } finally {
-    context.instantiateMaybePromise = null;
+    context.instantiatePromiseOrValue = null;
   }
 }
 
