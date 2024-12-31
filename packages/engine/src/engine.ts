@@ -94,7 +94,6 @@ export function initSync(instantiateSync: InstantiateSync) {
   const importObject = getImportObject();
   const instantiateResult = instantiateSync(importObject);
   postInstantiate(instantiateResult);
-  context.isInitialized = true;
 }
 
 function checkInit() {
