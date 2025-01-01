@@ -1,4 +1,9 @@
 /**
+
+type __Root {
+  query: Query
+}
+
 type Query {
   users: [User]
 }
