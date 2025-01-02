@@ -8,3 +8,4 @@ dist/
 
 # etc
 .env*
+/post-create.sh
